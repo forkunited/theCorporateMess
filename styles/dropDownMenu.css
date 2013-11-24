@@ -1,0 +1,141 @@
+/**
+ * Copyright 2013 Bill McDowell 
+ *
+ * This file is part of theMess (https://github.com/forkunited/theMess)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy 
+ * of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software 
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT 
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
+ * License for the specific language governing permissions and limitations 
+ * under the License.
+ */
+
+#dropDownMenuTitle_uiLayout {
+	position: absolute;
+	top: 0%;
+	left: 0%;
+}
+
+#dropDownMenuTitle_uiExport {
+	position: absolute;
+	top: 0%;
+	left: 25%;
+}
+
+#dropDownMenuTitle_uiImport {
+	position: absolute;
+	top: 0%;
+	left: 50%;
+}
+
+#dropDownMenuTitle_uiHelp {
+	position: absolute;
+	top: 0%;
+	left: 75%;
+}
+
+#dropDownMenuBody_uiLayout {
+	position: absolute;
+	top: 0%;
+	left: 0%;
+}
+
+#dropDownMenuBody_uiExport {
+	position: absolute;
+	top: 0%;
+	left: 25%;
+}
+
+#dropDownMenuBody_uiImport {
+	position: absolute;
+	top:0%;
+	left: 50%;
+}
+
+#dropDownMenuBody_uiHelp {
+	position: absolute;
+	top: 0%;
+	left: 75%;
+}
+
+div.dropDownMenuTitle {
+	z-index: 500;
+	height: 100%;
+	width: 25%;
+	font: 13pt Calibri;
+	color: #FFFFFF;
+	text-align: center;
+	padding:0;
+	font-weight: bold;
+	cursor: pointer;
+}
+
+div.dropDownMenuTitleMouseover {
+	z-index: 500;
+	height: 100%;
+	width: 25%;
+	font: 13pt Calibri;
+	background-color:#3B3B3B;
+	color: #000000;
+	text-align: center;
+	padding:0;
+	font-weight: bold;
+	cursor: pointer;
+}
+
+div.dropDownMenuBody {
+	z-index: 600;
+	cursor: pointer;
+	width: 25%;
+	text-align: center;
+	color: #FFFFFF;
+	background-color: #3B3B3B;
+	opacity:.9;
+	visibility: hidden;
+	cursor: pointer;
+}
+
+div.dropDownMenuLink {
+	padding-top:5px;
+	padding-bottom: 5px;
+	border-top-width:0px;
+	border-bottom-width: 1px;
+	border-left-width:0px;
+	border-right-width:0px;
+	border-color: #000000;
+	border-style: solid;
+	color: #FFFFFF;
+	
+}
+
+div.dropDownMenuLinkSelected {
+	padding-top:5px;
+	padding-bottom: 5px;
+	border-top-width:0px;
+	border-bottom-width: 1px;
+	border-left-width:0px;
+	border-right-width:0px;
+	border-color: #000000;
+	border-style: solid;
+	color: #000000;
+	background-color: #FFFFFF;
+}
+
+div.dropDownMenuLinkMouseover {
+	padding-top:5px;
+	padding-bottom: 5px;
+	border-top-width:0px;
+	border-bottom-width: 1px;
+	border-left-width:0px;
+	border-right-width:0px;
+	border-color: #000000;
+	border-style: solid;
+	color: #000000;
+	background-color: #BBBBBB;
+}

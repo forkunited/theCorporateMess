@@ -1,0 +1,40 @@
+curl -d "queryType=accessToTag&params={\"tagId\":\"51982f624a9df\"}" http://localhost/theMess/server/retrieveUsers.php
+
+curl -d "queryType=graphAllByTags&params={\"tagIds\":[\"51982f624a9df\"], \"minUpdatedDates\":[0], \"compactionDates\":[0]}" http://localhost/theMess/server/retrieveMessGraph.php
+curl -d "queryType=tagsAllByUser&params={\"user\":\"Bill\", \"skip\":0, \"limit\":0}" http://localhost/theMess/server/retrieveMessGraph.php
+curl -d "queryType=tagsRecentlyUpdated&params={\"skip\":0, \"limit\":0}" http://localhost/theMess/server/retrieveMessGraph.php
+
+curl -d "queryType=tagsSearchByUser&params={\"user\":\"Bill\", \"search\":\"searchStr\", \"skips\":[0,0], \"limit\":0}" http://localhost/theMess/server/retrieveMessGraph.php
+curl -d "queryType=tagsSearch&params={\"search\":\"searchStr\", \"skips\":[0,0], \"limit\":0}" http://localhost/theMess/server/retrieveMessGraph.php
+---------------------------------
+
+curl -d "messages=[{\"messageType\":\"requestAddTag\", \"tag\": { \"id\":\"tagSearchMenuTempId\", \"creatorUserId\": \"Bill\", \"name\":\"Hi\"}}]" http://localhost/theMess/server/storeMessGraph.php
+curl -d "messages=[{\"messageType\":\"requestAddNode\", \"node\": { \"id\":\"521eb7a294681_5\", \"tagId\":\"521eb7a294681\", \"brief\":\"BRIEF0\", \"thorough\":\"THOROUGH0\", \"posX\": 0, \"posY\": 0, \"main\":false }}, {\"messageType\":\"requestAddNode\", \"node\": { \"id\":\"521eb7a294681-1\", \"tagId\":\"521eb7a294681\", \"brief\":\"BRIEF1\", \"thorough\":\"THOROUGH1\", \"posX\": 0, \"posY\": 0, \"main\":true}}, {\"messageType\":\"requestAddNode\", \"node\": { \"id\":\"521eb7a294681-2\", \"tagId\":\"521eb7a294681\", \"brief\":\"BRIEF2\", \"thorough\":\"THOROUGH2\", \"posX\": 0, \"posY\": 0, \"main\":false }}]" http://localhost/theMess/server/storeMessGraph.php
+
+curl -d "messages=[{\"messageType\":\"requestAddNode\", \"node\": { \"id\":\"521eb7a294681_3\", \"tagId\":\"521eb7a294681\", \"brief\":\"BRIEF3\", \"thorough\":\"THOROUGH3\", \"posX\": 0, \"posY\": 0, \"main\":false }}, {\"messageType\":\"requestAddNode\", \"node\": { \"id\":\"521eb7a294681-4\", \"tagId\":\"521eb7a294681\", \"brief\":\"BRIEF4\", \"thorough\":\"THOROUGH4\", \"posX\": 0, \"posY\": 0, \"main\":true}},{\"messageType\":\"requestAddRelationship\", \"relationship\": { \"id1\":\"521eb7a294681_4\", \"id2\":\"521eb7a294681_3\", \"type\":1, \"group\":2, \"direction\":0}}]" http://localhost/theMess/server/storeMessGraph.php
+curl -d "messages=[{\"messageType\":\"requestAddNode\", \"node\": { \"id\":\"521eb7a294681_5\", \"tagId\":\"521eb7a294681\", \"brief\":\"BRIEF0\", \"thorough\":\"THOROUGH0\", \"posX\": 0, \"posY\": 0, \"main\":false }}]" http://localhost/theMess/server/storeMessGraph.php
+curl -d "messages=[{\"messageType\":\"requestOverwriteNode\", \"node\": { \"id\":\"521eb7a294681_9\", \"tagId\":\"521eb7a294681\", \"brief\":\"BRIEFADFSDF3\", \"thorough\":\"THOROUGSDFSH3\", \"posX\": 0, \"posY\": 0, \"main\": true }}]" http://localhost/theMess/server/storeMessGraph.php
+curl -d "messages=[{\"messageType\":\"requestOverwriteRelationship\", \"relationship\": { \"id\" : \"521eb7a294681_3_521eb7a294681_4\", \"id1\":\"521eb7a294681_4\", \"id2\":\"521eb7a294681_3\", \"type\":1, \"group\":2, \"direction\":0}}]" http://localhost/theMess/server/storeMessGraph.php
+curl -d "messages=[{\"messageType\":\"requestOverwriteTag\", \"tag\": { \"id\" : \"521eb7a294681\", \"creatorId\":\"Bill\", \"name\":\"Its a tag\", \"visibility\":0}}]" http://localhost/theMess/server/storeMessGraph.php
+
+curl -d "messages=[{\"messageType\":\"requestAddNode\", \"node\": { \"id\":\"522699ff0d731_8\", \"tagId\":\"522699ff0d731\", \"brief\":\"BRIEF3\", \"thorough\":\"THOROUGH3\", \"posX\": 0, \"posY\": 0, \"main\":false }}, {\"messageType\":\"requestAddNode\", \"node\": { \"id\":\"522699ff0d731_9\", \"tagId\":\"522699ff0d731\", \"brief\":\"BRIEF4\", \"thorough\":\"THOROUGH4\", \"posX\": 0, \"posY\": 0, \"main\":true}},{\"messageType\":\"requestAddRelationship\", \"relationship\": { \"id1\":\"522699ff0d731_8\", \"id2\":\"522699ff0d731_9\", \"type\":1, \"group\":2, \"direction\":0}}]" http://localhost/theMess/server/storeMessGraph.php
+
+
+
+curl -d "messages=[{\"messageType\":\"requestAddNode\", \"node\": { \"id\":\"522d2f6715acf_0\", \"tagId\":\"522d2f6715acf\", \"brief\":\"BRIEF0\", \"thorough\":\"THOROUGH0\", \"posX\": 0, \"posY\": 0, \"main\":false }}, {\"messageType\":\"requestAddNode\", \"node\": { \"id\":\"522d2f6715acf_1\", \"tagId\":\"522d2f6715acf\", \"brief\":\"BRIEF1\", \"thorough\":\"THOROUGH1\", \"posX\": 0, \"posY\": 0, \"main\":true}}, {\"messageType\":\"requestAddNode\", \"node\": { \"id\":\"522d2f6715acf_2\", \"tagId\":\"522d2f6715acf\", \"brief\":\"BRIEF2\", \"thorough\":\"THOROUGH2\", \"posX\": 0, \"posY\": 0, \"main\":false }}, {\"messageType\":\"requestAddRelationship\", \"relationship\": { \"id1\":\"522d2f6715acf_0\", \"id2\":\"522d2f6715acf_1\", \"type\":1, \"group\":2, \"direction\":0 }}]" http://localhost/theMess/server/storeMessGraph.php
+curl -d "messages=[{\"messageType\":\"requestAddRelationship\", \"relationship\": { \"id1\":\"5227dee614161_1\", \"id2\":\"5227dee614161_2\", \"type\":1, \"group\":2, \"direction\":0 }},{\"messageType\":\"requestAddRelationship\", \"relationship\": { \"id1\":\"5227dee614161_1\", \"id2\":\"5227dee614161_2\", \"type\":1, \"group\":2, \"direction\":0 }}]" http://localhost/theMess/server/storeMessGraph.php
+curl -d "messages=[{\"messageType\":\"requestRemoveRelationship\", \"relationship\": { \"id\":\"5227dee614161_0_5227dee614161_1\"}}]" http://localhost/theMess/server/storeMessGraph.php
+curl -d "messages=[{\"messageType\":\"requestRemoveNode\", \"node\": { \"id\":\"5227dee614161_2\"}}]" http://localhost/theMess/server/storeMessGraph.php
+curl -d "messages=[{\"messageType\":\"requestRemoveTag\", \"tag\": { \"id\":\"5227dee614161\"}}]" http://localhost/theMess/server/storeMessGraph.php
+
+curl -d "messages=[{\"messageType\":\"requestGrantAccessTag\", \"tagId\":\"521eb7a294681\", \"userId\":\"Zak\"}]" http://localhost/theMess/server/storeMessGraph.php
+curl -d "messages=[{\"messageType\":\"requestRemoveAccessTag\", \"tagId\":\"521eb7a294681\", \"userId\":\"Zak\"}]" http://localhost/theMess/server/storeMessGraph.php
+curl -d "message={\"messageType\":\"requestRetrieveUsers\", \"queryType\":\"accessToTag\", \"params\":{\"tagId\":\"521eb7a294681\"}}" http://localhost/theMess/server/retrieveUsers.php
+curl -d "message={\"messageType\":\"requestRetrieveMessGraph\", \"queryType\":\"graphAllByTags\", \"params\":{\"tagIds\":[\"521eb7a294681\"], \"minUpdatedDates\":[0], \"compactionDates\":[0]}}" http://localhost/theMess/server/retrieveMessGraph.php
+curl -d "message={\"messageType\":\"requestRetrieveMessGraph\", \"queryType\":\"tagsAllByUser\", \"params\":{\"user\":\"Bill\", \"skip\":0, \"limit\":0}}" http://localhost/theMess/server/retrieveMessGraph.php
+curl -d "message={\"messageType\":\"requestRetrieveMessGraph\", \"queryType\":\"tagsRecentlyUpdated\", \"params\":{\"user\":\"Bill\", \"skip\":0, \"limit\":0}}" http://localhost/theMess/server/retrieveMessGraph.php
+curl -d "message={\"messageType\":\"requestRetrieveMessGraph\", \"queryType\":\"tagsSearchByUser\", \"params\":{\"user\":\"Bill\", \"search\":\"Test\", \"skips\":[0,0], \"limit\":10}}" http://localhost/theMess/server/retrieveMessGraph.php
+curl -d "message={\"messageType\":\"requestRetrieveMessGraph\", \"queryType\":\"tagsSearch\", \"params\":{\"search\":\"Test\", \"skips\":[0,0], \"limit\":10}}" http://localhost/theMess/server/retrieveMessGraph.php
+
+
+"message={"messageType":"requestRetrieveMessGraph","queryType":"tagsRecentlyUpdated","params":{"skip":[10],"limit":10}}"

@@ -1,0 +1,238 @@
+/**
+ * Copyright 2013 Bill McDowell 
+ *
+ * This file is part of theMess (https://github.com/forkunited/theMess)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy 
+ * of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software 
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT 
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
+ * License for the specific language governing permissions and limitations 
+ * under the License.
+ */
+
+#uiSideRegion {
+	position: absolute;
+	top: 0%;
+	left: 0%;
+	width: 30%;
+	height: 100%;
+	padding:0;
+	z-index: 200;
+	opacity:.9;
+	overflow:hidden;
+}
+
+#uiTopRegion {
+	position: absolute;
+	top: 0%;
+	left: 30%;
+	width: 70%;
+	height: 10%;
+	z-index: 200;
+	padding:0;
+	overflow:hidden;
+	opacity:.9;
+	background-color: #3B3B3B;
+	/*border: 1px solid #FFFFFF;*/
+}
+
+#uiContentRegion {
+	position: absolute;
+	top: 0%;
+	left: 0%;
+	width: 100%;
+	height: 100%;
+	padding:0;
+	overflow:hidden;
+}
+
+#uiBottomRegion {
+	position: absolute;
+	top: 70%;
+	left: 30%;
+	width: 70%;
+	height: 30%;
+	z-index: 200;
+	padding:0;
+	overflow:hidden;
+	background-color: #3B3B3B;
+	/*border: 1px solid #FFFFFF;*/
+	opacity:.9;
+}
+
+#uiTagMenu {
+	position:absolute;
+	left: 0%;
+	top: 0%;
+	width: 100%;
+	height: 100%;
+	/*border: 1px solid #FFFFFF;*/
+	border-right: 0px;
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+
+#uiInstructions {
+	position: absolute;
+	top: 20%;
+	left: 40%;
+	width: 50%;
+	height: 40%;
+	z-index: 200;
+	font: 10pt Calibri;
+	color: #FFFFFF;
+	opacity:.9;
+	text-align: center;
+	padding:0;
+	background-color: #3B3B3B;
+	/*border: 1px solid #FFFFFF;*/
+	cursor: pointer;
+	overflow: auto;
+}
+
+#uiMess {
+	position: absolute;
+	top: 0%;
+	left: 0%;
+	border: 1px solid #000000;
+	width: 100%;
+	height: 100%;
+	z-index:0;
+	background-color: #000000;
+}
+
+#uiMessOverlay {
+	position: absolute;
+	top: 0%;
+	left: 0%;
+	border: 1px solid #000000;
+	width: 100%;
+	height: 100%;
+	z-index:50;
+}
+
+#uiStatus {
+	position: absolute;
+	top: 100%;
+	left: 50%;
+	width: 50%;
+	height: 34px;
+	margin-top: -34px;
+	font: 10pt Calibri;
+	color: #FFFFFF;
+	text-align: right;
+	padding:0;
+}
+
+#uiEditLabel {
+	position: absolute;
+	top: 25%;	
+	left: 45%;
+	width: 40%;
+	z-index:100;
+	height: 20px;
+	font: 12pt Calibri;
+	color: #FFFFFF;
+	text-align: center;
+	background-color: #000000;/*#3B3B3B;*/
+	border-style:solid;
+	border-width:1px;
+	border-color:#FFFFFF;
+	opacity:0.5;
+	padding:0;
+	overflow: hidden;
+	visibility:hidden;
+}
+
+#uiEditContent {
+	position:absolute;
+	top: 10%;
+	left: 10%;
+	width: 76%;
+	height: 56%;		
+	z-index:200;
+	font: 12pt Calibri;
+	color: #FFFFFF;
+	opacity:1;
+	background-color: #000000;
+	text-align:left;
+	display:none;
+	padding: 2%;
+	overflow:auto;
+	border: 1px solid #FFFFFF;
+}
+
+#uiSubmitEdit {
+	position: absolute;
+	top: 90%;
+	left: 10%;
+	width: 80%;
+	background-color: #FFFFFF;
+	border: 1px solid #000000;
+	display: none;
+	font-weight: bold;
+	cursor:pointer;
+}
+
+#uiShowContent {
+	position:absolute;
+	top: 10%;
+	left: 10%;
+	width: 76%;
+	height: 56%;		
+	z-index:100;
+	font: 12pt Calibri;
+	color: #FFFFFF;
+	opacity:1;
+	padding:2%;
+	background-color: #000000;
+	text-align:left;
+	padding:2%;
+	overflow:auto;
+	cursor:pointer;
+}
+
+#uiTopLinks {
+	position: absolute;
+	top: 100%;
+	left: 0%;
+	width: 500px;
+	height: 22px;
+	margin-top: -22px;
+	background-color:#111111;
+}
+
+#uiTopLinksBody {
+	position: absolute;
+	top: 10%;
+	left: 30%;
+	width: 500px;
+	height: 200px;
+	z-index: 500;
+	display:none;
+}
+
+#uiInstructionsHeading {
+	padding: 3px; 
+	font: 25px Calibri bold;
+}
+
+#uiInstructionsContent {
+	padding-left: 10px; 
+	padding-right: 10px; 
+	font: 12px Calibri; 
+	text-align: left;
+}
+
+#uiInstructionsKeys {
+	padding-left: 10px; 
+	padding-right: 10px; 
+	font: 12px Calibri; 
+	text-align: left;
+}

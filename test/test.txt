@@ -1,0 +1,9 @@
+[{"changeType":"addVert","user":1,"tag":"everything","label":"","content":""},{"type":"addVert","user":1,"tag":"everything","label":"","content":""}]
+
+[{"changeType":"overwriteVert","vertID":5,"tag":"tagasdfsa","label":"asdf","content":"some content"}]
+
+[{"changeType":"overwriteEdge","vertID1":5,"vertID2":6,"group":2,"type":1,"direction":1}]
+
+[{"changeType":"removeEdge","vertID1":1,"vertID2":6}]
+
+[{"changeType":"removeVert","vertID":1}]
