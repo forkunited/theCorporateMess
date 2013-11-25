@@ -20,10 +20,10 @@
 
 //exit(0);
 
-require_once("phar://lib/neo4jphp.phar");
+require_once("phar:///cre/server/lib/neo4jphp.phar");
 
-require_once('./classes/User.php');
-require_once('./classes/MessTag.php');
+require_once('/cre/server/classes/User.php');
+require_once('/cre/server/classes/MessTag.php');
 
 use Everyman\Neo4j\Client,
 	Everyman\Neo4j\Index\NodeIndex,
