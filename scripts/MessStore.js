@@ -44,7 +44,7 @@ function MessStore(currentUser) {
 	this.AUTO_SAVE_INTERVAL = 5000;
 	
 	/* Tags */
-	this.MAX_NUM_SELECTED_TAGS = 10;
+	this.MAX_NUM_SELECTED_TAGS = 10000;
 	
 	/* Sends storage messages to the server */
 	var store = new StoreMessGraph();
@@ -301,9 +301,9 @@ function MessStore(currentUser) {
 		
 		var tagsToRetrieve = [];
 		for (var tagId in selectedTags) {
-			if (!selectedGraph.hasTag(tagId) 
+			if (/*!selectedGraph.hasTag(tagId) 
 				|| selectedGraph.getTag(tagId).creatorUserId != currentUser 
-				|| selectedTags[tagId].retrievalTime == that.RETRIEVAL_TIME_NEVER) {
+				|| HACK: Only retrieve selected once */selectedTags[tagId].retrievalTime == that.RETRIEVAL_TIME_NEVER) {
 				
 				tagsToRetrieve.push(
 				{

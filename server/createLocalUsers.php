@@ -17,7 +17,7 @@
  * under the License.
  */
  
-exit(0);
+//exit(0);
  
 require_once('auth.php');
 

@@ -18,7 +18,7 @@
  * under the License.
  */
 
-exit(0);
+//exit(0);
 
 require_once("phar://lib/neo4jphp.phar");
 
