@@ -182,6 +182,8 @@ function TagSearchMenu(container, editContainer, currentUser, messStore) {
 		};
 		
 		tagEditMenuElement.style.visibility = 'hidden';
+		
+		filterElement.style.visibility = 'hidden'; // HACK: Don't allow filtering for now
 	}
 	
 	function removeContainerChildren() {

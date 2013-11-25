@@ -92,8 +92,9 @@ function MessStore(currentUser) {
 	var localMessageHandlers = [];
 	
 	this.init = function() {
-		window.setInterval(retrieveGraph, that.GRAPH_RETRIEVAL_INTERVAL);
-		window.setInterval(that.save, that.AUTO_SAVE_INTERVAL);
+		// HACK: No auto retrieval for now...
+		//window.setInterval(retrieveGraph, that.GRAPH_RETRIEVAL_INTERVAL);
+		//window.setInterval(that.save, that.AUTO_SAVE_INTERVAL);
 	}
 	
 	this.addLocalMessageHandler = function(handlerFn) {
@@ -399,6 +400,8 @@ function MessStore(currentUser) {
 	/* Storage stuff */
 	
 	this.save = function() {
+		return; // HACK: No saves...
+	
 		if (saveState == that.SAVE_STATE_SAVING) {
 			runLocalMessageHandlers(LocalStorageMessage.makeSkipSave());
 			return;

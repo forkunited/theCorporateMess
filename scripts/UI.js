@@ -222,6 +222,8 @@ function UI(container, currentUser) {
 											messOverlayElement.width = messOverlayElement.offsetWidth;
 											messOverlayElement.height = messOverlayElement.offsetHeight;
 											setVisibleMessWindow();}
+											
+		topLinksElement.style.visibility = 'hidden'; // HACK: Hide top links for now...
 	}
 	
 	function constructComponents() {
@@ -351,6 +353,8 @@ function UI(container, currentUser) {
 	}
 	
 	function updateStatus() {
+		return; // HACK: Don't show status for now
+	
 		if (typeof Util.error !== "undefined") {
 			statusElement.innerHTML = '<span style="color: #FF0000;">' + Util.error + '</span>';
 			return;
