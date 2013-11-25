@@ -48,6 +48,7 @@ User::create('2009');
 User::create('2010');
 User::create('2011');
 User::create('2012');
+User::create('Default');
 
 echo 'Done.';
 
