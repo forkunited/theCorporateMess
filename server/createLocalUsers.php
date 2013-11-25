@@ -24,9 +24,30 @@ require_once('auth.php');
 require_once("phar://lib/neo4jphp.phar");
 require_once('./classes/User.php');
 
-User::create('Bill');
-User::create('Christian');
-User::create('Zak');
+User::create('FULL');
+User::create('1990');
+User::create('1991');
+User::create('1992');
+User::create('1993');
+User::create('1994');
+User::create('1995');
+User::create('1996');
+User::create('1997');
+User::create('1998');
+User::create('1999');
+User::create('2000');
+User::create('2001');
+User::create('2002');
+User::create('2003');
+User::create('2004');
+User::create('2005');
+User::create('2006');
+User::create('2007');
+User::create('2008');
+User::create('2009');
+User::create('2010');
+User::create('2011');
+User::create('2012');
 
 echo 'Done.';
 

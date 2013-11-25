@@ -18,7 +18,7 @@
  * under the License.
  */
 
-require_once('./server/requireDrupalAuth.php');
+require_once('./server/auth.php');
 
 ?>
 <!DOCTYPE HTML>

@@ -653,7 +653,7 @@ function UI(container, currentUser) {
 	/* Keyboard event handling.  Uses external library for shortcuts.  Replace
 	 * this later
 	 */
-	 
+	/*
 	shortcut.add(this.KEYBOARD_TOGGLE_INSTRUCTIONS,
 	toggleInstructions,
 	{
@@ -959,4 +959,5 @@ function UI(container, currentUser) {
 		'propagate': false,
 		'target':document
 	});
+	*/
 }
