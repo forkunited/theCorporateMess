@@ -19,7 +19,7 @@ function VisualEdge(canvas, v1, v2, color, direction) {
 	var that = this;
 
 	var DEFAULT_COLOR = "#FFFFFF";
-	var DEFAULT_EDGE_DIR = VisualEdge.EDGE_DIR_FORWARD;
+	var DEFAULT_EDGE_DIR = VisualEdge.EDGE_DIR_BOTH;
 	var DEFAULT_THICKNESS = 2;
 	var EMPHASIZED_THICKNESS = 4;
 	var TRIANGLE_LENGTH = 10;
@@ -282,9 +282,9 @@ function VisualEdge(canvas, v1, v2, color, direction) {
 }
 
 /* Edge directions */
-VisualEdge.EDGE_DIR_FORWARD = 0;
-VisualEdge.EDGE_DIR_BACKWARD = 1;
-VisualEdge.EDGE_DIR_BOTH = 2;
+VisualEdge.EDGE_DIR_FORWARD = 1;//0;
+VisualEdge.EDGE_DIR_BACKWARD = 2;//1;
+VisualEdge.EDGE_DIR_BOTH = 0;//2;
 
 /* Edge types */
 VisualEdge.EDGE_TYPE_NORMAL = 0;
