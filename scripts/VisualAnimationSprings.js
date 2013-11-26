@@ -181,7 +181,7 @@ function VisualAnimationSprings() {
 		
 		if (animateVertices) {
 			var vertFMag = Math.sqrt(Math.pow(vertFX, 2.0)+Math.pow(vertFY, 2.0));
-			if (vertFMag > 10.0) {
+			if (vertFMag > 50.0) {
 				vertFX = 0;//;10.0*vertFX/vertFMag;
 				vertFY = 0;//10.0*vertFY/vertFMag;
 			}
