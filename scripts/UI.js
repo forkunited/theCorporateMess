@@ -522,7 +522,8 @@ function UI(container, currentUser) {
 		if (!focusContent) {
 			showContentElement.innerHTML = '';
 		} else {
-			showContentElement.innerHTML = focusContent;
+			var visibleContent = focusContent.substring(focusContent.indexOf("<br />"), focusContent.length);
+			showContentElement.innerHTML = visibleContent;
 		}
 	}
 	

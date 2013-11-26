@@ -238,7 +238,7 @@ function MessViewControl(canvas, overlayCanvas, currentUser, messStore) {
 		if (visualGraph.getFocusVertexId() in tVisualToStoreIds)
 			messStore.selectTag(tVisualToStoreIds[visualGraph.getFocusVertexId()]);
 		else
-			messStore.deselectTag(visualGraph.getFocusVertexId());
+			messStore.deselectTag(messStore.getTag(nVisualToStoreIds[visualGraph.getFocusVertexId()]).id);
 	}
 
 	this.editFocus = function() {
