@@ -18,7 +18,7 @@
 function TagSearchMenuItem(tagSearchMenu, currentUser, messStore, tag) {
 	var that = this;  
 	
-	this.MAX_NAME_LENGTH = 20;
+	this.MAX_NAME_LENGTH = 24;
 	
 	this.SELECT_STATE_SELECTED = 0;
 	this.SELECT_STATE_UNSELECTED = 1;
@@ -86,11 +86,7 @@ function TagSearchMenuItem(tagSearchMenu, currentUser, messStore, tag) {
 
 		selectInputElement.setAttribute('type', 'checkbox');
 		
-		if (tag.name.length <= that.MAX_NAME_LENGTH) {
-			textElement.innerHTML = tag.name;
-		} else {
-			textElement.innerHTML = tag.name.substring(0, that.MAX_NAME_LENGTH - 3) + "...";
-		}
+		textElement.innerHTML = getTagName();
 		
 		subtextElement.innerHTML = ' (' + tag.creatorUserId + ')';
 		deleteLinkElement.innerHTML = '[Delete]';
@@ -117,6 +113,14 @@ function TagSearchMenuItem(tagSearchMenu, currentUser, messStore, tag) {
 		selectInputElement.onclick = selectInputClickHandler;
 		
 		defaultColor = element.style.backgroundColor;
+	}
+	
+	function getTagName() {
+		if (tag.name.length <= that.MAX_NAME_LENGTH) {
+			return tag.name;
+		} else {
+			return tag.name.substring(0, that.MAX_NAME_LENGTH - 3) + "...";
+		}
 	}
 	
 	/* Interactivity handlers */
@@ -168,7 +172,7 @@ function TagSearchMenuItem(tagSearchMenu, currentUser, messStore, tag) {
 	}
 	
 	function deleteLinkClickHandler() {
-		textElement.innerHTML = 'Removing ' + tag.name + '...';
+		textElement.innerHTML = 'Removing ' + getTagName() + '...';
 		that.hideSubtext();
 		tagSearchMenu.setTagEditMenu();
 		
@@ -208,7 +212,7 @@ function TagSearchMenuItem(tagSearchMenu, currentUser, messStore, tag) {
 			
 		that.showSubtext();
 		that.setUnhighlighted();
-		textElement.innerHTML = tag.name;
+		textElement.innerHTML = getTagName();
 		
 		var tagColor = messStore.getTagColor(tag.id);
 		element.style.backgroundColor = tagColor;
@@ -225,7 +229,7 @@ function TagSearchMenuItem(tagSearchMenu, currentUser, messStore, tag) {
 	
 		that.setUnhighlighted();
 		that.setUnmainSelected();
-		textElement.innerHTML = tag.name;
+		textElement.innerHTML = getTagName();
 		element.style.backgroundColor = defaultColor;
 			
 		textElement.setAttribute('class', that.DOM_TEXT_CLASS);
@@ -235,7 +239,7 @@ function TagSearchMenuItem(tagSearchMenu, currentUser, messStore, tag) {
 	}
 	
 	this.setSelecting = function() {
-		textElement.innerHTML = 'Selecting ' + tag.name + '...';
+		textElement.innerHTML = 'Selecting ' + getTagName() + '...';
 		that.hideSubtext();
 		selected = that.SELECT_STATE_SELECTING;
 	}
