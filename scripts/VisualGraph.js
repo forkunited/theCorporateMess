@@ -744,7 +744,7 @@ function VisualGraph(canvas, overlayCanvas) {
 			retActiveVerts[activeVertsCache[i]] = 1;
 		}
 		
-		if (i == activeVertsCache.length - 1) {
+		if (i >= activeVertsCache.length - 1) {
 			activeVertsCache = [];
 			activeVertsCacheIterator = 0;
 		} else {
