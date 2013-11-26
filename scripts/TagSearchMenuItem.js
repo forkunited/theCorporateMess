@@ -92,7 +92,7 @@ function TagSearchMenuItem(tagSearchMenu, currentUser, messStore, tag) {
 			textElement.innerHTML = tag.name.substring(0, that.MAX_NAME_LENGTH - 3) + "...";
 		}
 		
-		subtextElement.innerHTML = ' (' + tag.creatorUserId ')';
+		subtextElement.innerHTML = ' (' + tag.creatorUserId + ')';
 		deleteLinkElement.innerHTML = '[Delete]';
 		optionsLinkElement.innerHTML = '[Edit]';
 		
