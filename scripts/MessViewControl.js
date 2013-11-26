@@ -524,7 +524,7 @@ function MessViewControl(canvas, overlayCanvas, currentUser, messStore) {
 				removeLocalVert(message.nodeIds[i]);
 			for (var relatedTagId in message.relatedUnselectedTagIds)
 				updateLocalTag(relatedTagId);
-			updateLocalTag(message.id, (messStore.getTag(message.id) ? messStore.getTag(message.id).name + " (Click to Expand)" : ""));
+			updateLocalTag(message.id, (messStore.getTag(message.id) ? messStore.getTag(message.id).name + " (Collapsed)" : ""));
 		} else if (message.messageType == LocalStorageMessage.SKIP_RETRIEVAL) {
 			updateStatusFn();
 		} else if (message.messageType == LocalStorageMessage.NO_START_RETRIEVAL) {
@@ -534,7 +534,7 @@ function MessViewControl(canvas, overlayCanvas, currentUser, messStore) {
 		} else if (message.messageType == LocalStorageMessage.FINISH_RETRIEVAL) {
 			updateStatusFn();
 		} else if (message.messageType == LocalStorageMessage.RETRIEVE_ADD_TAG) {
-			updateLocalTag(message.tag.id, messStore.getTag(message.tag.id).name + " (Click to Expand)");
+			updateLocalTag(message.tag.id, messStore.getTag(message.tag.id).name + " (Collapsed)");
 		} else if (message.messageType == LocalStorageMessage.RETRIEVE_ADD_NODE) {
 			if (!messStore.tagSelected(message.node.tagId))
 				return;
