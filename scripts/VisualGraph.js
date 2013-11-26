@@ -37,6 +37,8 @@ function VisualGraph(canvas, overlayCanvas) {
 	var SCROLL_UP = 8;	
 	var SCROLL_DELTA = 3;
 	
+	var ACTIVE_VERTS_CACHE_RETRIEVAL_SIZE = 50;
+	
 	var canvas = canvas;
 	
 	var highlightedPrefix = undefined;
@@ -55,7 +57,9 @@ function VisualGraph(canvas, overlayCanvas) {
 	var windowScrollFocusEdge = undefined;
 	
 	var selectedVertices = [];
-
+	var activeVertsCache = [];
+	var activeVertsCacheIterator = 0;
+	
 	/* Window and Grid stuff */
 	var windowTop = 0;
 	var windowLeft = 0;
@@ -725,6 +729,54 @@ function VisualGraph(canvas, overlayCanvas) {
 		return activeVerts;
 	}
 	
+	function getCachedActiveVerts() {
+		if (activeVertsCache.length == 0) {
+			var activeVerts = getActiveVerts();
+			var activeVertsList = [];
+			for (var id in activeVerts)
+				activeVertsList.push(id);
+			activeVertsCache = shuffle(activeVertsList);
+		}
+		
+		var retActiveVerts = [];
+		var i = 0;
+		for (i = activeVertsCacheIterator; i < Math.min(activeVertsCacheIterator + ACTIVE_VERTS_CACHE_RETRIEVAL_SIZE, activeVertsCache.length); i++) {
+			retActiveVerts.push(activeVertsCache[i]);
+		}
+		
+		if (i == activeVertsCache.length - 1) {
+			activeVertsCache = [];
+			activeVertsCacheIterator = 0;
+		} else {
+			activeVertsCacheIterator = i + 1;
+		}
+		
+		return retActiveVerts;
+	}
+	
+	/* From: http://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array */
+	function shuffle(array) {
+	  var currentIndex = array.length
+		, temporaryValue
+		, randomIndex
+		;
+
+	  // While there remain elements to shuffle...
+	  while (0 !== currentIndex) {
+
+		// Pick a remaining element...
+		randomIndex = Math.floor(Math.random() * currentIndex);
+		currentIndex -= 1;
+
+		// And swap it with the current element.
+		temporaryValue = array[currentIndex];
+		array[currentIndex] = array[randomIndex];
+		array[randomIndex] = temporaryValue;
+	  }
+
+	  return array;
+	}
+	
 	function updateGrid(v, oldX, oldY) {
 		oldKey = Math.floor(oldX/gridWidth) + ' ' + Math.floor(oldY/gridHeight);
 		if (oldKey in gridToVerts) {
@@ -944,7 +996,7 @@ function VisualGraph(canvas, overlayCanvas) {
 	
 		/*var centerX = windowLeft + fullVisibleWindow.left + fullVisibleWindow.width/2.0;
 		var centerY = windowTop + fullVisibleWindow.top + fullVisibleWindow.height/2.0;	*/	
-		var activeVerts = getActiveVerts();
+		var activeVerts = getCachedActiveVerts();
 		
 		if (animationClusterer)
 			animationClusterer.reset(activeVerts);
