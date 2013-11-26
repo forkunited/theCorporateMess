@@ -777,7 +777,7 @@ function UI(container, currentUser) {
 		'propagate': false,
 		'target':document
 	});
-	 
+	 */
 	shortcut.add(this.KEYBOARD_SCROLL_LEFT,
 	messControl.setMovementLeftOn,
 	{
@@ -849,7 +849,7 @@ function UI(container, currentUser) {
 		'propagate': false,
 		'target':document
 	});	
-	
+	/*
 	shortcut.add(this.KEYBOARD_UNDO,
 	messControl.undo,
 	{
