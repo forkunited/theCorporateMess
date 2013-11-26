@@ -95,11 +95,18 @@ function VisualAnimationSprings() {
 		var vertFY = 0;
 		var clusterFX = 0;
 		var clusterFY = 0;
-
-		var clusterId = animationClusterer.getClusterIdFromVertId(vert.getID());
-		var clusterSize = animationClusterer.getClusterFromVertId(vert.getID()).length;
-		var clusterEdgeCount = animationClusterer.getClusterEdgeCountFromVertId(vert.getID());
-		var clusterDensity = 2.0*clusterEdgeCount/(clusterSize*(clusterSize - 1.0));
+		
+		var clusterId = ""; 
+		var clusterSize = 0;
+		var clusterEdgeCount = 0;
+		var clusterDensity = 0;
+		
+		if (animationClusterer) {
+			clusterId = animationClusterer.getClusterIdFromVertId(vert.getID());
+			clusterSize = animationClusterer.getClusterFromVertId(vert.getID()).length;
+			clusterEdgeCount = animationClusterer.getClusterEdgeCountFromVertId(vert.getID());
+			clusterDensity = 2.0*clusterEdgeCount/(clusterSize*(clusterSize - 1.0));
+		}
 		
 		for (v2 in activeVerts) {
 			if (vert.getID() != v2) {
@@ -108,7 +115,7 @@ function VisualAnimationSprings() {
 				var dVY = vert.getY() - vert2.getY();
 					
 				if (dVX != 0 || dVY != 0) {
-					var clusterId2 = animationClusterer.getClusterIdFromVertId(vert2.getID());
+					var clusterId2 = (animationClusterer) ? animationClusterer.getClusterIdFromVertId(vert2.getID()) : "";
 					var clusterReduction = 1.0;
 					
 					var dVNorm = Math.max(that.EPSILON, Math.sqrt(Math.pow(dVX,2)+Math.pow(dVY,2)));
