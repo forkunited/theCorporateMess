@@ -21,7 +21,7 @@ function VisualVertex(canvas, overlayCanvas, id, label, colors, fullVisibleWindo
 	var DEFAULT_COLOR = "#FFFFFF";
 	var SELECTED_COLOR = "#00FFFF";
 	var EMPHASIZED_RADIUS_MULTIPLIER = 1.5;
-	var LABEL_OPACITY_MINIMUM = .12;
+	var LABEL_OPACITY_MINIMUM = 0;
 	var LABEL_OPACITY_NOT_EMPHASIZED = .2;
 	var LABEL_OPACITY_EMPHASIZED_DELTA = .05;
 	var LABEL_OPACITY_NOT_EMPHASIZED_DELTA = .0001;
@@ -195,7 +195,7 @@ function VisualVertex(canvas, overlayCanvas, id, label, colors, fullVisibleWindo
 		}
 		
 		if (this.inFullVisibleWindow(fullVisibleWindow, windowLeft, windowTop)) {
-			if (labelVisible && currentLabelOpacity > EPSILON) {
+			if (labelVisible && currentLabelOpacity > LABEL_OPACITY_MINIMUM + EPSILON) {
 				overlayContext.beginPath();
 				overlayContext.font = FONT;
 				overlayContext.strokeStyle = "#000000";
