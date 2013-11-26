@@ -101,6 +101,8 @@ function VisualAnimationSprings() {
 		var clusterEdgeCount = 0;
 		var clusterDensity = 0;
 		
+		var attractorCount = 0;
+		
 		if (animationClusterer) {
 			clusterId = animationClusterer.getClusterIdFromVertId(vert.getID());
 			clusterSize = animationClusterer.getClusterFromVertId(vert.getID()).length;
@@ -108,13 +110,14 @@ function VisualAnimationSprings() {
 			clusterDensity = 2.0*clusterEdgeCount/(clusterSize*(clusterSize - 1.0));
 		}
 		
-		var shuffledVerts = [];
+		/*var shuffledVerts = [];
 		for (var vId in activeVerts)
 			shuffledVerts.push(vId);
-		shuffledVerts = shuffle(shuffledVerts);
+		shuffledVerts = shuffle(shuffledVerts);*/
 		
-		for (var i = 0; i < Math.min(20, shuffledVerts.length); i++) {
-			var v2 = shuffledVerts[i];
+		//for (var i = 0; i < Math.min(20, shuffledVerts.length); i++) {
+		for (var v2 in activeVerts) {
+			//var v2 = shuffledVerts[i];
 			if (vert.getID() != v2) {
 				var vert2 = idsToVerts[v2];
 				var dVX = vert.getX() - vert2.getX();
@@ -150,6 +153,8 @@ function VisualAnimationSprings() {
 					
 					/* If edge then do stuff */ 
 					if ((vert.getID() in idsToEdges && v2 in idsToEdges[vert.getID()]) || (v2 in idsToEdges && vert.getID() in idsToEdges[v2])) {
+						attractorCount++;
+					
 						var baseAttractiveFX = -that.VERTEX_ATTRACTIVE_FORCE_MULTIPLIER*dVX;
 						var baseAttractiveFY = -that.VERTEX_ATTRACTIVE_FORCE_MULTIPLIER*dVY;
 
@@ -187,7 +192,7 @@ function VisualAnimationSprings() {
 		
 		if (animateVertices) {
 			var vertFMag = Math.sqrt(Math.pow(vertFX, 2.0)+Math.pow(vertFY, 2.0));
-			if (vertFMag > 10.0) {
+			if (vertFMag > 25.0/(attractorCount+1.0)) {
 				vertFX = 5.0*vertFX/vertFMag;
 				vertFY = 5.0*vertFY/vertFMag;
 			}
