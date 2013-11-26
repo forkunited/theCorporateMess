@@ -18,7 +18,6 @@
  * under the License.
  */
 
-require_once('auth.php');
 require_once('./classes/User.php');
 require_once('./classes/MessTag.php');
 require_once('./classes/MessNode.php');
@@ -28,12 +27,15 @@ require_once('./classes/MessGraph.php');
 require_once('./classes/MessTransaction.php');
 require_once('./classes/StorageMessage.php');
 
-exit(0); // Don't allow modifications for now
+//exit(0); // Don't allow modifications for now
 
 if (!isset($_POST["messages"]))
 	die("No message info.");
+	
+if (!isset($_POST["user"]))
+	die("No user");
 
-$u = new User($GLOBALS['User']);
+$u = new User($_POST['user']);
 	
 $requestMessages = json_decode($_POST["messages"]);
 
