@@ -1009,7 +1009,8 @@ function VisualGraph(canvas, overlayCanvas) {
 			animation.startNextFrame(activeVerts);
 		}
 		
-		for (aV1 in activeVerts) {
+		for (var i in activeVerts) {
+			var aV1 = activeVerts[i];
 			var v1 = idsToVerts[aV1];
 			
 			v1.animationNextFrame();
