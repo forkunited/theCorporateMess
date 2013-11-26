@@ -179,8 +179,14 @@ function VisualAnimationSprings() {
 			}
 		}
 		
-		if (animateVertices)
+		if (animateVertices) {
+			var vertFMag = Math.sqrt(Math.pow(vertFX, 2.0)+Math.pow(vertFY, 2.0));
+			if (vertFMag > 10.0) {
+				vertFX = 10.0*vertFX/vertFMag;
+				vertFY = 10.0*vertFY/vertFMag;
+			}
 			vertPosFn(vert, vert.getX()+vertFX, vert.getY()+vertFY);
+		}
 	
 		if (animateClusters) {
 			if (!(clusterId in clusterForces))
