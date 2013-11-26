@@ -996,7 +996,7 @@ function VisualGraph(canvas, overlayCanvas) {
 	
 		/*var centerX = windowLeft + fullVisibleWindow.left + fullVisibleWindow.width/2.0;
 		var centerY = windowTop + fullVisibleWindow.top + fullVisibleWindow.height/2.0;	*/	
-		var activeVerts = getCachedActiveVerts();
+		var activeVerts = getActiveVerts();//getCachedActiveVerts(); Doesn't help
 		
 		if (animationClusterer)
 			animationClusterer.reset(activeVerts);
