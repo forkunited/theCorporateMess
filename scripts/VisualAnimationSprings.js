@@ -193,8 +193,8 @@ function VisualAnimationSprings() {
 		if (animateVertices) {
 			var vertFMag = Math.sqrt(Math.pow(vertFX, 2.0)+Math.pow(vertFY, 2.0));
 			if (vertFMag > 25.0/(attractorCount+1.0)) {
-				vertFX = 5.0*vertFX/vertFMag;
-				vertFY = 5.0*vertFY/vertFMag;
+				vertFX = (5.0/(attractorCount/10.0+1.0))*vertFX/vertFMag;
+				vertFY = (5.0/(attractorCount/10.0+1.0))*vertFY/vertFMag;
 			}
 			vertPosFn(vert, vert.getX()+vertFX, vert.getY()+vertFY);
 		}
