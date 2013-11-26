@@ -18,6 +18,8 @@
 function TagSearchMenuItem(tagSearchMenu, currentUser, messStore, tag) {
 	var that = this;  
 	
+	this.MAX_NAME_LENGTH = 12;
+	
 	this.SELECT_STATE_SELECTED = 0;
 	this.SELECT_STATE_UNSELECTED = 1;
 	this.SELECT_STATE_SELECTING = 2;
@@ -84,11 +86,16 @@ function TagSearchMenuItem(tagSearchMenu, currentUser, messStore, tag) {
 
 		selectInputElement.setAttribute('type', 'checkbox');
 		
-		textElement.innerHTML = tag.name;
-		subtextElement.innerHTML = ' by ' + tag.creatorUserId;
+		if (tag.name.length <= that.MAX_NAME_LENGTH) {
+			textElement.innerHTML = tag.name;
+		} else {
+			textElement.innerHTML = tag.name.substring(0, that.MAX_NAME_LENGTH - 3) + "...";
+		}
+		
+		subtextElement.innerHTML = ' (' + tag.creatorUserId ')';
 		deleteLinkElement.innerHTML = '[Delete]';
 		optionsLinkElement.innerHTML = '[Edit]';
-	
+		
 		/* Set up hierarchy */
 		element.appendChild(leftElement);
 		element.appendChild(rightElement);
