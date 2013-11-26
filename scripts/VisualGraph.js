@@ -37,7 +37,7 @@ function VisualGraph(canvas, overlayCanvas) {
 	var SCROLL_UP = 8;	
 	var SCROLL_DELTA = 3;
 	
-	var ACTIVE_VERTS_CACHE_RETRIEVAL_SIZE = 100;
+	var ACTIVE_VERTS_CACHE_RETRIEVAL_SIZE = 3;
 	
 	var canvas = canvas;
 	
