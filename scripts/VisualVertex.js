@@ -21,7 +21,7 @@ function VisualVertex(canvas, overlayCanvas, id, label, colors, fullVisibleWindo
 	var DEFAULT_COLOR = "#FFFFFF";
 	var SELECTED_COLOR = "#00FFFF";
 	var EMPHASIZED_RADIUS_MULTIPLIER = 1.5;
-	var LABEL_OPACITY_MINIMUM = .2;
+	var LABEL_OPACITY_MINIMUM = .12;
 	var LABEL_OPACITY_NOT_EMPHASIZED = .2;
 	var LABEL_OPACITY_EMPHASIZED_DELTA = .05;
 	var LABEL_OPACITY_NOT_EMPHASIZED_DELTA = .0001;
@@ -41,7 +41,7 @@ function VisualVertex(canvas, overlayCanvas, id, label, colors, fullVisibleWindo
 	var label = (label) ? label : '';
 	var colors = colors;
 	var radius = radius;
-	var currentLabelOpacity = 0;//LABEL_OPACITY_NOT_EMPHASIZED;
+	var currentLabelOpacity = LABEL_OPACITY_MINIMUM;
 	
 	var x = x;
 	var y = y;
