@@ -24,7 +24,7 @@ require_once('./server/auth.php');
 <!DOCTYPE HTML>
 <html>
 	<head>
-		<title>The Mess</title>
+		<title>The Corporate Mess</title>
 		
 		<!-- Style -->
 		<link href="styles/main.css" rel="stylesheet" type="text/css"/>
