@@ -23,7 +23,7 @@ function MessViewControl(canvas, overlayCanvas, currentUser, messStore) {
 	var messStore = messStore;
 	
 	/* Number of different colors for edges and types of edges */
-	this.NUM_EDGE_GROUPS = 10;
+	this.NUM_EDGE_GROUPS = 200;
 	this.NUM_EDGE_TYPES = 3;
 
 	/* Different types of edges */

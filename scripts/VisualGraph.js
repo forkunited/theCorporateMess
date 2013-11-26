@@ -946,14 +946,13 @@ function VisualGraph(canvas, overlayCanvas) {
 		var centerY = windowTop + fullVisibleWindow.top + fullVisibleWindow.height/2.0;	*/	
 		var activeVerts = getActiveVerts();
 		
-		/* HACK: no animation clustering nfor now
 		if (animationClusterer)
-			animationClusterer.reset(activeVerts); */
+			animationClusterer.reset(activeVerts); 
 		
 		if (animation) {
 			animation.setGraphParts(idsToVerts, idsToEdges, idsToHyperEdges);
 			animation.setVertPosFn(that.setVertAbsolutePos);
-			// HACK animation.setAnimationClusterer(animationClusterer);
+			animation.setAnimationClusterer(animationClusterer);
 			
 			animation.startNextFrame(activeVerts);
 		}
