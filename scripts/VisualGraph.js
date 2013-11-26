@@ -738,10 +738,10 @@ function VisualGraph(canvas, overlayCanvas) {
 			activeVertsCache = shuffle(activeVertsList);
 		}
 		
-		var retActiveVerts = [];
+		var retActiveVerts = {};
 		var i = 0;
 		for (i = activeVertsCacheIterator; i < Math.min(activeVertsCacheIterator + ACTIVE_VERTS_CACHE_RETRIEVAL_SIZE, activeVertsCache.length); i++) {
-			retActiveVerts.push(activeVertsCache[i]);
+			retActiveVerts[activeVertsCache[i]] = 1;
 		}
 		
 		if (i == activeVertsCache.length - 1) {
@@ -1009,8 +1009,7 @@ function VisualGraph(canvas, overlayCanvas) {
 			animation.startNextFrame(activeVerts);
 		}
 		
-		for (var i in activeVerts) {
-			var aV1 = activeVerts[i];
+		for (var aV1 in activeVerts) {
 			var v1 = idsToVerts[aV1];
 			
 			v1.animationNextFrame();
