@@ -292,6 +292,8 @@ function UI(container, currentUser) {
 		keysElement.innerHTML = keys;
 		
 		footerElement.innerHTML = that.INSTRUCTIONS_FOOTER_TEXT;
+	
+		instructionsElement.style.display = 'none'; // HACK: No instructions now
 	}
 	
 	function constructTopLinks() {
