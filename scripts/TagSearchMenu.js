@@ -417,7 +417,7 @@ function TagSearchMenu(container, editContainer, currentUser, messStore) {
 				nextLink.setAttribute("href", "javascript:void(0)");
 				nextLink.innerHTML = 'Next >';
 				nextLink.onclick = nextLinkClickHandler;
-				footerLeftElement.appendChild(nextLink);
+				footerRightElement.appendChild(nextLink);
 			}
 		}
 	}
