@@ -109,8 +109,8 @@ function VisualAnimationSprings() {
 		}
 		
 		var shuffledVerts = [];
-		for (var i = 0; i < activeVerts.length; i++)
-			shuffledVerts.push(activeVerts[i]);
+		for (var vId in activeVerts)
+			shuffledVerts.push(vId);
 		shuffledVerts = shuffle(shuffledVerts);
 		
 		for (var i = 0; i < Math.min(20, shuffledVerts.length); i++) {
