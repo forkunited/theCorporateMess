@@ -18,7 +18,7 @@
 function TagSearchMenuItem(tagSearchMenu, currentUser, messStore, tag) {
 	var that = this;  
 	
-	this.MAX_NAME_LENGTH = 12;
+	this.MAX_NAME_LENGTH = 20;
 	
 	this.SELECT_STATE_SELECTED = 0;
 	this.SELECT_STATE_UNSELECTED = 1;
