@@ -110,6 +110,7 @@ function VisualAnimationSprings() {
 			clusterDensity = 2.0*clusterEdgeCount/(clusterSize*(clusterSize - 1.0));
 		}
 		
+		/* FIXME: Remove this later... random sampling causes more jitteriness */
 		/*var shuffledVerts = [];
 		for (var vId in activeVerts)
 			shuffledVerts.push(vId);
@@ -191,6 +192,7 @@ function VisualAnimationSprings() {
 		}
 		
 		if (animateVertices) {
+			// HACK: Magic constants (good chance of changing this later)
 			var vertFMag = Math.sqrt(Math.pow(vertFX, 2.0)+Math.pow(vertFY, 2.0));
 			if (vertFMag > 25.0/(attractorCount+1.0)) {
 				vertFX = (5.0/(attractorCount/10.0+1.0))*vertFX/vertFMag;

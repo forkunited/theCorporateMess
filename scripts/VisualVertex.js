@@ -21,6 +21,7 @@ function VisualVertex(canvas, overlayCanvas, id, label, colors, fullVisibleWindo
 	var DEFAULT_COLOR = "#FFFFFF";
 	var SELECTED_COLOR = "#00FFFF";
 	var EMPHASIZED_RADIUS_MULTIPLIER = 1.5;
+	var LABEL_OPACITY_MINIMUM = .2;
 	var LABEL_OPACITY_NOT_EMPHASIZED = .2;
 	var LABEL_OPACITY_EMPHASIZED_DELTA = .05;
 	var LABEL_OPACITY_NOT_EMPHASIZED_DELTA = .0001;
@@ -167,7 +168,7 @@ function VisualVertex(canvas, overlayCanvas, id, label, colors, fullVisibleWindo
 		if (!emphasized) {
 			if (currentLabelOpacity > LABEL_OPACITY_NOT_EMPHASIZED)
 				currentLabelOpacity -= LABEL_OPACITY_EMPHASIZED_DELTA;
-			else if (currentLabelOpacity > 0)
+			else if (currentLabelOpacity > LABEL_OPACITY_MINIMUM)
 				currentLabelOpacity -= LABEL_OPACITY_NOT_EMPHASIZED_DELTA;
 		} else if (emphasized && currentLabelOpacity < 1) {
 			currentLabelOpacity += LABEL_OPACITY_EMPHASIZED_DELTA;
@@ -210,7 +211,7 @@ function VisualVertex(canvas, overlayCanvas, id, label, colors, fullVisibleWindo
 			context.beginPath();
 			context.font = FONT;
 			context.fillStyle = DEFAULT_COLOR;
-			
+			/* HACK: Don't show vertex id for now
 			if (idHighlightIndex >= 0 && !selected) {
 				context.fillStyle = ID_HIGHLIGHT_COLOR;
 				context.fillText(id.substring(0,idHighlightIndex+1), drawX-CHAR_WIDTH*id.length/2.0+ID_X_OFFSET, drawY-radius+ID_Y_OFFSET);
@@ -222,6 +223,7 @@ function VisualVertex(canvas, overlayCanvas, id, label, colors, fullVisibleWindo
 				context.fillStyle = (selected) ? SELECTED_COLOR : DEFAULT_COLOR;
 				context.fillText(id, drawX-CHAR_WIDTH*id.length/2.0+ID_X_OFFSET, drawY-radius+ID_Y_OFFSET);
 			}
+			*/
 
 			context.closePath();
 		}
