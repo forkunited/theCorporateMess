@@ -37,7 +37,7 @@ function VisualGraph(canvas, overlayCanvas) {
 	var SCROLL_UP = 8;	
 	var SCROLL_DELTA = 3;
 	
-	var ACTIVE_VERTS_CACHE_RETRIEVAL_SIZE = 3;
+	var ACTIVE_VERTS_CACHE_RETRIEVAL_SIZE = 20;
 	
 	var canvas = canvas;
 	
@@ -985,7 +985,7 @@ function VisualGraph(canvas, overlayCanvas) {
 		context.restore();
 		overlayContext.restore();
 		
-		that.draw(context, overlayContext, activeVerts);
+		that.draw(context, overlayContext);
 
 		requestAnimFrame(function() {
 			that.animate();
