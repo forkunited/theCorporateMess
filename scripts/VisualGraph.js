@@ -364,13 +364,14 @@ function VisualGraph(canvas, overlayCanvas) {
 		}
 	}
 	
-	this.draw = function(context, overlayContext) {
+	this.draw = function(context, overlayContext, activeVerts) {
 		windowBuffer = canvas.height*this.WINDOW_BUFFER_MULTIPLIER;
 		gridWidth = canvas.width*this.GRID_WIDTH_MULTIPLIER;
 		gridHeight = canvas.height*this.GRID_HEIGHT_MULTIPLIER;	
 	
 		var drawn = {}
-		activeVerts = getActiveVerts();
+		if (!activeVerts)
+			activeVerts = getActiveVerts();
 		for (v1 in activeVerts) {
 			if (edgeDisplayMode == that.EDGE_DISPLAY_NORMAL) {
 				drawn[v1] = 1;
@@ -970,7 +971,7 @@ function VisualGraph(canvas, overlayCanvas) {
 	this.animate = function() {
 		var context = canvas.getContext("2d");
 		var overlayContext = overlayCanvas.getContext("2d");
-		animationNextFrame();
+		activeVerts = animationNextFrame();
 		
 		context.save();
 		overlayContext.save();
@@ -984,7 +985,7 @@ function VisualGraph(canvas, overlayCanvas) {
 		context.restore();
 		overlayContext.restore();
 		
-		that.draw(context, overlayContext);
+		that.draw(context, overlayContext, activeVerts);
 
 		requestAnimFrame(function() {
 			that.animate();
@@ -1037,6 +1038,8 @@ function VisualGraph(canvas, overlayCanvas) {
 		
 		if (animation)
 			animation.finishNextFrame(activeVerts);
+			
+		return activeVerts;
 	}
 	
 	function scroll() {
