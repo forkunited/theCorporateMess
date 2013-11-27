@@ -191,6 +191,7 @@ class MessRelationship extends MessObject
 		}
 		catch (Exception $e)
 		{
+			echo $e->getMessage() . "\n" . var_dump($e->getTrace()) . "\n";
 			return false;
 		}
 		
