@@ -736,7 +736,7 @@ function VisualGraph(canvas, overlayCanvas) {
 			var activeVertsList = [];
 			for (var id in activeVerts)
 				activeVertsList.push(id);
-			activeVertsCache = activeVertsList;//shuffle(activeVertsList);
+			activeVertsCache = shuffle(activeVertsList);
 		}
 		
 		var retActiveVerts = {};
