@@ -735,7 +735,7 @@ function VisualGraph(canvas, overlayCanvas) {
 			var activeVertsList = [];
 			for (var id in activeVerts)
 				activeVertsList.push(id);
-			activeVertsCache = shuffle(activeVertsList);
+			activeVertsCache = activeVertsList;//shuffle(activeVertsList);
 		}
 		
 		var retActiveVerts = {};
@@ -996,7 +996,7 @@ function VisualGraph(canvas, overlayCanvas) {
 	
 		/*var centerX = windowLeft + fullVisibleWindow.left + fullVisibleWindow.width/2.0;
 		var centerY = windowTop + fullVisibleWindow.top + fullVisibleWindow.height/2.0;	*/	
-		var activeVerts = getActiveVerts();//getCachedActiveVerts(); Doesn't help
+		var activeVerts = getCachedActiveVerts(); //Doesn't help
 		
 		if (animationClusterer)
 			animationClusterer.reset(activeVerts);
