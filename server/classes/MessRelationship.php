@@ -109,7 +109,7 @@ class MessRelationship extends MessObject
 			
 			// Check if it already exists
 			if ($relationshipIndex->findOne('id', $id) != null || ($transaction != null && $transaction->hasObject($id))) {
-				echo 'Already exists...';
+				echo 'Already exists...'; // FIXME: Remove after debug
 				return null;
 			}
 			
@@ -139,13 +139,13 @@ class MessRelationship extends MessObject
 			$retRel = new MessRelationship($user, $id, $from, $to, $type, $group, $direction, $thorough, true, true);
 			$retRel->setTransaction($transaction);
 			if (!$retRel->saveTags($client, $messRelationship, false)) {
-				echo 'Save tags failed';
+				echo 'Save tags failed'; // FIXME: Remove after debug
 				return null;
 			}
 		
 			if (!$clientProvided)
 				if (!$client->commitBatch()) {
-					echo 'Failed to commit';
+					echo 'Failed to commit'; // FIXME: Remove after debug
 					return null;
 				}
 		}
