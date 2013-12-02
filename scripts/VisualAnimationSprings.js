@@ -150,37 +150,43 @@ function VisualAnimationSprings() {
 		var id = vert.getID();
 		if (id in idsToEdges) {
 			for (var id2 in idsToEdges[id]) {
-				attractorCount++;
-			
-				var baseAttractiveFX = -that.VERTEX_ATTRACTIVE_FORCE_MULTIPLIER*dVX;
-				var baseAttractiveFY = -that.VERTEX_ATTRACTIVE_FORCE_MULTIPLIER*dVY;
+				var vert2 = idsToVerts[id2];
+				var dVX = vert.getX() - vert2.getX();
+				var dVY = vert.getY() - vert2.getY();
+					
+				if (dVX != 0 || dVY != 0) {
+					attractorCount++;
+				
+					var baseAttractiveFX = -that.VERTEX_ATTRACTIVE_FORCE_MULTIPLIER*dVX;
+					var baseAttractiveFY = -that.VERTEX_ATTRACTIVE_FORCE_MULTIPLIER*dVY;
 
-				vertFX += clusterReduction*baseAttractiveFX;
-				vertFY += clusterReduction*baseAttractiveFY;
-				
-				if (clusterId != clusterId2) {
-					clusterFX += baseAttractiveFX;
-					clusterFY += baseAttractiveFY;
-				}
-				
-				if (animateHyperEdges) {
-					var colorGroup = idsToEdges[id2][vert.getID()].getColor();
-					if (
-							id2 in idsToHyperEdges 
-						&& colorGroup in idsToHyperEdges[id2]
-						&& vert.getID() in idsToHyperEdges[id2][colorGroup].getSourcesToEdges()
-						) {
-							var hyperSources = idsToHyperEdges[id2][colorGroup].getSourcesToEdges();
-							for (var s in hyperSources) {
-								if (s != vert.getID() && s in activeVerts && !(s in idsToEdges[vert.getID()])) {
-									var sVert = idsToVerts[s];
-									var dSX = vert.getX() - sVert.getX();
-									var dSY = vert.getY() - sVert.getY();
-									vertFX += -that.VERTEX_HYPER_EDGE_ATTRACTIVE_FORCE_MULTIPLIER*dSX*clusterReduction;
-									vertFY += -that.VERTEX_HYPER_EDGE_ATTRACTIVE_FORCE_MULTIPLIER*dSY*clusterReduction;
+					vertFX += clusterReduction*baseAttractiveFX;
+					vertFY += clusterReduction*baseAttractiveFY;
+					
+					if (clusterId != clusterId2) {
+						clusterFX += baseAttractiveFX;
+						clusterFY += baseAttractiveFY;
+					}
+					
+					if (animateHyperEdges) {
+						var colorGroup = idsToEdges[id2][vert.getID()].getColor();
+						if (
+								id2 in idsToHyperEdges 
+							&& colorGroup in idsToHyperEdges[id2]
+							&& vert.getID() in idsToHyperEdges[id2][colorGroup].getSourcesToEdges()
+							) {
+								var hyperSources = idsToHyperEdges[id2][colorGroup].getSourcesToEdges();
+								for (var s in hyperSources) {
+									if (s != vert.getID() && s in activeVerts && !(s in idsToEdges[vert.getID()])) {
+										var sVert = idsToVerts[s];
+										var dSX = vert.getX() - sVert.getX();
+										var dSY = vert.getY() - sVert.getY();
+										vertFX += -that.VERTEX_HYPER_EDGE_ATTRACTIVE_FORCE_MULTIPLIER*dSX*clusterReduction;
+										vertFY += -that.VERTEX_HYPER_EDGE_ATTRACTIVE_FORCE_MULTIPLIER*dSY*clusterReduction;
+									}
 								}
 							}
-						}
+					}
 				}
 			}
 		}
