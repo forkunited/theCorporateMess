@@ -739,7 +739,7 @@ function VisualGraph(canvas, overlayCanvas) {
 		var gridY = getGridYPos(y, height);
 		var closeVerts = {};
 		for (var closeX = gridX - numClose; closeX < gridX + numClose; closeX++) {
-			for (var closeY = gridY - numClose; closeY < gridY + numClose; closeY++ {
+			for (var closeY = gridY - numClose; closeY < gridY + numClose; closeY++) {
 				var key = getGridXPos(closeX, width) + ' ' + getGridYPos(closeY, height);
 				for (var id in grid[key])
 					closeVerts[id] = 1;
