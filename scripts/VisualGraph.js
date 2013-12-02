@@ -39,9 +39,9 @@ function VisualGraph(canvas, overlayCanvas) {
 	
 	var ACTIVE_VERTS_CACHE_RETRIEVAL_SIZE = 20;
 	
-	var SMALL_GRID_WIDTH = 50;
-	var SMALL_GRID_HEIGHT = 50;
-	var CLOSE_GRID_SPACES = 2;
+	var SMALL_GRID_WIDTH = 40;
+	var SMALL_GRID_HEIGHT = 40;
+	var CLOSE_GRID_SPACES = 10;
 	
 	var canvas = canvas;
 	
