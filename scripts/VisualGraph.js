@@ -740,7 +740,7 @@ function VisualGraph(canvas, overlayCanvas) {
 		var closeVerts = {};
 		for (var closeX = gridX - numClose; closeX < gridX + numClose; closeX++) {
 			for (var closeY = gridY - numClose; closeY < gridY + numClose; closeY++) {
-				var key = getGridXPos(closeX, width) + ' ' + getGridYPos(closeY, height);
+				var key = closeX + ' ' + closeY;
 				for (var id in grid[key])
 					closeVerts[id] = 1;
 			}
