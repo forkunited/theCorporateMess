@@ -1038,7 +1038,7 @@ function VisualGraph(canvas, overlayCanvas) {
 		
 		var smallGrid = {};
 		for (var id in activeVerts) {
-			updateGrid(id, smallGrid, SMALL_GRID_WIDTH, SMALL_GRID_HEIGHT, 0, 0);
+			updateGrid(idsToVerts[id], smallGrid, SMALL_GRID_WIDTH, SMALL_GRID_HEIGHT, 0, 0);
 		}
 		
 		for (var id1 in activeVerts) {
