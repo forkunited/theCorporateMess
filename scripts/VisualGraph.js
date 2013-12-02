@@ -1043,7 +1043,7 @@ function VisualGraph(canvas, overlayCanvas) {
 		
 		for (var id1 in activeVerts) {
 			var v1 = idsToVerts[id1];
-			var closeVerts = getCloseVerts(v1.getX(), v1.getY(), smallGrid, SMALL_GRID_WIDTH, SMALL_GRID_HEIGHT, CLOSE_GRID_SPACES);
+			var closeVerts = activeVerts;//getCloseVerts(v1.getX(), v1.getY(), smallGrid, SMALL_GRID_WIDTH, SMALL_GRID_HEIGHT, CLOSE_GRID_SPACES);
 			
 			v1.animationNextFrame();
 			
