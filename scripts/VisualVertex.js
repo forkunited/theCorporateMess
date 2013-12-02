@@ -208,10 +208,10 @@ function VisualVertex(canvas, overlayCanvas, id, label, colors, fullVisibleWindo
 				overlayContext.closePath();
 			}
 
+			/* HACK: Don't show vertex id for now
 			context.beginPath();
 			context.font = FONT;
 			context.fillStyle = DEFAULT_COLOR;
-			/* HACK: Don't show vertex id for now
 			if (idHighlightIndex >= 0 && !selected) {
 				context.fillStyle = ID_HIGHLIGHT_COLOR;
 				context.fillText(id.substring(0,idHighlightIndex+1), drawX-CHAR_WIDTH*id.length/2.0+ID_X_OFFSET, drawY-radius+ID_Y_OFFSET);
@@ -223,9 +223,8 @@ function VisualVertex(canvas, overlayCanvas, id, label, colors, fullVisibleWindo
 				context.fillStyle = (selected) ? SELECTED_COLOR : DEFAULT_COLOR;
 				context.fillText(id, drawX-CHAR_WIDTH*id.length/2.0+ID_X_OFFSET, drawY-radius+ID_Y_OFFSET);
 			}
-			*/
-
 			context.closePath();
+			*/
 		}
 	} 
 }

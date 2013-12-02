@@ -90,7 +90,7 @@ function VisualAnimationSprings() {
 		clusterForces = undefined;
 	}
 	
-	this.vertNextFrame = function(vert, activeVerts) {
+	this.vertNextFrame = function(vert, activeVerts, closeVerts) {
 		var vertFX = 0;
 		var vertFY = 0;
 		var clusterFX = 0;
@@ -110,15 +110,7 @@ function VisualAnimationSprings() {
 			clusterDensity = 2.0*clusterEdgeCount/(clusterSize*(clusterSize - 1.0));
 		}
 		
-		/* FIXME: Remove this later... random sampling causes more jitteriness */
-		/*var shuffledVerts = [];
-		for (var vId in activeVerts)
-			shuffledVerts.push(vId);
-		shuffledVerts = shuffle(shuffledVerts);*/
-		
-		//for (var i = 0; i < Math.min(20, shuffledVerts.length); i++) {
-		for (var v2 in activeVerts) {
-			//var v2 = shuffledVerts[i];
+		for (var v2 in closeVerts) {
 			if (vert.getID() != v2) {
 				var vert2 = idsToVerts[v2];
 				var dVX = vert.getX() - vert2.getX();
@@ -151,42 +143,44 @@ function VisualAnimationSprings() {
 						clusterDensity > that.SAME_CLUSTER_DENSITY_REDUCTION_THRESHOLD) {
 						clusterReduction = 1.0/(that.SAME_CLUSTER_FORCE_DIVISOR*clusterSize);
 					}
-					
-					/* If edge then do stuff */ 
-					if ((vert.getID() in idsToEdges && v2 in idsToEdges[vert.getID()]) || (v2 in idsToEdges && vert.getID() in idsToEdges[v2])) {
-						attractorCount++;
-					
-						var baseAttractiveFX = -that.VERTEX_ATTRACTIVE_FORCE_MULTIPLIER*dVX;
-						var baseAttractiveFY = -that.VERTEX_ATTRACTIVE_FORCE_MULTIPLIER*dVY;
+				}
+			}
+		}
+		
+		var id = vert.getID();
+		if (id in idsToEdges) {
+			for (var id2 in idsToEdges[id]) {
+				attractorCount++;
+			
+				var baseAttractiveFX = -that.VERTEX_ATTRACTIVE_FORCE_MULTIPLIER*dVX;
+				var baseAttractiveFY = -that.VERTEX_ATTRACTIVE_FORCE_MULTIPLIER*dVY;
 
-						vertFX += clusterReduction*baseAttractiveFX;
-						vertFY += clusterReduction*baseAttractiveFY;
-						
-						if (clusterId != clusterId2) {
-							clusterFX += baseAttractiveFX;
-							clusterFY += baseAttractiveFY;
-						}
-						
-						if (animateHyperEdges) {
-							var colorGroup = idsToEdges[v2][vert.getID()].getColor();
-							if (
-									v2 in idsToHyperEdges 
-								&& colorGroup in idsToHyperEdges[v2]
-								&& vert.getID() in idsToHyperEdges[v2][colorGroup].getSourcesToEdges()
-								) {
-									var hyperSources = idsToHyperEdges[v2][colorGroup].getSourcesToEdges();
-									for (var s in hyperSources) {
-										if (s != vert.getID() && s in activeVerts && !(s in idsToEdges[vert.getID()])) {
-											var sVert = idsToVerts[s];
-											var dSX = vert.getX() - sVert.getX();
-											var dSY = vert.getY() - sVert.getY();
-											vertFX += -that.VERTEX_HYPER_EDGE_ATTRACTIVE_FORCE_MULTIPLIER*dSX*clusterReduction;
-											vertFY += -that.VERTEX_HYPER_EDGE_ATTRACTIVE_FORCE_MULTIPLIER*dSY*clusterReduction;
-										}
-									}
+				vertFX += clusterReduction*baseAttractiveFX;
+				vertFY += clusterReduction*baseAttractiveFY;
+				
+				if (clusterId != clusterId2) {
+					clusterFX += baseAttractiveFX;
+					clusterFY += baseAttractiveFY;
+				}
+				
+				if (animateHyperEdges) {
+					var colorGroup = idsToEdges[v2][vert.getID()].getColor();
+					if (
+							v2 in idsToHyperEdges 
+						&& colorGroup in idsToHyperEdges[v2]
+						&& vert.getID() in idsToHyperEdges[v2][colorGroup].getSourcesToEdges()
+						) {
+							var hyperSources = idsToHyperEdges[v2][colorGroup].getSourcesToEdges();
+							for (var s in hyperSources) {
+								if (s != vert.getID() && s in activeVerts && !(s in idsToEdges[vert.getID()])) {
+									var sVert = idsToVerts[s];
+									var dSX = vert.getX() - sVert.getX();
+									var dSY = vert.getY() - sVert.getY();
+									vertFX += -that.VERTEX_HYPER_EDGE_ATTRACTIVE_FORCE_MULTIPLIER*dSX*clusterReduction;
+									vertFY += -that.VERTEX_HYPER_EDGE_ATTRACTIVE_FORCE_MULTIPLIER*dSY*clusterReduction;
 								}
+							}
 						}
-					}
 				}
 			}
 		}
@@ -207,28 +201,5 @@ function VisualAnimationSprings() {
 			clusterForces[clusterId].x += clusterFX;
 			clusterForces[clusterId].y += clusterFY;
 		}
-	}
-	
-	/* From: http://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array */
-	function shuffle(array) {
-	  var currentIndex = array.length
-		, temporaryValue
-		, randomIndex
-		;
-
-	  // While there remain elements to shuffle...
-	  while (0 !== currentIndex) {
-
-		// Pick a remaining element...
-		randomIndex = Math.floor(Math.random() * currentIndex);
-		currentIndex -= 1;
-
-		// And swap it with the current element.
-		temporaryValue = array[currentIndex];
-		array[currentIndex] = array[randomIndex];
-		array[randomIndex] = temporaryValue;
-	  }
-
-	  return array;
 	}
 }

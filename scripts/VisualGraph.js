@@ -39,6 +39,10 @@ function VisualGraph(canvas, overlayCanvas) {
 	
 	var ACTIVE_VERTS_CACHE_RETRIEVAL_SIZE = 20;
 	
+	var SMALL_GRID_WIDTH = 50;
+	var SMALL_GRID_HEIGHT = 50;
+	var CLOSE_GRID_SPACES = 2;
+	
 	var canvas = canvas;
 	
 	var highlightedPrefix = undefined;
@@ -135,7 +139,7 @@ function VisualGraph(canvas, overlayCanvas) {
 			}
 		}
 
-		updateGrid(v, v.getX(), v.getY());
+		updateGrid(v, gridToVerts, gridWidth, gridHeight, v.getX(), v.getY());
 		
 		curVertId++;
 		
@@ -181,7 +185,7 @@ function VisualGraph(canvas, overlayCanvas) {
 		var oldX = v.getX();
 		var oldY = v.getY();
 		v.setPos(x, y);
-		updateGrid(v, oldX, oldY);
+		updateGrid(v, gridToVerts, gridWidth, gridHeight, oldX, oldY);
 	}
 	
 	this.getVertAbsolutePosX = function(v) {
@@ -711,10 +715,10 @@ function VisualGraph(canvas, overlayCanvas) {
 		t = windowTop - windowBuffer;
 		b = windowTop + canvas.height + windowBuffer;
 		
-		topLeftKey = Math.floor(l/gridWidth) + ' ' + Math.floor(t/gridHeight);
-		topRightKey = Math.floor(r/gridWidth) + ' ' + Math.floor(t/gridHeight);
-		bottomLeftKey = Math.floor(l/gridWidth) + ' ' + Math.floor(b/gridHeight);
-		bottomRightKey = Math.floor(r/gridWidth) + ' ' + Math.floor(b/gridHeight);
+		topLeftKey = getGridXPos(l,gridWidth) + ' ' + getGridYPos(t,gridHeight);
+		topRightKey = getGridXPos(r,gridWidth) + ' ' + getGridYPos(t,gridHeight);
+		bottomLeftKey = getGridXPos(l,gridWidth) + ' ' + getGridYPos(b,gridHeight);
+		bottomRightKey = getGridXPos(r,gridWidth) + ' ' + getGridYPos(b,gridHeight);
 		
 		/* FIXME */
 		keys = {};
@@ -728,6 +732,20 @@ function VisualGraph(canvas, overlayCanvas) {
 				activeVerts[id] = 1;
 		
 		return activeVerts;
+	}
+	
+	function getCloseVerts(x, y, grid, width, height, numClose) {
+		var gridX = getGridXPos(x, width);
+		var gridY = getGridYPos(y, height);
+		var closeVerts = {};
+		for (var closeX = gridX - numClose; closeX < gridX + numClose; closeX++) {
+			for (var closeY = gridY - numClose; closeY < gridY + numClose; closeY++ {
+				var key = getGridXPos(closeX, width) + ' ' + getGridYPos(closeY, height);
+				for (var id in grid[key])
+					closeVerts[id] = 1;
+			}
+		}
+		return closeVerts;
 	}
 	
 	function getCachedActiveVerts() {
@@ -778,28 +796,36 @@ function VisualGraph(canvas, overlayCanvas) {
 	  return array;
 	}
 	
-	function updateGrid(v, oldX, oldY) {
-		oldKey = Math.floor(oldX/gridWidth) + ' ' + Math.floor(oldY/gridHeight);
-		if (oldKey in gridToVerts) {
-			oldWindow = gridToVerts[oldKey];
+	function updateGrid(v, grid, width, height, oldX, oldY) {
+		var oldKey = getGridXPos(oldX, width) + ' ' + getGridYPos(oldY, height);
+		if (oldKey in grid) {
+			oldWindow = grid[oldKey];
 			if (v.getID() in oldWindow) {
 				delete oldWindow[v.getID()];
 			}
 			
 			if (oldWindow.length == 0) {
-				delete gridToVerts[oldKey];
+				delete grid[oldKey];
 			}
 		}
 
-		x = v.getX();
-		y = v.getY();
-		key = Math.floor(x/gridWidth) + ' ' + Math.floor(y/gridHeight);
+		var x = v.getX();
+		var y = v.getY();
+		var key = getGridXPos(x, width) + ' ' + getGridYPos(y, height);
 		
-		if (!(key in gridToVerts)) {
-			gridToVerts[key] = {};
+		if (!(key in grid)) {
+			grid[key] = {};
 		}
 		
-		gridToVerts[key][v.getID()] = 1;
+		grid[key][v.getID()] = 1;
+	}
+	
+	function getGridXPos(x, width) {
+		return Math.floor(x/width);
+	}
+	
+	function getGridYPos(y, height) {
+		return Math.floor(y/height);
 	}
 	
 	this.hasFocusObject = function() {
@@ -1010,8 +1036,14 @@ function VisualGraph(canvas, overlayCanvas) {
 			animation.startNextFrame(activeVerts);
 		}
 		
-		for (var aV1 in activeVerts) {
-			var v1 = idsToVerts[aV1];
+		var smallGrid = {};
+		for (var id in activeVerts) {
+			updateGrid(id, closeGrid, SMALL_GRID_WIDTH, SMALL_GRID_HEIGHT, 0, 0);
+		}
+		
+		for (var id1 in activeVerts) {
+			var v1 = idsToVerts[id1];
+			var closeVerts = getCloseVerts(v1.getX(), v1.getY(), grid, SMALL_GRID_WIDTH, SMALL_GRID_HEIGHT, CLOSE_GRID_SPACES);
 			
 			v1.animationNextFrame();
 			
@@ -1028,11 +1060,11 @@ function VisualGraph(canvas, overlayCanvas) {
 				continue;
 			}
 			
-			if (aV1 == focusVertexId || (focusEdge && (aV1 == focusEdge.getV1().getID() || aV1 == focusEdge.getV2().getID())))
+			if (id1 == focusVertexId || (focusEdge && (id1 == focusEdge.getV1().getID() || id1 == focusEdge.getV2().getID())))
 				continue;
 		  
 			if (animation) {
-				animation.vertNextFrame(v1, activeVerts);
+				animation.vertNextFrame(v1, activeVerts, closeVerts);
 			}
 		}
 		
