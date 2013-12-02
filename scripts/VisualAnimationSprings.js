@@ -164,13 +164,13 @@ function VisualAnimationSprings() {
 				}
 				
 				if (animateHyperEdges) {
-					var colorGroup = idsToEdges[v2][vert.getID()].getColor();
+					var colorGroup = idsToEdges[id2][vert.getID()].getColor();
 					if (
-							v2 in idsToHyperEdges 
-						&& colorGroup in idsToHyperEdges[v2]
-						&& vert.getID() in idsToHyperEdges[v2][colorGroup].getSourcesToEdges()
+							id2 in idsToHyperEdges 
+						&& colorGroup in idsToHyperEdges[id2]
+						&& vert.getID() in idsToHyperEdges[id2][colorGroup].getSourcesToEdges()
 						) {
-							var hyperSources = idsToHyperEdges[v2][colorGroup].getSourcesToEdges();
+							var hyperSources = idsToHyperEdges[id2][colorGroup].getSourcesToEdges();
 							for (var s in hyperSources) {
 								if (s != vert.getID() && s in activeVerts && !(s in idsToEdges[vert.getID()])) {
 									var sVert = idsToVerts[s];
