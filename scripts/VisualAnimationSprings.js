@@ -137,14 +137,15 @@ function VisualAnimationSprings() {
 					vertFX += dVX*that.VERTEX_REPULSIVE_FORCE_MULTIPLIER/(1.0+Math.pow(Math.E, (dVNorm-50.0)/1000.0));
 					vertFY += dVY*that.VERTEX_REPULSIVE_FORCE_MULTIPLIER/(1.0+Math.pow(Math.E, (dVNorm-50.0)/1000.0));
 					*/
-					
-					// Cluster force reduction for connected verts
-					if (clusterSize > that.SAME_CLUSTER_SIZE_REDUCTION_THRESHOLD &&
-						clusterDensity > that.SAME_CLUSTER_DENSITY_REDUCTION_THRESHOLD) {
-						clusterReduction = 1.0/(that.SAME_CLUSTER_FORCE_DIVISOR*clusterSize);
-					}
 				}
 			}
+		}
+		
+		var clusterReduction = 1.0;
+		// Cluster force reduction for connected verts
+		if (clusterSize > that.SAME_CLUSTER_SIZE_REDUCTION_THRESHOLD &&
+			clusterDensity > that.SAME_CLUSTER_DENSITY_REDUCTION_THRESHOLD) {
+			clusterReduction = 1.0/(that.SAME_CLUSTER_FORCE_DIVISOR*clusterSize);
 		}
 		
 		var id = vert.getID();
