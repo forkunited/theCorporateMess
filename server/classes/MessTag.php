@@ -388,6 +388,7 @@ class MessTag extends MessObject
 			}
 
 			$result = $query->getResultSet();
+			
 			foreach ($result as $row)
 			{
 				$n = new MessNode($this->__user, 
@@ -404,7 +405,12 @@ class MessTag extends MessObject
 				$n->_deleted = $row["n"]->getProperty("_deleted");
 				$graph->addNode($n); 
 
-				if (!is_null($row['r']))
+				if ($result->count() > 100) // HACK: Assumes one node per tag
+				{
+					$n->brief = $n->brief . ' [' . $result->count() . ' neighbors] ';
+					break;
+				}
+				else if (!is_null($row['r']))
 				{	
 					if ($this->id == $row["tr.id"]) 
 					{
