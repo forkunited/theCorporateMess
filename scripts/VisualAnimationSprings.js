@@ -27,7 +27,7 @@ function VisualAnimationSprings() {
 	this.SAME_CLUSTER_SIZE_REDUCTION_THRESHOLD = 5.0;
 	this.SAME_CLUSTER_DENSITY_REDUCTION_THRESHOLD = .9;
 	
-	var animateHyperEdges = true;
+	var animateHyperEdges = false;
 	var animateClusters = false;
 	var animateVertices = true;
 	var idsToVerts = undefined;
