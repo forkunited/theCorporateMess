@@ -373,7 +373,7 @@ function MessStore(currentUser) {
 			} else if (graphObj.objType == selectedGraph.OBJ_TYPE_NODE) {
 				if (selectedGraph.addNode(graphObj.node)) {
 					runLocalMessageHandlers(LocalStorageMessage.makeRetrieveAddNode(graphObj.node));
-					if (graphObj.node.brief.contains("[") && graphObj.node.brief.contains("]")) { 
+					if (graphObj.node.brief.indexOf("[") >= 0 && graphObj.node.brief.indexOf("]") >= 0) { 
 						// HACK: Check if node relationships were not included from server.  If they aren't,
 						// then 'brief' will contain a string of the form '[X neightbors]'
 						var relationships = selectedGraph.getNodeRelationships(graphObj.node.id);
