@@ -228,7 +228,7 @@ class RetrieveMessGraph
 			
 			$metaData = array(
 				"remainder" => true,
-				"nextSkips" => array_fill(0, $numQueries, 0)
+				"nextSkips" => $skips//array_fill(0, $numQueries, 0)
 			);
 			
 			if ($limit == 0)
