@@ -153,8 +153,8 @@ function VisualAnimationSprings() {
 				if (dVX != 0 || dVY != 0) {
 					if (!(id2 in closeVerts)) {
 						var dVNorm = Math.max(that.EPSILON, Math.sqrt(Math.pow(dVX,2)+Math.pow(dVY,2)));
-						var baseRepulsiveFX = 2.0*dVX*that.VERTEX_REPULSIVE_FORCE_MULTIPLIER/Math.pow(dVNorm, 3.1);//3.4);
-						var baseRepulsiveFY = 2.0*dVY*that.VERTEX_REPULSIVE_FORCE_MULTIPLIER/Math.pow(dVNorm, 3.1);//3.4);
+						var baseRepulsiveFX = 10.0*dVX*that.VERTEX_REPULSIVE_FORCE_MULTIPLIER/Math.pow(dVNorm, 3.1);//3.4);
+						var baseRepulsiveFY = 10.0*dVY*that.VERTEX_REPULSIVE_FORCE_MULTIPLIER/Math.pow(dVNorm, 3.1);//3.4);
 						
 						vertFX += baseRepulsiveFX;
 						vertFY += baseRepulsiveFY;
