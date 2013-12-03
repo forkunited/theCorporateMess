@@ -371,7 +371,8 @@ function MessStore(currentUser) {
 				if (addedTag)
 					runLocalMessageHandlers(LocalStorageMessage.makeRetrieveAddTag(graphObj.tag));
 			} else if (graphObj.objType == selectedGraph.OBJ_TYPE_NODE) {
-				if (selectedGraph.addNode(graphObj.node)) {
+				if (selectedGraph.hasNode(graphObj.node.id) || selectedGraph.addNode(graphObj.node)) {
+					graphObj.node = node = selectedGraph.getNode(graphObj.node.id);
 					runLocalMessageHandlers(LocalStorageMessage.makeRetrieveAddNode(graphObj.node));
 					if (graphObj.node.brief.indexOf("[") >= 0 && graphObj.node.brief.indexOf("]") >= 0) { 
 						// HACK: Check if node relationships were not included from server.  If they aren't,
