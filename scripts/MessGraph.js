@@ -176,7 +176,8 @@ function MessGraph() {
 			relationships[node.id] = {}		
 		}
 		
-		nodes[node.id] = node;
+		if (!(node.id in nodes) || node.brief.indexOf("[") >= 0) // HACK for nodes with too many neighbors
+			nodes[node.id] = node;
 			
 		return true;
 	}
