@@ -228,7 +228,7 @@ class RetrieveMessGraph
 			
 			$metaData = array(
 				"remainder" => true,
-				"nextSkips" => $skips//array_fill(0, $numQueries, 0)
+				"nextSkips" => array_fill(0, $numQueries, 0)
 			);
 			
 			if ($limit == 0)
@@ -270,6 +270,10 @@ class RetrieveMessGraph
 				
 				$graph->addTag($tag);	
 				$metaData["nextSkips"][$maxUpdatedDateQuery]++;
+			}
+			
+			for ($i = 0; $i < $numQueries; $i++) {
+				$metaData["nextSkips"][$i] += $skips[$i];
 			}
 			
 			$graph->setMetaData($metaData);
