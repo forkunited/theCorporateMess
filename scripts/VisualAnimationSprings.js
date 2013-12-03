@@ -132,20 +132,15 @@ function VisualAnimationSprings() {
 					
 					vertFX += clusterReduction*baseRepulsiveFX;
 					vertFY += clusterReduction*baseRepulsiveFY;
-					
-					/* Alternative idea for repulsive force...
-					vertFX += dVX*that.VERTEX_REPULSIVE_FORCE_MULTIPLIER/(1.0+Math.pow(Math.E, (dVNorm-50.0)/1000.0));
-					vertFY += dVY*that.VERTEX_REPULSIVE_FORCE_MULTIPLIER/(1.0+Math.pow(Math.E, (dVNorm-50.0)/1000.0));
-					*/
 				}
 			}
 		}
 		
-		var clusterReduction = 1.0;
+		var attractiveClusterReduction = 1.0;
 		// Cluster force reduction for connected verts
 		if (clusterSize > that.SAME_CLUSTER_SIZE_REDUCTION_THRESHOLD &&
 			clusterDensity > that.SAME_CLUSTER_DENSITY_REDUCTION_THRESHOLD) {
-			clusterReduction = 1.0/(that.SAME_CLUSTER_FORCE_DIVISOR*clusterSize);
+			attractiveClusterReduction = 1.0/(that.SAME_CLUSTER_FORCE_DIVISOR*clusterSize);
 		}
 		
 		var id = vert.getID();
@@ -156,13 +151,32 @@ function VisualAnimationSprings() {
 				var dVY = vert.getY() - vert2.getY();
 					
 				if (dVX != 0 || dVY != 0) {
+					if (!(id2 in closeVerts)) { // FIXME: Messy repulsive force for edges
+						var clusterId2 = (animationClusterer) ? animationClusterer.getClusterIdFromVertId(vert2.getID()) : "";
+						var clusterReduction = 1.0;
+						
+						var dVNorm = Math.max(that.EPSILON, Math.sqrt(Math.pow(dVX,2)+Math.pow(dVY,2)));
+						var baseRepulsiveFX = dVX*that.VERTEX_REPULSIVE_FORCE_MULTIPLIER/Math.pow(dVNorm, 3.1);//3.4);
+						var baseRepulsiveFY = dVY*that.VERTEX_REPULSIVE_FORCE_MULTIPLIER/Math.pow(dVNorm, 3.1);//3.4);
+						
+						if (clusterId != clusterId2) {
+							clusterReduction = (clusterSize == 1) ? 0 : 1.0/(that.SEPARATE_CLUSTER_FORCE_DIVISOR*clusterSize*animationClusterer.getClusterFromVertId(vert2.getID()).length);
+							clusterFX += baseRepulsiveFX;
+							clusterFY += baseRepulsiveFY;
+						}
+						
+						vertFX += clusterReduction*baseRepulsiveFX;
+						vertFY += clusterReduction*baseRepulsiveFY;
+					}
+					
+					/* Attractive force */
 					attractorCount++;
 				
 					var baseAttractiveFX = -that.VERTEX_ATTRACTIVE_FORCE_MULTIPLIER*dVX;
 					var baseAttractiveFY = -that.VERTEX_ATTRACTIVE_FORCE_MULTIPLIER*dVY;
 
-					vertFX += clusterReduction*baseAttractiveFX;
-					vertFY += clusterReduction*baseAttractiveFY;
+					vertFX += attractiveClusterReduction*baseAttractiveFX;
+					vertFY += attractiveClusterReduction*baseAttractiveFY;
 					
 					if (clusterId != clusterId2) {
 						clusterFX += baseAttractiveFX;
@@ -182,8 +196,8 @@ function VisualAnimationSprings() {
 										var sVert = idsToVerts[s];
 										var dSX = vert.getX() - sVert.getX();
 										var dSY = vert.getY() - sVert.getY();
-										vertFX += -that.VERTEX_HYPER_EDGE_ATTRACTIVE_FORCE_MULTIPLIER*dSX*clusterReduction;
-										vertFY += -that.VERTEX_HYPER_EDGE_ATTRACTIVE_FORCE_MULTIPLIER*dSY*clusterReduction;
+										vertFX += -that.VERTEX_HYPER_EDGE_ATTRACTIVE_FORCE_MULTIPLIER*dSX*attractiveClusterReduction;
+										vertFY += -that.VERTEX_HYPER_EDGE_ATTRACTIVE_FORCE_MULTIPLIER*dSY*attractiveClusterReduction;
 									}
 								}
 							}
