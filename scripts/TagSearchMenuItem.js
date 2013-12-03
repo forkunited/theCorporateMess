@@ -115,11 +115,12 @@ function TagSearchMenuItem(tagSearchMenu, currentUser, messStore, tag) {
 		defaultColor = element.style.backgroundColor;
 	}
 	
-	function getTagName() {
-		if (tag.name.length <= that.MAX_NAME_LENGTH) {
-			return tag.name;
+	function getTagName(prefix) {
+		var tagName = (prefix) ? prefix + tag.name : tag.name;
+		if (tagName.length <= that.MAX_NAME_LENGTH) {
+			return tagName;
 		} else {
-			return tag.name.substring(0, that.MAX_NAME_LENGTH - 3) + "...";
+			return tagName.substring(0, that.MAX_NAME_LENGTH - 3) + "...";
 		}
 	}
 	
@@ -172,7 +173,7 @@ function TagSearchMenuItem(tagSearchMenu, currentUser, messStore, tag) {
 	}
 	
 	function deleteLinkClickHandler() {
-		textElement.innerHTML = 'Removing ' + getTagName() + '...';
+		textElement.innerHTML = getTagName('Removing ');
 		that.hideSubtext();
 		tagSearchMenu.setTagEditMenu();
 		
@@ -239,7 +240,7 @@ function TagSearchMenuItem(tagSearchMenu, currentUser, messStore, tag) {
 	}
 	
 	this.setSelecting = function() {
-		textElement.innerHTML = 'Selecting ' + getTagName() + '...';
+		textElement.innerHTML = getTagName('Selecting ');
 		that.hideSubtext();
 		selected = that.SELECT_STATE_SELECTING;
 	}
