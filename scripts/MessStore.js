@@ -371,8 +371,16 @@ function MessStore(currentUser) {
 				if (addedTag)
 					runLocalMessageHandlers(LocalStorageMessage.makeRetrieveAddTag(graphObj.tag));
 			} else if (graphObj.objType == selectedGraph.OBJ_TYPE_NODE) {
-				if (selectedGraph.addNode(graphObj.node))
+				if (selectedGraph.addNode(graphObj.node)) {
 					runLocalMessageHandlers(LocalStorageMessage.makeRetrieveAddNode(graphObj.node));
+					if (graphObj.node.brief.contains("[") && graphObj.node.brief.contains("]")) { 
+						// HACK: Check if node relationships were not included from server.  If they aren't,
+						// then 'brief' will contain a string of the form '[X neightbors]'
+						var relationships = selectedGraph.getNodeRelationships(graphObj.node.id);
+						for (var id2 in relationships)
+							runLocalMessageHandlers(LocalStorageMessage.makeRetrieveAddRelationship(relationships[id2]));
+					}
+				}
 			} else if (graphObj.objType == selectedGraph.OBJ_TYPE_RELATIONSHIP) {
 				selectedGraph.setRelationship(graphObj.relationship);
 				runLocalMessageHandlers(LocalStorageMessage.makeRetrieveAddRelationship(graphObj.relationship));
