@@ -110,6 +110,13 @@ function VisualAnimationSprings() {
 			clusterDensity = 2.0*clusterEdgeCount/(clusterSize*(clusterSize - 1.0));
 		}
 		
+		var attractiveClusterReduction = 1.0;
+		// Cluster force reduction for connected verts
+		if (clusterSize > that.SAME_CLUSTER_SIZE_REDUCTION_THRESHOLD &&
+			clusterDensity > that.SAME_CLUSTER_DENSITY_REDUCTION_THRESHOLD) {
+			attractiveClusterReduction = 1.0/(that.SAME_CLUSTER_FORCE_DIVISOR*clusterSize);
+		}
+		
 		for (var v2 in closeVerts) {
 			if (vert.getID() != v2) {
 				var vert2 = idsToVerts[v2];
@@ -132,66 +139,42 @@ function VisualAnimationSprings() {
 					
 					vertFX += clusterReduction*baseRepulsiveFX;
 					vertFY += clusterReduction*baseRepulsiveFY;
-				}
-			}
-		}
-		
-		var attractiveClusterReduction = 1.0;
-		// Cluster force reduction for connected verts
-		if (clusterSize > that.SAME_CLUSTER_SIZE_REDUCTION_THRESHOLD &&
-			clusterDensity > that.SAME_CLUSTER_DENSITY_REDUCTION_THRESHOLD) {
-			attractiveClusterReduction = 1.0/(that.SAME_CLUSTER_FORCE_DIVISOR*clusterSize);
-		}
-		
-		var id = vert.getID();
-		if (id in idsToEdges) {
-			for (var id2 in idsToEdges[id]) {
-				var vert2 = idsToVerts[id2];
-				var dVX = vert.getX() - vert2.getX();
-				var dVY = vert.getY() - vert2.getY();
 					
-				if (dVX != 0 || dVY != 0) {
-					if (!(id2 in closeVerts)) {
-						var dVNorm = Math.max(that.EPSILON, Math.sqrt(Math.pow(dVX,2)+Math.pow(dVY,2)));
-						var baseRepulsiveFX = 10.0*dVX*that.VERTEX_REPULSIVE_FORCE_MULTIPLIER/Math.pow(dVNorm, 3.1);//3.4);
-						var baseRepulsiveFY = 10.0*dVY*that.VERTEX_REPULSIVE_FORCE_MULTIPLIER/Math.pow(dVNorm, 3.1);//3.4);
-						
-						vertFX += baseRepulsiveFX;
-						vertFY += baseRepulsiveFY;
-					}
+					var v1 = vert.getID();
+					if (v1 in idsToEdges && v2 in idsToEdges[v1]) {
+						/* Attractive force */
+						attractorCount++;
 					
-					/* Attractive force */
-					attractorCount++;
-				
-					var baseAttractiveFX = -that.VERTEX_ATTRACTIVE_FORCE_MULTIPLIER*dVX;
-					var baseAttractiveFY = -that.VERTEX_ATTRACTIVE_FORCE_MULTIPLIER*dVY;
+						var baseAttractiveFX = -that.VERTEX_ATTRACTIVE_FORCE_MULTIPLIER*dVX;
+						var baseAttractiveFY = -that.VERTEX_ATTRACTIVE_FORCE_MULTIPLIER*dVY;
 
-					vertFX += attractiveClusterReduction*baseAttractiveFX;
-					vertFY += attractiveClusterReduction*baseAttractiveFY;
-					
-					if (clusterId != clusterId2) {
-						clusterFX += baseAttractiveFX;
-						clusterFY += baseAttractiveFY;
-					}
-					
-					if (animateHyperEdges) {
-						var colorGroup = idsToEdges[id2][vert.getID()].getColor();
-						if (
-								id2 in idsToHyperEdges 
-							&& colorGroup in idsToHyperEdges[id2]
-							&& vert.getID() in idsToHyperEdges[id2][colorGroup].getSourcesToEdges()
-							) {
-								var hyperSources = idsToHyperEdges[id2][colorGroup].getSourcesToEdges();
-								for (var s in hyperSources) {
-									if (s != vert.getID() && s in activeVerts && !(s in idsToEdges[vert.getID()])) {
-										var sVert = idsToVerts[s];
-										var dSX = vert.getX() - sVert.getX();
-										var dSY = vert.getY() - sVert.getY();
-										vertFX += -that.VERTEX_HYPER_EDGE_ATTRACTIVE_FORCE_MULTIPLIER*dSX*attractiveClusterReduction;
-										vertFY += -that.VERTEX_HYPER_EDGE_ATTRACTIVE_FORCE_MULTIPLIER*dSY*attractiveClusterReduction;
+						vertFX += attractiveClusterReduction*baseAttractiveFX;
+						vertFY += attractiveClusterReduction*baseAttractiveFY;
+						
+						if (clusterId != clusterId2) {
+							clusterFX += baseAttractiveFX;
+							clusterFY += baseAttractiveFY;
+						}
+						
+						if (animateHyperEdges) {
+							var colorGroup = idsToEdges[id2][vert.getID()].getColor();
+							if (
+									id2 in idsToHyperEdges 
+								&& colorGroup in idsToHyperEdges[id2]
+								&& vert.getID() in idsToHyperEdges[id2][colorGroup].getSourcesToEdges()
+								) {
+									var hyperSources = idsToHyperEdges[id2][colorGroup].getSourcesToEdges();
+									for (var s in hyperSources) {
+										if (s != vert.getID() && s in activeVerts && !(s in idsToEdges[vert.getID()])) {
+											var sVert = idsToVerts[s];
+											var dSX = vert.getX() - sVert.getX();
+											var dSY = vert.getY() - sVert.getY();
+											vertFX += -that.VERTEX_HYPER_EDGE_ATTRACTIVE_FORCE_MULTIPLIER*dSX*attractiveClusterReduction;
+											vertFY += -that.VERTEX_HYPER_EDGE_ATTRACTIVE_FORCE_MULTIPLIER*dSY*attractiveClusterReduction;
+										}
 									}
 								}
-							}
+						}					
 					}
 				}
 			}
