@@ -371,7 +371,7 @@ function MessStore(currentUser) {
 				if (addedTag)
 					runLocalMessageHandlers(LocalStorageMessage.makeRetrieveAddTag(graphObj.tag));
 			} else if (graphObj.objType == selectedGraph.OBJ_TYPE_NODE) {
-				if (selectedGraph.hasNode(graphObj.node.id) || selectedGraph.addNode(graphObj.node)) {
+				if (selectedGraph.addNode(graphObj.node)) {
 					graphObj.node = selectedGraph.getNode(graphObj.node.id);
 					runLocalMessageHandlers(LocalStorageMessage.makeRetrieveAddNode(graphObj.node));
 					if (graphObj.node.brief.indexOf("[") >= 0) { 
