@@ -425,10 +425,11 @@ function MessViewControl(canvas, overlayCanvas, currentUser, messStore) {
 		} else if (messStore.getTag(storeId) && !messStore.tagSelected(storeId)) {
 			if (storeId in tStoreToVisualIds) {
 				var visualId = tStoreToVisualIds[storeId];
-				visualGraph.setVertLabel(visualId, label);
+				if (label)
+					visualGraph.setVertLabel(visualId, label);
 			} else {
 				/* Add visual */
-				var visualId = visualGraph.addVert(label, [that.TAG_VERT_COLOR]);
+				var visualId = visualGraph.addVert((label) ? label : '', [that.TAG_VERT_COLOR]);
 				visualGraph.setVertRadius(visualId, that.TAG_VERT_RADIUS);
 				tStoreToVisualIds[storeId] = visualId;
 				tVisualToStoreIds[visualId] = storeId;
