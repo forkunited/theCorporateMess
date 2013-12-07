@@ -442,6 +442,9 @@ function MessViewControl(canvas, overlayCanvas, currentUser, messStore) {
 		var visualId = tStoreToVisualIds[storeId];
 		var relatedNodes = messStore.getTagRelatedNodeIds(storeId, true);
 		for (var nodeStoreId in relatedNodes) {
+			if (!(nodeStoreId in nStoreToVisualIds))
+				continue; // HACK: If node hasn't been added in yet
+			
 			var nVisualId = nStoreToVisualIds[nodeStoreId];
 			if (!visualGraph.hasEdge(visualId, nVisualId)) {
 				visualGraph.addEdge(visualId, nVisualId, that.TAG_VERT_COLOR, VisualEdge.EDGE_DIR_BOTH, VisualEdge.EDGE_TYPE_NORMAL);
