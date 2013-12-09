@@ -120,9 +120,10 @@ function MessGraph() {
 			// Remove related unselected tags if they aren't related to anything anymore
 			var relatedSelected = 0;
 			for (var relatedTagId in relatedTagIds) {
-				if (!tags[relatedTagId].selected) {
-					if (!(relatedTagId in deselectedVisited))
-						that.deselectTag(relatedTagId, deselectedVisited); 
+				if (!(relatedTagId in deselectedVisited) && !tags[relatedTagId].selected) {
+					var distantRelatedUnselected = that.deselectTag(relatedTagId, deselectedVisited); 
+					for (var distantId in distantRelatedUnselected)
+						relatedUnselectedTagIds[distantId] = 1;
 					relatedUnselectedTagIds[relatedTagId] = 1;
 				} else
 					relatedSelected++;
