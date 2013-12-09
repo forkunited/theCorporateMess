@@ -125,7 +125,7 @@ function MessGraph() {
 					for (var distantId in distantRelatedUnselected)
 						relatedUnselectedTagIds[distantId] = 1;
 					relatedUnselectedTagIds[relatedTagId] = 1;
-				} else
+				} else if ((relatedTagId in tags) && tags[relatedTagId].selected)
 					relatedSelected++;
 			}
 			
