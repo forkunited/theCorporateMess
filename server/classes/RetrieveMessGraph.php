@@ -114,7 +114,7 @@ class RetrieveMessGraph
 			$extraParameters[$i] = array('userId' => $user->id, 'tagName' => $tagNames[$i]);
 		}
 		
-		return $this->runTagQueries($queries, $skips, $limit, $extraParameters);
+		return $this->runTagQueries($queries, $skips, count($tagNames), $extraParameters);
 	}
 	
 	public function tagsAllByUser($user, $skip = 0, $limit = 0)
