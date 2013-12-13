@@ -19,6 +19,7 @@ function RetrieveMessGraph() {
 	var that = this; 
 	
 	var QUERY_TYPE_GRAPH_ALL_BY_TAGS = "graphAllByTags";
+	var QUERY_TYPE_TAGS_BY_NAMES_AND_USER = "tagsByNamesAndUser";
 	var QUERY_TYPE_TAGS_ALL_BY_USER = "tagsAllByUser";
 	var QUERY_TYPE_TAGS_RECENTLY_UPDATED = "tagsRecentlyUpdated";
 	var QUERY_TYPE_TAGS_SEARCH_BY_USER = "tagsSearchByUser";
@@ -49,6 +50,22 @@ function RetrieveMessGraph() {
 											minUpdatedDates : minUpdatedDates,
 											compactionDates : compactionDates
 										}
+									)
+								)
+		);
+	}
+	
+	this.tagsByNamesAndUser = function(fnRetrieved, user, tagNames) {
+		Util.sendJSONPostRequest(
+								this.RETRIEVE_SCRIPT,
+								fnRetrieved,
+								"message=" + JSON.stringify(
+									StorageMessage.makeRequestRetrieveMessGraph(
+										QUERY_TYPE_TAGS_BY_NAMES_AND_USER,
+										{
+											user : user, 
+											tagNames : tagNames
+										} 
 									)
 								)
 		);

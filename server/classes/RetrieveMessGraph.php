@@ -31,6 +31,7 @@ use Everyman\Neo4j\Client,
 class RetrieveMessGraph
 {
 	const GraphAllByTags = "graphAllByTags";
+	const TagsByNamesAndUser = "tagsByNamesAndUser";
 	const TagsAllByUser = "tagsAllByUser";
 	const TagsRecentlyUpdated = "tagsRecentlyUpdated";
 	const TagsSearchByUser = "tagsSearchByUser";
@@ -50,6 +51,7 @@ class RetrieveMessGraph
 		switch ($queryType)
 		{
 			case RetrieveMessGraph::GraphAllByTags: return $this->graphAllByTags($params->{'tagIds'}, $params->{'minUpdatedDates'}, $params->{'compactionDates'});
+			case RetrieveMessGraph::TagsByNamesAndUser: return $this->tagsByNamesAndUser(new User($params->{'user'}), $params->{'tagNames'});
 			case RetrieveMessGraph::TagsAllByUser: return $this->tagsAllByUser(new User($params->{'user'}), $params->{'skip'}, $params->{'limit'});
 			case RetrieveMessGraph::TagsRecentlyUpdated: return $this->tagsRecentlyUpdated($params->{'skip'}, $params->{'limit'});
 			case RetrieveMessGraph::TagsSearchByUser: return $this->tagsSearchByUser(new User($params->{'user'}), $params->{'search'}, $params->{'skips'}, $params->{'limit'});
@@ -90,6 +92,30 @@ class RetrieveMessGraph
 	/*
 	 * Tag queries (searching for tags)
 	 */
+	
+	public function tagsByNamesAndUser($user, $tagNames) 
+	{
+		$queryStr = "START u=node:exactUser(id={userId}),c=node:exactUser(id={currentUserId}),t=node:exactTag(name={tagName}) " .
+					"MATCH (u)-[:USER_CREATED_TAG]->(t)<-[ct?:USER_CREATED_TAG|USER_RECEIVED_TAG]-(c) " .
+					"WHERE " .
+					"t.visibility = " . Visibility::All . " " .
+					"OR (t.visibility = " . Visibility::Some . " AND ct IS NOT NULL) " .
+					"OR (t.visibility = " . Visibility::None . " AND ct IS NOT NULL AND TYPE(ct) = 'USER_CREATED_TAG') " .
+					"RETURN ct, t";
+		
+		$queries = array();
+		$skips = array();
+		$extraParameters = array();
+		
+		for ($i = 0; $i < count($tagNames); $i++) 
+		{
+			$queries[$i] = $queryStr;
+			$skips[$i] = 0;
+			$extraParameters[$i] = array('userId' => $user->id, 'tagName' => $tagNames[$i]);
+		}
+		
+		return $this->runTagQueries($queries, $skips, $limit, $extraParameters);
+	}
 	
 	public function tagsAllByUser($user, $skip = 0, $limit = 0)
 	{

@@ -19,6 +19,7 @@
 
 require_once("phar://lib/neo4jphp.phar");
 require_once("MessTag.php");
+require_once("User.php");
 
 use Everyman\Neo4j\Client,
 	Everyman\Neo4j\Index\NodeIndex,
@@ -29,6 +30,7 @@ use Everyman\Neo4j\Client,
 class RetrieveUsers
 {
 	const AccessToTag = "accessToTag";
+	const All = "all";
 	
 	private $__client;
 	private $__user;
@@ -44,6 +46,7 @@ class RetrieveUsers
 		switch ($queryType)
 		{
 			case RetrieveUsers::AccessToTag: return $this->accessToTag($params->{'tagId'});
+			case RetrieveUsers::All: return $this->all();
 			default: return null;
 		}
 	}
@@ -57,6 +60,10 @@ class RetrieveUsers
 	{
 		$tag = new MessTag($this->__user, $tagId);
 		return $tag->retrieveUsersWithAccess();
+	}
+	
+	public function all() {
+		return User::retrieveAll();
 	}
 }
 

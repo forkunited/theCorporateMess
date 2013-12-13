@@ -50,7 +50,7 @@ function TagSearchMenu(container, editContainer, currentUser, messStore) {
 	this.LIST_STATE_LOADING = 'loading';
 	this.LIST_STATE_READY = 'ready';
 	
-	this.DEFAULT_FILTER_STATE = this.FILTER_STATE_ALL;
+	this.DEFAULT_FILTER_STATE = "FULL";
 	this.LIST_DISPLAY_LIMIT = 10;
 	this.CREATE_TAG_TEMP_ID = "tagSearchMenuTempId";
 	this.SELECT_TAG_TEMP_ID_PREFIX = "selecting_";
@@ -89,9 +89,13 @@ function TagSearchMenu(container, editContainer, currentUser, messStore) {
 	 */
 	var filterData = {};
 	var filterState = that.DEFAULT_FILTER_STATE;
+	var filterUser = undefined;
 	var footerState = that.FOOTER_STATE_NONE;
+	var searching = false;
+	var filteringByYear = false;
 	
 	var retrieve = new RetrieveMessGraph();
+	var retrieveUsers = new RetrieveUsers();
 	var tagEditMenu = new TagEditMenu(tagEditMenuContentElement, currentUser, messStore);
 	
 	removeContainerChildren();
@@ -148,9 +152,9 @@ function TagSearchMenu(container, editContainer, currentUser, messStore) {
 		searchElement.appendChild(searchSubmitElement);
 		createElement.appendChild(createInputElement);
 		createElement.appendChild(createSubmitElement);
-		filterSelectElement.appendChild(filterSelectOptionSelectedElement);
+		/*filterSelectElement.appendChild(filterSelectOptionSelectedElement);
 		filterSelectElement.appendChild(filterSelectOptionYoursElement);
-		filterSelectElement.appendChild(filterSelectOptionAllElement);
+		filterSelectElement.appendChild(filterSelectOptionAllElement); HACK: Don't put these there... put users (years) from server there instead */
 		editContainer.appendChild(tagEditMenuElement);
 		tagEditMenuElement.appendChild(tagEditMenuHeaderElement);
 		tagEditMenuElement.appendChild(tagEditMenuContentElement);
@@ -160,7 +164,7 @@ function TagSearchMenu(container, editContainer, currentUser, messStore) {
 		searchSubmitElement.onclick = searchSubmitClickHandler;
 		createSubmitElement.onclick = createSubmitClickHandler;
 		
-		filterSelectElement.value = that.DEFAULT_FILTER_STATE;
+		//filterSelectElement.value = that.DEFAULT_FILTER_STATE; HACK ... no
 		listLoadingElement.innerHTML = 'Loading...';
 		filterTextElement.innerHTML = 'Filter: ';
 
@@ -182,8 +186,6 @@ function TagSearchMenu(container, editContainer, currentUser, messStore) {
 		};
 		
 		tagEditMenuElement.style.visibility = 'hidden';
-		
-		filterElement.style.visibility = 'hidden'; // HACK: Don't allow filtering for now
 	}
 	
 	function removeContainerChildren() {
@@ -195,7 +197,8 @@ function TagSearchMenu(container, editContainer, currentUser, messStore) {
 	/* Form handlers */
 	
 	function filterSelectChangeHandler() {
-		filterState = filterSelectElement.value;
+		filterState = that.FILTER_STATE_YOURS; // HACK: Always filter by user ("yours" is filterUser (year))
+		filterUser = filterSelectElement.value;
 
 		var prevState = true;
 		if (!(filterState in filterData) || filterData[filterState].resetOnSelectChange) {
@@ -220,9 +223,19 @@ function TagSearchMenu(container, editContainer, currentUser, messStore) {
 		} else {
 			setFooterState(that.FOOTER_STATE_SKIP);
 			showSearch();
-			if (!prevState) {
-				searchSubmitClickHandler(); // Perform search
-			} 
+			searchSubmitClickHandler(); // Perform search
+			
+			// Change selected tag years...
+			var selectedIds = messStore.getSelectedTagIds();
+			var selectedTagNames = [];
+			for (var i = 0; i < selectedIds.length; i++) {
+				selectedTagNames.push(messStore.getTag(selectedIds[i]).name);
+				messStore.deselectTag(selectedIds[i]);
+			}
+			if (selectedIds.length > 0) {
+				retrieve.tagsByNamesAndUser(filterSelectChangeTagsHandler, filterUser, selectedTagNames);
+				filteringByYear = true;
+			}
 		}
 	}
 	
@@ -292,19 +305,25 @@ function TagSearchMenu(container, editContainer, currentUser, messStore) {
 	}
 	
 	function searchHelper(state, searchStr, skips) {
+		if (!filterUser) {
+			retrieveFilterUsers();
+			return;
+		}
+	
 		if (state == that.FILTER_STATE_YOURS) {
 			if (searchStr.length == 0) {
 				retrieve.tagsAllByUser(searchRetrieveHandler,
-									   currentUser,
+									   filterUser,
 									   skips.length == 0 ? 0 : skips[0],
 									   that.LIST_DISPLAY_LIMIT);
 			} else {
 				retrieve.tagsSearchByUser(searchRetrieveHandler,
-										  currentUser,
+										  filterUser,
 										  searchStr,
 										  skips.length == 0 ? [] : skips,
 										  that.LIST_DISPLAY_LIMIT);
 			}
+			searching = true;
 		} else if (state == that.FILTER_STATE_ALL) {
 			if (searchStr.length == 0) {
 				retrieve.tagsRecentlyUpdated(searchRetrieveHandler,
@@ -316,7 +335,12 @@ function TagSearchMenu(container, editContainer, currentUser, messStore) {
 									skips.length == 0 ? [] : skips,
 									that.LIST_DISPLAY_LIMIT);
 			}
+			searching = true;
 		} 
+	}
+	
+	function retrieveFilterUsers() {
+		retrieveUsers.all(retrieveFilterUsersHandler);
 	}
 	
 	function closeTagEditMenuClickHandler() {
@@ -594,8 +618,53 @@ function TagSearchMenu(container, editContainer, currentUser, messStore) {
 			}
 		}
 		
-		filterStateData.listState = that.LIST_STATE_READY;
-		setListState(filterStateData.listState);
+		if (!filteringByYear) {
+			filterStateData.listState = that.LIST_STATE_READY;
+			setListState(filterStateData.listState);
+		}
+		
+		searching = false;
+	}
+	
+	function retrieveFilterUsersHandler(storageMessages) {
+		var userAdded = false;
+		for (var i = 0; i < storageMessages.length; i++) {
+			if (storageMessages[i].messageType == StorageMessage.RESPOND_RETRIEVE_USERS
+				&& storageMessages[i].queryType == retrieveUsers.QUERY_TYPE_ALL) {
+				for (var j = 0; j < storageMessages[i].users.length; j++) {
+					var userElement = document.createElement('option');
+					userElement.setAttribute('value', storageMessages[i].users[j]);
+					userElement.innerHTML = storageMessages[i].users[j];
+					filterSelectElement.appendChild(userElement);
+					userAdded = true;
+				}
+			}
+		}
+		
+		if (userAdded) {
+			filterSelectElement.value = that.DEFAULT_FILTER_STATE;
+			filterSelectChangeHandler();
+		}
+	}
+	
+	function filterSelectChangeTagsHandler(storageMessages) {
+		for (var i = 0; i < storageMessages.length; i++) {
+			if (storageMessages[i].messageType == StorageMessage.RESPOND_RETRIEVE_MESSGRAPH
+				&& storageMessages[i].queryType == retrieve.QUERY_TYPE_TAGS_BY_NAMES_AND_USER) {
+				var messGraph = new MessGraph();
+				messGraph.appendObjects(message.messGraph);
+				var tagIds = messGraph.getTagIds();
+				for (var i = 0; i < tagIds.length; i++) {
+					messStore.selectTag(tagIds[i]);
+				}
+			}
+		}
+		
+		if (!searching) {
+			filterStateData.listState = that.LIST_STATE_READY;
+			setListState(filterStateData.listState);
+		}
+		filteringByYear = false;
 	}
 	
 	/* Getters and setters */

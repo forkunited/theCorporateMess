@@ -284,6 +284,14 @@ function MessStore(currentUser) {
 			mainSelectedTagId = undefined;
 	}
 	
+	this.getSelectedTagIds = function() {
+		var ids = [];
+		for (var id in selectedTags)
+			if (that.tagSelected(id))
+				ids.push(id);
+		return ids;
+	}
+	
 	this.tagSelected = function(id) {
 		return (id in selectedTags) && selectedGraph.hasTag(id) && selectedGraph.getTag(id).selected;
 	}

@@ -19,6 +19,7 @@ function RetrieveUsers() {
 	var that = this; 
 
 	this.QUERY_TYPE_ACCESS_TO_TAG = "accessToTag";
+	this.QUERY_TYPE_ALL = "all";
 	
 	this.RETRIEVE_SCRIPT = 'server/retrieveUsers.php';
 	
@@ -32,6 +33,19 @@ function RetrieveUsers() {
 										{tagId : tag.id}
 									)
 								)
+		);
+	}
+	
+	this.all = function(fnRetrieved) {
+		Util.sendJSONPostRequest(
+							this.RETRIEVE_SCRIPT,
+							fnRetrieved,
+							"message=" + JSON.stringify(
+								StorageMessage.makeRequestRetrieveUsers(
+									that.QUERY_TYPE_ALL,
+									{}
+								)
+							)
 		);
 	}
 }

@@ -117,8 +117,7 @@ class User
 		/* Return user */
 		return new User($id);
 	}	
-	
-	/* Deprecated (used by user tag menu) */
+
 	public static function retrieveAll()
 	{
 		try 
@@ -129,7 +128,7 @@ class User
 			$users = array();
 			foreach ($userNodes as $userNode)
 			{
-				array_push($users, $userNode->getProperty('id'));
+				array_push($users, new User($userNode->getProperty('id')));
 			}
 			
 			return $users;
