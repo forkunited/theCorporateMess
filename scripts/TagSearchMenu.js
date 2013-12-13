@@ -212,7 +212,7 @@ function TagSearchMenu(container, editContainer, currentUser, messStore) {
 				items : [],
 				skips : [[]],
 				remainder : false,
-				search : "",
+				search : (filterState in filterData) ? filterData[filterState].search : "", // HACK: Don't reset search
 				listState : that.LIST_STATE_READY,
 				resetOnSelectChange : true
 			};
