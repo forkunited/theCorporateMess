@@ -237,7 +237,14 @@ function TagSearchMenu(container, editContainer, currentUser, messStore) {
 				messStore.deselectTag(selectedIds[i]);
 				selectedTagNames[tagName] = 1; // Add tag name back in after deselection removes it
 			}
-			if (selectedIds.length > 0) {
+			
+			var hasSelectedTagName = false;
+			for (var selectedTagName in selectedTagNames) {
+				hasSelectedTagName = true;
+				break;
+			}
+			
+			if (hasSelectedTagName) {
 				var tagNamesList = [];
 				for (var tagName in selectedTagNames)
 					tagNamesList.push(tagName);
