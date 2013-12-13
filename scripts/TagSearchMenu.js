@@ -631,7 +631,11 @@ function TagSearchMenu(container, editContainer, currentUser, messStore) {
 		for (var i = 0; i < storageMessages.length; i++) {
 			if (storageMessages[i].messageType == StorageMessage.RESPOND_RETRIEVE_USERS
 				&& storageMessages[i].queryType == retrieveUsers.QUERY_TYPE_ALL) {
+				storageMessages[i].users.sort();
 				for (var j = 0; j < storageMessages[i].users.length; j++) {
+					if (storageMessages[i].users[j] == "Default")
+						continue;
+						
 					var userElement = document.createElement('option');
 					userElement.setAttribute('value', storageMessages[i].users[j]);
 					userElement.innerHTML = storageMessages[i].users[j];
