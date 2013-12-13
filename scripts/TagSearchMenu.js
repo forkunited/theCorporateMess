@@ -640,6 +640,7 @@ function TagSearchMenu(container, editContainer, currentUser, messStore) {
 		}
 		
 		if (!filteringByYear) {
+			var filterStateData = filterData[filterState];
 			filterStateData.listState = that.LIST_STATE_READY;
 			setListState(filterStateData.listState);
 		}
