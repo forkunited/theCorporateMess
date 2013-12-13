@@ -106,13 +106,15 @@ class RetrieveMessGraph
 		$queries = array();
 		$skips = array();
 		$extraParameters = array();
-		
+		$extraParameters['userId'] = $user->id;
 		for ($i = 0; $i < count($tagNames); $i++) 
 		{
-			$queries[$i] = $queryStr;
+			$queries[$i] = str_replace("tagName", "tagName" + $i, $queryStr);
 			$skips[$i] = 0;
-			$extraParameters[$i] = array('userId' => $user->id, 'tagName' => $tagNames[$i]);
+			$extraParameters['tagName' + $i] = $tagNames[$i];
 		}
+		
+		
 		
 		return $this->runTagQueries($queries, $skips, 0, $extraParameters);
 	}
