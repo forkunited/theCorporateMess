@@ -94,6 +94,11 @@ function TagSearchMenu(container, editContainer, currentUser, messStore) {
 	var searching = false;
 	var filteringByYear = false;
 	
+	// Keeps track of names of selected tags
+	// This is necessary for keeping tags selected when year filter is changed and
+	// some some tags are missing from some years
+	var selectedTagNames = {};
+	
 	var retrieve = new RetrieveMessGraph();
 	var retrieveUsers = new RetrieveUsers();
 	var tagEditMenu = new TagEditMenu(tagEditMenuContentElement, currentUser, messStore);
@@ -229,11 +234,16 @@ function TagSearchMenu(container, editContainer, currentUser, messStore) {
 			var selectedIds = messStore.getSelectedTagIds();
 			var selectedTagNames = [];
 			for (var i = 0; i < selectedIds.length; i++) {
-				selectedTagNames.push(messStore.getTag(selectedIds[i]).name);
+				var tagName = messStore.getTag(selectedIds[i]).name;
 				messStore.deselectTag(selectedIds[i]);
+				selectedTagNames[tagName] = 1; // Add tag name back in after deselection removes it
 			}
 			if (selectedIds.length > 0) {
-				retrieve.tagsByNamesAndUser(filterSelectChangeTagsHandler, filterUser, selectedTagNames);
+				var tagNamesList = [];
+				for (var tagName in selectedTagNames)
+					tagNamesList.push(tagName);
+			
+				retrieve.tagsByNamesAndUser(filterSelectChangeTagsHandler, filterUser, tagNamesList);
 				filteringByYear = true;
 			}
 		}
@@ -506,6 +516,9 @@ function TagSearchMenu(container, editContainer, currentUser, messStore) {
 			}
 			if (that.getFilterState() == that.FILTER_STATE_SELECTED)
 				setListState(filterData[that.FILTER_STATE_SELECTED].listState);
+				
+			if (message.name && message.name in selectedTagNames)
+				delete selectedTagNames[message.name];
 		} else if (message.messageType == LocalStorageMessage.RETRIEVE_ADD_TAG) {
 			var selectingTagId = that.SELECT_TAG_TEMP_ID_PREFIX + message.tag.id;
 			var selectingIndex = indexOfTagId(that.FILTER_STATE_SELECTED, selectingTagId);
@@ -528,6 +541,8 @@ function TagSearchMenu(container, editContainer, currentUser, messStore) {
 			if (that.getFilterState() == that.FILTER_STATE_SELECTED) {
 				setListState(filterData[that.FILTER_STATE_SELECTED].listState);
 			}
+			
+			 selectedTagNames[message.tag.name] = 1;
 		} else if (message.messageType == LocalStorageMessage.FINISH_SAVE) {
 			for (var i = 0; i < message.storageMessages.length; i++) {
 				if (message.storageMessages[i].messageType == StorageMessage.RESPOND_ADD_TAG

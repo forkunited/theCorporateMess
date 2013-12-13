@@ -42,12 +42,13 @@ LocalStorageMessage.makeSelectTag = function(id) {
 	};
 }
 
-LocalStorageMessage.makeDeselectTag = function(id, nodeIds, relatedUnselectedTagIds) {
+LocalStorageMessage.makeDeselectTag = function(id, nodeIds, relatedUnselectedTagIds, name) {
 	return { 
 		messageType : LocalStorageMessage.DESELECT_TAG, 
 		id : id,
 		nodeIds : nodeIds,
-		relatedUnselectedTagIds : relatedUnselectedTagIds
+		relatedUnselectedTagIds : relatedUnselectedTagIds,
+		name : name
 	};
 }
 

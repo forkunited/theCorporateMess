@@ -25,10 +25,6 @@ require_once("phar://lib/neo4jphp.phar");
 require_once('./classes/User.php');
 
 User::create('FULL');
-User::create('1990');
-User::create('1991');
-User::create('1992');
-User::create('1993');
 User::create('1994');
 User::create('1995');
 User::create('1996');

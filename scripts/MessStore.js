@@ -276,9 +276,10 @@ function MessStore(currentUser) {
 		
 		delete selectedTags[id];
 		
+		var tagName = (selectedGraph.hasTag(id) ? selectedGraph.getTag(id).name : undefined);
 		var relatedUnselectedTagIds = selectedGraph.deselectTag(id);
 		
-		runLocalMessageHandlers(LocalStorageMessage.makeDeselectTag(id, nodeIds, relatedUnselectedTagIds));
+		runLocalMessageHandlers(LocalStorageMessage.makeDeselectTag(id, nodeIds, relatedUnselectedTagIds, tagName));
 		
 		if (mainSelectedTagId == id)
 			mainSelectedTagId = undefined;
