@@ -656,7 +656,7 @@ function TagSearchMenu(container, editContainer, currentUser, messStore) {
 			if (storageMessages[i].messageType == StorageMessage.RESPOND_RETRIEVE_MESSGRAPH
 				&& storageMessages[i].queryType == retrieve.QUERY_TYPE_TAGS_BY_NAMES_AND_USER) {
 				var messGraph = new MessGraph();
-				messGraph.appendObjects(message.messGraph);
+				messGraph.appendObjects(storageMessages[i].messGraph);
 				var tagIds = messGraph.getTagIds();
 				for (var i = 0; i < tagIds.length; i++) {
 					messStore.selectTag(tagIds[i]);
