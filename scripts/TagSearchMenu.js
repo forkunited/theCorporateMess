@@ -232,7 +232,6 @@ function TagSearchMenu(container, editContainer, currentUser, messStore) {
 			
 			// Change selected tag years...
 			var selectedIds = messStore.getSelectedTagIds();
-			var selectedTagNames = [];
 			for (var i = 0; i < selectedIds.length; i++) {
 				var tagName = messStore.getTag(selectedIds[i]).name;
 				messStore.deselectTag(selectedIds[i]);
