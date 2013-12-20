@@ -91,7 +91,7 @@ class MessTag extends MessObject
 			}
 			
 			/* Check to see if the tag already exists under this user before creating it */
-			$query = new Query($client, "START u=node:exactUser(id={userId}) " .
+			/* $query = new Query($client, "START u=node:exactUser(id={userId}) " .
 										"MATCH (u)-[:USER_CREATED_TAG]->(t) " .
 										"WHERE t.name={tagName} " .
 										"RETURN t",
@@ -100,7 +100,7 @@ class MessTag extends MessObject
 											)
 								);
 			if ($query->getResultSet()->count() > 0)
-				return null;
+				return null; HACK: Assume that it doesn't already exist to save time */
 			
 			/* Create tag node, relate it to creator, and add it to indices */
 			$id = uniqid();
