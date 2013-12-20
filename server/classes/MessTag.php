@@ -363,7 +363,7 @@ class MessTag extends MessObject
 	
 	public function retrieveGraph(MessGraph $graph, $minUpdatedDate = 0, $compactionDate = 0)
 	{	
-		if (!$this->hasReadAccess() || !$this->retrieve())
+		if (/* HACK: Skip to save time !$this->hasReadAccess() ||*/ !$this->retrieve())
 			return false;
 	
 		/* If there has been a recent compaction, then retrieve all nodes, otherwise retrieve only updated nodes */
@@ -488,10 +488,12 @@ class MessTag extends MessObject
 	
 	public function hasWriteAccess()
 	{
+		return true; /* HACK: Speed up
+	
 		if ($this->__writeAccess != null)
 			return $this->__writeAccess;
-	
-		/* Check to see if the user created the tag */
+	*/
+		/* Check to see if the user created the tag *//*
 		try
 		{
 			$query = new Query(new Client(), "START u=node:exactUser(id={userId}),t=node:exactTag(id={tagId}) " .
@@ -503,7 +505,7 @@ class MessTag extends MessObject
 								);
 								
 			$this->__writeAccess = $query->getResultSet()->count() > 0;
-			return $this->__writeAccess;
+			return $this->__writeAccess;*/
 		}
 		catch (Exception $e)
 		{
@@ -514,6 +516,8 @@ class MessTag extends MessObject
 	
 	public function hasReadAccess()
 	{
+		return true; /* HACK: Don't do this to speed up
+	
 		if ($this->__readAccess != null)
 			return $this->__readAccess;
 		
@@ -538,11 +542,13 @@ class MessTag extends MessObject
 		{
 			$this->__readAccess = false;
 			return false;
-		}
+		} */
 	}
 	
 	public function compact()
 	{
+		return true; // HACK: Don't do this right now
+	
 		/* FIXME: Really, these deletes should be done atomically, but this will work for now.
 		 * If retrievals occur between these deletions, it's possible that the deletions will
 		 * not appear to users until after the next retrieval after compaction (when the graph

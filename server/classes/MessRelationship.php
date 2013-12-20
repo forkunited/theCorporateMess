@@ -322,13 +322,14 @@ class MessRelationship extends MessObject
 	
 	public function hasWriteAccess()
 	{
+		return true; /* HACK: Speed up
 		if ($this->__writeAccess != null)
 			return $this->__writeAccess;
 	
 		try
-		{
+		{*/
 			/* Check to see if the user created the tag for the node */
-			$query = new Query(new Client(), "START r=relationship:exactRelationship(id={relationshipId}), u=node:exactUser(id={userId}) " .
+		/*	$query = new Query(new Client(), "START r=relationship:exactRelationship(id={relationshipId}), u=node:exactUser(id={userId}) " .
 				"MATCH (u)-[:USER_CREATED_TAG]->(t)-[:TAG_TAGGED_NODE]->(n)-[r:MESS_RELATIONSHIP]-() " .
 				"RETURN u",
 				array( 'relationshipId' => $this->id,
@@ -343,11 +344,13 @@ class MessRelationship extends MessObject
 		{
 			$this->__writeAccess = false;
 			return false;
-		}
+		}*/
 	}
 	
 	public function hasReadAccess()
 	{
+		return true;
+		/* HACK: Speed up
 		if ($this->__readAccess != null)
 			return $this->__readAccess;
 	
@@ -387,7 +390,7 @@ class MessRelationship extends MessObject
 		}
 		
 		$this->__readAccess = true;
-		return true;
+		return true;*/
 	}
 	
 }
