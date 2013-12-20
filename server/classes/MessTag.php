@@ -505,13 +505,13 @@ class MessTag extends MessObject
 								);
 								
 			$this->__writeAccess = $query->getResultSet()->count() > 0;
-			return $this->__writeAccess;*/
+			return $this->__writeAccess;
 		}
 		catch (Exception $e)
 		{
 			$this->__writeAccess = false;
 			return false;
-		}
+		}*/
 	}
 	
 	public function hasReadAccess()
