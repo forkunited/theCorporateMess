@@ -303,8 +303,8 @@ class MessNode extends MessObject
 		catch(Exception $e)
 		{
 			$this->__writeAccess = false;
-			return false;*/
-		}
+			return false;
+		}*/
 	}
 	
 	public function hasReadAccess()
