@@ -139,8 +139,10 @@ class MessNode extends MessObject
 	
 	public function retrieve()
 	{
+		/* HACK: Skip to save time 
 		if (!$this->hasReadAccess())
 			return false;
+		*/
 	
 		try
 		{

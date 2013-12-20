@@ -81,9 +81,12 @@ class MessRelationship extends MessObject
 		$client = null;
 		try
 		{
+			/* HACK: Don't check permissions to save time
+			
 			if (!(($from->hasReadAccess() && $to->hasWriteAccess()) || ($from->hasWriteAccess() && $to->hasReadAccess()) || ($from->hasWriteAccess() && $to->hasWriteAccess()))) {
 				return null;
 			}
+			*/
 			
 			/* Create mess relationship and add it to indices */
 			$clientProvided = true;
@@ -108,10 +111,12 @@ class MessRelationship extends MessObject
 			$relationshipIndex = new RelationshipIndex($client, 'exactRelationship');
 			
 			// Check if it already exists
+			/* HACK: Don't check for now to save time 
 			if ($relationshipIndex->findOne('id', $id) != null || ($transaction != null && $transaction->hasObject($id))) {
 				echo 'Already exists...'; // FIXME: Remove after debug
 				return null;
 			}
+			*/
 			
 			if ($to->__cachedNeo4jNode == null) 
 				$to->__cachedNeo4jNode = $nodeIndex->findOne('id', $to->id);
@@ -161,8 +166,10 @@ class MessRelationship extends MessObject
 	
 	public function retrieve()
 	{
+		/* HACK: Skip to save time 
 		if (!$this->hasReadAccess())
 			return false;
+		*/
 	
 		try
 		{

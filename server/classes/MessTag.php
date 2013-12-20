@@ -150,8 +150,11 @@ class MessTag extends MessObject
 	
 	public function retrieve()
 	{	
+		/* HACK: Don't check to save time
 		if (!$this->hasReadAccess())
 			return false;
+			
+		*/
 		
 		try
 		{
@@ -184,7 +187,6 @@ class MessTag extends MessObject
 	{	
 		if (!$this->hasWriteAccess())
 			return false;
-			
 		try
 		{	
 			$this->compact();
@@ -216,12 +218,14 @@ class MessTag extends MessObject
 	
 	public function update()
 	{
+		/* HACK: Don't do this to save time 
 		if (!$this->hasWriteAccess())
 			return false;
-		
+		*/
 		if (!$this->__retrieved)
 			if (!$this->retrieve())
 				return false;
+		
 			
 		try
 		{
