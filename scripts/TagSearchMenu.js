@@ -328,10 +328,16 @@ function TagSearchMenu(container, editContainer, currentUser, messStore) {
 	
 		if (state == that.FILTER_STATE_YOURS) {
 			if (searchStr.length == 0) {
+				/* HACK: Takes too long for too many tags in FULL 
 				retrieve.tagsAllByUser(searchRetrieveHandler,
 									   filterUser,
 									   skips.length == 0 ? 0 : skips[0],
-									   that.LIST_DISPLAY_LIMIT);
+									   that.LIST_DISPLAY_LIMIT); */
+				retrieve.tagsSearchByUser(searchRetrieveHandler,
+						  filterUser,
+						  "Carnegie",
+						  skips.length == 0 ? [] : skips,
+						  that.LIST_DISPLAY_LIMIT);
 			} else {
 				retrieve.tagsSearchByUser(searchRetrieveHandler,
 										  filterUser,
