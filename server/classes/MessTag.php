@@ -409,7 +409,7 @@ class MessTag extends MessObject
 				$n->_deleted = $row["n"]->getProperty("_deleted");
 				$graph->addNode($n); 
 
-				if ($result->count() > 100) // HACK: Assumes one node per tag
+				if ($result->count() > 250) // HACK: Assumes one node per tag
 				{
 					$n->brief = $n->brief . ' [' . $result->count() . ' neighbors] ';
 					break;
