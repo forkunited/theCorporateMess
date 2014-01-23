@@ -354,13 +354,21 @@ function UI(container, currentUser) {
 		if (message.messageType == LocalStorageMessage.SELECT_TAG
 			|| message.messageType == LocalStorageMessage.DESELECT_TAG
 			|| message.messageType == LocalStorageMessage.RETRIEVE_ADD_TAG) {
-			updateWindowURL();
+			updateToWindowURL();
 		}
 	}
 	
-	/* Update URL */
-	function updateWindowURL() {
-		history.pushState({}, "", "?filter=" + tagMenu.getFilterUser() + "&tags=" + JSON.stringify(messStore.getSelectedTagIds()));
+	/* Update from/to URL */
+	function updateToWindowURL() {
+		var tagIds = messStore.getSelectedTagIds();
+		if (tagIds.length > 100) { // FIXME: Hack.
+			tagIds = tagIds.slice(0, 99);
+		}
+		alert(location.href);
+		history.pushState({}, "", "?filter=" + tagMenu.getFilterUser() + "&tags=" + JSON.stringify(tagIds));
+	}
+	
+	function updateFromWindowURL() {
 		// Updating from URL (do this on back or forward click or at start:
 			// Set tag menu filter
 			// Set mess store selected tags from id list
