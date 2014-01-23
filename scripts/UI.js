@@ -400,11 +400,10 @@ function UI(container, currentUser) {
 		
 		}
 	}
-	/*
+
 	window.addEventListener("popstate", function (event){
 		updateFromURL(event.state);
 	});
-	*/
 
 	/* Update interface elements */
 
