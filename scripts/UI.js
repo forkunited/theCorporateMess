@@ -380,12 +380,12 @@ function UI(container, currentUser) {
 			if (assignment[0] == 'filter') {
 				filter = assignment[1];
 			} else if (assignment[0] == 'tags') {
-				tagsStr = assignment[1];
+				tagsStr = assignment[1].replace("%22","\"", "g");
 			}
 		}
 		
 		try {
-			var tagIds = JSON.parse(tagsStr.replace("%22","\""));
+			var tagIds = JSON.parse(tagsStr);
 			tagSearchMenu.setFilterUser(filter);
 			for (var i = 0; i < tagIds.length; i++)
 				messStore.selectTag(tagIds[i]);
