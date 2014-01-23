@@ -673,9 +673,8 @@ function TagSearchMenu(container, editContainer, currentUser, messStore) {
 		}
 		
 		if (userAdded) {
-			if (!filterSelectElement.value || filterSelectElement.value.length == 0) {
+			if (!filterSelectElement.value)
 				filterSelectElement.value = that.DEFAULT_FILTER_STATE;
-			}
 			filterSelectChangeHandler();
 		}
 	}
