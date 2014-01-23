@@ -368,7 +368,8 @@ function UI(container, currentUser) {
 		}
 
 		var search = "?filter=" + tagMenu.getFilterUser() + "&tags=" + JSON.stringify(tagIds);
-		history.pushState(search, "", search);
+		if (window.location.search != search)
+			history.pushState(search, "", search);
 	}
 	
 	function updateFromURL(urlSearch) {
@@ -399,10 +400,11 @@ function UI(container, currentUser) {
 		
 		}
 	}
-	
+	/*
 	window.addEventListener("popstate", function (event){
 		updateFromURL(event.state);
 	});
+	*/
 
 	/* Update interface elements */
 
