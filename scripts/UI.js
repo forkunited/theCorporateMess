@@ -364,7 +364,7 @@ function UI(container, currentUser) {
 	function updateToWindowURL() {
 		if (updatingFromURL || !history || !history.pushState)
 			return;
-		var tagIds = messStore.getSelectedTagIds();
+		var tagIds = messStore.getSelectedTagIds(true);
 		if (tagIds.length > 100) { // FIXME: Hack.
 			tagIds = tagIds.slice(0, 99);
 		}
@@ -399,7 +399,7 @@ function UI(container, currentUser) {
 		}
 		
 		try {
-			var selectedIds = messStore.getSelectedTagIds();
+			var selectedIds = messStore.getSelectedTagIds(true);
 			for (var i = 0; i < selectedIds.length; i++)
 				messStore.deselectTag(selectedIds[i]);
 				

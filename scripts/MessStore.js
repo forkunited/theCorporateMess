@@ -285,10 +285,10 @@ function MessStore(currentUser) {
 			mainSelectedTagId = undefined;
 	}
 	
-	this.getSelectedTagIds = function() {
+	this.getSelectedTagIds = function(skipExistCheck) {
 		var ids = [];
 		for (var id in selectedTags)
-			if (that.tagSelected(id))
+			if (skipExistCheck || that.tagSelected(id))
 				ids.push(id);
 		return ids;
 	}
