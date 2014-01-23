@@ -368,7 +368,7 @@ function UI(container, currentUser) {
 		}
 
 		var search = "?filter=" + tagMenu.getFilterUser() + "&tags=" + JSON.stringify(tagIds);
-		history.pushState(search, "", url);
+		history.pushState(search, "", search);
 	}
 	
 	function updateFromURL(urlSearch) {
