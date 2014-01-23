@@ -245,7 +245,7 @@ function UI(container, currentUser) {
 		setVisibleMessWindow();
 		messStore.addLocalMessageHandler(storeMessageHandler);
 		messStore.init();
-		updateFromWindowURL();
+		updateFromURL();
 	}
 	
 	function setVisibleMessWindow() {
@@ -367,14 +367,18 @@ function UI(container, currentUser) {
 			tagIds = tagIds.slice(0, 99);
 		}
 
-		history.pushState({}, "", "?filter=" + tagMenu.getFilterUser() + "&tags=" + JSON.stringify(tagIds));
+		var search = "?filter=" + tagMenu.getFilterUser() + "&tags=" + JSON.stringify(tagIds);
+		history.pushState(search, "", url);
 	}
 	
-	function updateFromWindowURL() {
-		if (window.location.search.length <= 1)
+	function updateFromURL(urlSearch) {
+		if (!urlSearch)
+			urlSearch = window.location.search;
+	
+		if (urlSearch.length <= 1)
 			return;
 		
-		var urlAssignments = window.location.search.substring(1).split('&');
+		var urlAssignments = urlSearch.substring(1).split('&');
 		var filter = undefined;
 		var tagsStr = undefined;
 		for (var i = 0; i < urlAssignments.length; i++) {
@@ -397,7 +401,7 @@ function UI(container, currentUser) {
 	}
 	
 	window.addEventListener("popstate", function (event){
-		updateFromWindowURL();
+		updateFromURL(event.state);
 	});
 
 	/* Update interface elements */
