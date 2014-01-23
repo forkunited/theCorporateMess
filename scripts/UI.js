@@ -385,7 +385,7 @@ function UI(container, currentUser) {
 		}
 		
 		try {
-			var tagIds = JSON.parse(tagsStr);
+			var tagIds = JSON.parse(tagsStr.replace("%22","\""));
 			tagSearchMenu.setFilterUser(filter);
 			for (var i = 0; i < tagIds.length; i++)
 				messStore.selectTag(tagIds[i]);
