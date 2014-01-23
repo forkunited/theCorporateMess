@@ -661,9 +661,9 @@ function TagSearchMenu(container, editContainer, currentUser, messStore) {
 				&& storageMessages[i].queryType == retrieveUsers.QUERY_TYPE_ALL) {
 				storageMessages[i].users.sort();
 				for (var j = 0; j < storageMessages[i].users.length; j++) {
-					if (storageMessages[i].users[j] == "Default")
+					if (storageMessages[i].users[j] == "Default" || storageMessages[i].users[j] == initialFilterValue)
 						continue;
-						
+					
 					var userElement = document.createElement('option');
 					userElement.setAttribute('value', storageMessages[i].users[j]);
 					userElement.innerHTML = storageMessages[i].users[j];
@@ -720,13 +720,16 @@ function TagSearchMenu(container, editContainer, currentUser, messStore) {
 	}
 	
 	that.setFilterUser = function(user) {
-		/*for (var i = 0; i < filterSelectElement.length; i++) {
-			if (filterSelectElement.options[i].text == user) {*/
-				filterSelectElement.value = user;
-				filterSelectChangeHandler();
-		/*return;
-			}
-		}*/
+		filterSelectElement.value = user;
+		if (!filterSelectElement.value) {
+			var userElement = document.createElement('option');
+			userElement.setAttribute('value', user);
+			userElement.innerHTML = user;
+			filterSelectElement.appendChild(userElement);
+			filterSelectElement.value = user;
+		}
+		
+		filterSelectChangeHandler();
 	}
 	
 	that.setTagEditMenu = function(tag) {
