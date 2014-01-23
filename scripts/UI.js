@@ -351,9 +351,9 @@ function UI(container, currentUser) {
 	/* Mess store change handler */
 	
 	function storeMessageHandler(message) {
-		if (message.messageType == LocalStorageMessage.SELECT_TAG) {
-			updateWindowURL();
-		} else if (message.messageType == LocalStorageMessage.DESELECT_TAG) {
+		if (message.messageType == LocalStorageMessage.SELECT_TAG
+			|| message.messageType == LocalStorageMessage.DESELECT_TAG
+			|| message.messageType == LocalStorageMessage.RETRIEVE_ADD_TAG) {
 			updateWindowURL();
 		}
 	}
