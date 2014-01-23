@@ -715,6 +715,16 @@ function TagSearchMenu(container, editContainer, currentUser, messStore) {
 		return filterUser;
 	}
 	
+	that.setFilterUser = function(user) {
+		for (var i = 0; i < filterSelectElement.length; i++) {
+			if (filterSelectElement.options[i].text == user) {
+				filterSelectElement.value = user;
+				filterSelectChangeHandler();
+				return;
+			}
+		}
+	}
+	
 	that.setTagEditMenu = function(tag) {
 		tagEditMenu.setTag(tag);
 		if (!tag) {

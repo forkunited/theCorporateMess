@@ -245,7 +245,7 @@ function UI(container, currentUser) {
 		setVisibleMessWindow();
 		messStore.addLocalMessageHandler(storeMessageHandler);
 		messStore.init();
-	
+		updateFromWindowURL();
 	}
 	
 	function setVisibleMessWindow() {
@@ -364,14 +364,34 @@ function UI(container, currentUser) {
 		if (tagIds.length > 100) { // FIXME: Hack.
 			tagIds = tagIds.slice(0, 99);
 		}
-		alert(location.href);
+
 		history.pushState({}, "", "?filter=" + tagMenu.getFilterUser() + "&tags=" + JSON.stringify(tagIds));
 	}
 	
 	function updateFromWindowURL() {
-		// Updating from URL (do this on back or forward click or at start:
-			// Set tag menu filter
-			// Set mess store selected tags from id list
+		if (window.location.search.length <= 1)
+			return;
+		
+		var urlAssignments = window.location.search.substring(1).split('&');
+		var filter = undefined;
+		var tagsStr = undefined;
+		for (var i = 0; i < urlAssignments.length; i++) {
+			var assignment = urlAssignments[i].split('=');
+			if (assignment[0] == 'filter') {
+				filter = assignment[1];
+			} else if (assignment[0] == 'tags') {
+				tagsStr = assignment[1];
+			}
+		}
+		
+		try {
+			var tagIds = JSON.parse(tagsStr);
+			tagSearchMenu.setFilterUser(filter);
+			for (var i = 0; i < tagIds.length; i++)
+				messStore.selectTag(tagIds[i]);
+		} catch (error) {
+		
+		}
 	}
 
 	/* Update interface elements */
