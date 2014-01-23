@@ -392,6 +392,10 @@ function UI(container, currentUser) {
 		}
 		
 		try {
+			var selectedIds = messStore.getSelectedTagIds();
+			for (var i = 0; i < selectedIds.length; i++)
+				messStore.deselectTag(selectedIds[i]);
+				
 			var tagIds = JSON.parse(tagsStr);
 			tagMenu.setFilterUser(filter);
 			for (var i = 0; i < tagIds.length; i++)
