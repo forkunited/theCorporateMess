@@ -349,9 +349,9 @@ function UI(container, currentUser) {
 		if (updatingFromURL || !history || !history.pushState)
 			return;
 		var tagIds = messStore.getSelectedTagIds(true);
-		if (tagIds.length > 100) { // FIXME: Hack.
-			tagIds = tagIds.slice(0, 99);
-		}
+		//if (tagIds.length > 100) { // FIXME: Hack. Add this back in if necessary.
+		//	tagIds = tagIds.slice(0, 99);
+		//}
 
 		var search = "?filter=" + tagMenu.getFilterUser() + "&tags=" + JSON.stringify(tagIds);
 		if (window.location.search.replace(/%22/g,"\"") != search)
