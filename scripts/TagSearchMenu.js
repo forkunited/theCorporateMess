@@ -282,7 +282,7 @@ function TagSearchMenu(container, editContainer, currentUser, messStore) {
 	function searchSubmitClickHandler() {
 		var filterStateData = filterData[filterState];
 		filterStateData.listState = that.LIST_STATE_LOADING;
-		filterStateData.search = searchInputElement.value;
+		filterStateData.search = searchInputElement.value.replace("_", " ");
 		filterStateData.skips = [[]];
 		filterStateData.items = [];
 		
