@@ -368,7 +368,7 @@ function UI(container, currentUser) {
 		}
 
 		var search = "?filter=" + tagMenu.getFilterUser() + "&tags=" + JSON.stringify(tagIds);
-		if (window.location.search.replace(/%22/g,"\""); != search)
+		if (window.location.search.replace(/%22/g,"\"") != search)
 			history.pushState(search, "", search);
 	}
 	
