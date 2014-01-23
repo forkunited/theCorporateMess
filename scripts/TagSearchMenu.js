@@ -719,9 +719,16 @@ function TagSearchMenu(container, editContainer, currentUser, messStore) {
 		return filterUser;
 	}
 	
-	that.setFilterUser = function(user) {
+	that.getSelectedTagNames = function() {
+		var tagNames = [];
+		for (var name in selectedTagNames)
+			tagNames.push(name);
+		return tagNames;
+	}
+	
+	that.setFilterUser = function(user, onlyExisting) {
 		filterSelectElement.value = user;
-		if (!filterSelectElement.value) {
+		if (!filterSelectElement.value && !onlyExisting) {
 			var userElement = document.createElement('option');
 			userElement.setAttribute('value', user);
 			userElement.innerHTML = user;
@@ -741,5 +748,18 @@ function TagSearchMenu(container, editContainer, currentUser, messStore) {
 			tagEditMenuElement.style.visibility = 'visible';
 			closeTagEditMenuLink.style.visibility = 'visible';
 		}
+	}
+	
+	that.selectTagNames = function(tagNames) {
+		var selectedIds = messStore.getSelectedTagIds(true);
+		for (var i = 0; i < selectedIds.length; i++) {
+			messStore.deselectTag(selectedIds[i]);
+		}
+		selectedTagNames = {};
+	
+		for (var i = 0; i < tagNames.length; i++) {
+			selectedTagNames[tagNames[i]] = 1;
+		}
+		filterSelectChangeHandler();
 	}
 }

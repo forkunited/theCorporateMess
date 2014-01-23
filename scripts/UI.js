@@ -45,8 +45,9 @@ function UI(container, currentUser) {
 	this.DOM_TOP_LINKS_BODY_ID = 'uiTopLinksBody';
 	
 	this.DOM_LAYOUT_DROP_DOWN_ID = 'uiLayout';
-	this.DOM_EXPORT_DROP_DOWN_ID = 'uiExport';
-	this.DOM_IMPORT_DROP_DOWN_ID = 'uiImport';
+	this.DOM_QUERY_DROP_DOWN_ID = 'uiQuery';
+	//this.DOM_EXPORT_DROP_DOWN_ID = 'uiExport';
+	//this.DOM_IMPORT_DROP_DOWN_ID = 'uiImport';
 	this.DOM_HELP_DROP_DOWN_ID = 'uiHelp';
 	
 	this.DOM_INSTRUCTIONS_HEADING_ID = 'uiInstructionsHeading';
@@ -223,7 +224,7 @@ function UI(container, currentUser) {
 											messOverlayElement.height = messOverlayElement.offsetHeight;
 											setVisibleMessWindow();}
 											
-		topLinksElement.style.visibility = 'hidden'; // HACK: Hide top links for now...
+		//topLinksElement.style.visibility = 'hidden'; // HACK: Hide top links for now...
 	}
 	
 	function constructComponents() {
@@ -310,34 +311,17 @@ function UI(container, currentUser) {
 															} 
 						   );
 						   
-		/*layoutMenu.addLink('radial', 'Radial', function() { 
-																messControl.getVisual().setAnimation(new VisualAnimationRadial());
-																messControl.getVisual().setAnimationClusterer(new GraphClustererProperties(function(v) { return v.getFirstColor(); }));
-														} );*/
-														
-		/*layoutMenu.addLink('custom', 'Custom', function() { 
-																var animation = new VisualAnimationSprings();
-																animation.setAnimateClusters(true);
-																animation.setAnimateVertices(false);
-																messControl.getVisual().setAnimation(animation); 
-																messControl.getVisual().setAnimationClusterer(new GraphClustererProperties(function(v) { return v.getFirstColor(); }));
-																messControl.setSaveVertPositions(true);
-													  } );*/
-		
 		layoutMenu.addLink('none', 'None', function() { 
 															messControl.getVisual().setAnimation(undefined); 
 															messControl.getVisual().setAnimationClusterer(undefined);
-													  } );		
+													  } );	
 		
-		var exportMenu = new DropDownMenu(topLinksElement, topLinksBodyElement, that.DOM_EXPORT_DROP_DOWN_ID, 'Export', false);
-		exportMenu.addLink('argument', 'As Argument', exportMessAsArgument);
-		exportMenu.addLink('json', 'As JSON', exportMessAsJSON);
-		
-		var importMenu = new DropDownMenu(topLinksElement, topLinksBodyElement, that.DOM_IMPORT_DROP_DOWN_ID, 'Import', false);
-		importMenu.addLink('json', 'From JSON', importMessFromJSON);
-		
+		var queryMenu = new DropDownMenu(topLinksElement, topLinksBodyElement, that.DOM_QUERY_DROP_DOWN_ID, 'Query', false);
+		queryMenu.addLink('run', 'Run', runQuery);
+		queryMenu.addLink('generate', 'Generate', generateQuery);
+		/*
 		var helpMenu = new DropDownMenu(topLinksElement, topLinksBodyElement, that.DOM_HELP_DROP_DOWN_ID, 'Help', false);
-		helpMenu.addLink('quickReference', 'Quick Reference', toggleInstructions);			
+		helpMenu.addLink('quickReference', 'Quick Reference', toggleInstructions);	*/		
 	}
 	
 	function removeContainerChildren() {
@@ -695,6 +679,77 @@ function UI(container, currentUser) {
 		exportWindow.document.write(exportWindowContent);
 		exportWindow.document.body.innerHTML=messStr;
 		exportWindow.focus();
+	}
+	
+	/* Queries */
+	
+	function runQuery() {
+		var importWindowContent = "<!DOCTYPE HTML PUBLIC '-//W3C//DTD HTML 4.01 Transitional//EN' 'http://www.w3.org/TR/html4/loose.dtd'>\n" +
+								  "<html>\n" +
+								  "<head>\n" +
+								  "<title>The Corporate Mess - Run Query</title>\n" +
+								  "<link href=\"styles/importExport.css\" rel=\"stylesheet\" type=\"text/css\"/>\n" + 
+								  "</head>\n" +
+								  "<body>\n" +
+								  "<div id=\"importBody\">\n" + 
+								  "<div id=\"importText\" contenteditable=\"true\"></div>\n" +
+								  "<input type=\"text\" id=\"importSubmit\" value=\"Run\"></input>\n" +
+								  "</div>" +
+								  "</body>\n" +
+								  "</html>";
+								  
+		importWindow = window.open('','','menubar=no,width=' + that.IMPORT_EXPORT_WIDTH + ',height=' + that.IMPORT_EXPORT_HEIGHT + ',toolbar=no');		
+		importWindow.document.write(importWindowContent);
+		importWindow.document.getElementById('importSubmit').onclick = function() {
+			try {
+				var queryObj = JSON.parse(importWindow.document.getElementById('importText').innerHTML);
+				
+				tagMenu.setFilterUser(queryObj.filter, true);
+				var tagNames = [];
+				for (var i = 0; i < queryObj.organizations.length; i++) {
+					// Upper case first letter, replace _ with space
+					var name = queryObj.organizations[i];
+					if (name.length == 0)
+						continue;
+					var newName = "";
+					var nameParts = name.split("_");
+					for (var j = 0; j < nameParts.length; j++) {
+						newName += nameParts[j].charAt(0).toUpperCase();
+						if (nameParts[j].length > 1)
+							newName += nameParts[j].substring(1);
+						newName += " ";
+					}
+					
+					newName = newName.trim();
+					tagNames.push(newName);
+				}
+				
+				tagMenu.selectTagNames(tagNames);
+			} catch(error) {
+			
+			}
+			importWindow.close();
+		};
+		
+		importWindow.focus();
+	}
+	
+	function generateQuery() {
+		var exportWindowContent = "<!DOCTYPE HTML PUBLIC '-//W3C//DTD HTML 4.01 Transitional//EN' 'http://www.w3.org/TR/html4/loose.dtd'>\n" +
+								  "<html>\n" +
+								  "<head>\n" +
+								  "<title>The Corporate Mess - Query</title>\n" +
+								  "<link href=\"styles/importExport.css\" rel=\"stylesheet\" type=\"text/css\"/>\n" + 
+								  "</head>\n" +
+								  "<body></body>\n" +
+								  "</html>";
+		var tagNames = tagMenu.getSelectedTagNames();
+		var filter = tagMenu.getFilterUser();
+		
+		exportWindow = window.open('','','menubar=no,width=' + that.IMPORT_EXPORT_WIDTH + ',height=' + that.IMPORT_EXPORT_HEIGHT + ',toolbar=no');		
+		exportWindow.document.write(exportWindowContent);
+		exportWindow.document.body.innerHTML=JSON.stringify({filter : filter, organizations : tagNames});
+		exportWindow.focus()
 	}
 	
 	/* Mouse event handling */

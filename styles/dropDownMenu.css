@@ -15,53 +15,29 @@
  * License for the specific language governing permissions and limitations 
  * under the License.
  */
-
-#dropDownMenuTitle_uiLayout {
+ 
+ #dropDownMenuTitle_uiLayout {
 	position: absolute;
 	top: 0%;
 	left: 0%;
 }
-
-#dropDownMenuTitle_uiExport {
+ 
+#dropDownMenuTitle_uiQuery {
 	position: absolute;
 	top: 0%;
 	left: 25%;
 }
 
-#dropDownMenuTitle_uiImport {
-	position: absolute;
-	top: 0%;
-	left: 50%;
-}
-
-#dropDownMenuTitle_uiHelp {
-	position: absolute;
-	top: 0%;
-	left: 75%;
-}
-
-#dropDownMenuBody_uiLayout {
+ #dropDownMenuBody_uiLayout {
 	position: absolute;
 	top: 0%;
 	left: 0%;
 }
-
-#dropDownMenuBody_uiExport {
+ 
+#dropDownMenuBody_uiQuery {
 	position: absolute;
 	top: 0%;
 	left: 25%;
-}
-
-#dropDownMenuBody_uiImport {
-	position: absolute;
-	top:0%;
-	left: 50%;
-}
-
-#dropDownMenuBody_uiHelp {
-	position: absolute;
-	top: 0%;
-	left: 75%;
 }
 
 div.dropDownMenuTitle {
