@@ -716,13 +716,13 @@ function TagSearchMenu(container, editContainer, currentUser, messStore) {
 	}
 	
 	that.setFilterUser = function(user) {
-		for (var i = 0; i < filterSelectElement.length; i++) {
-			if (filterSelectElement.options[i].text == user) {
+		/*for (var i = 0; i < filterSelectElement.length; i++) {
+			if (filterSelectElement.options[i].text == user) {*/
 				filterSelectElement.value = user;
 				filterSelectChangeHandler();
-				return;
+		/*return;
 			}
-		}
+		}*/
 	}
 	
 	that.setTagEditMenu = function(tag) {
