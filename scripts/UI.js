@@ -360,6 +360,8 @@ function UI(container, currentUser) {
 	
 	/* Update from/to URL */
 	function updateToWindowURL() {
+		if (!history || !history.pushState)
+			return;
 		var tagIds = messStore.getSelectedTagIds();
 		if (tagIds.length > 100) { // FIXME: Hack.
 			tagIds = tagIds.slice(0, 99);
@@ -393,6 +395,10 @@ function UI(container, currentUser) {
 		
 		}
 	}
+	
+	window.addEventListener("popstate", function (event){
+		updateFromWindowURL();
+	});
 
 	/* Update interface elements */
 
