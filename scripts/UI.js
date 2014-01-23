@@ -360,7 +360,7 @@ function UI(container, currentUser) {
 	
 	/* Update URL */
 	function updateWindowURL() {
-		history.pushState({}, "", "?filter=" + tagMenu.getFilterState() + "&tags=" + JSON.stringify(messStore.getSelectedTagIds()));
+		history.pushState({}, "", "?filter=" + tagMenu.getFilterUser() + "&tags=" + JSON.stringify(messStore.getSelectedTagIds()));
 		// Updating from URL (do this on back or forward click or at start:
 			// Set tag menu filter
 			// Set mess store selected tags from id list

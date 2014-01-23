@@ -711,6 +711,10 @@ function TagSearchMenu(container, editContainer, currentUser, messStore) {
 		return filterState;
 	}
 	
+	that.getFilterUser = function() {
+		return filterUser;
+	}
+	
 	that.setTagEditMenu = function(tag) {
 		tagEditMenu.setTag(tag);
 		if (!tag) {
