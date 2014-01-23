@@ -741,7 +741,11 @@ function UI(container, currentUser) {
 								  "<title>The Corporate Mess - Query</title>\n" +
 								  "<link href=\"styles/importExport.css\" rel=\"stylesheet\" type=\"text/css\"/>\n" + 
 								  "</head>\n" +
-								  "<body></body>\n" +
+								  "<body>" +
+								  "<div id=\"importBody\">\n" + 
+								  "<div id=\"importText\" contenteditable=\"true\"></div>\n" +
+								  "</div>" +
+								  "</body>\n" +
 								  "</html>";
 		var tagNames = tagMenu.getSelectedTagNames();
 		var filter = tagMenu.getFilterUser();
@@ -753,7 +757,7 @@ function UI(container, currentUser) {
 		
 		exportWindow = window.open('','','menubar=no,width=' + that.IMPORT_EXPORT_WIDTH + ',height=' + that.IMPORT_EXPORT_HEIGHT + ',toolbar=no');		
 		exportWindow.document.write(exportWindowContent);
-		exportWindow.document.body.innerHTML=JSON.stringify({filter : filter, organizations : tagNames});
+		exportWindow.document.getElementById("importText").innerHTML=JSON.stringify({filter : filter, organizations : tagNames});
 		exportWindow.focus()
 	}
 	
