@@ -351,8 +351,8 @@ function UI(container, currentUser) {
 	/* Mess store change handler */
 	
 	function storeMessageHandler(message) {
-		if (message.messageType == LocalStorageMessage.SELECT_TAG
-			|| message.messageType == LocalStorageMessage.DESELECT_TAG
+		if (/*message.messageType == LocalStorageMessage.SELECT_TAG
+			|| */message.messageType == LocalStorageMessage.DESELECT_TAG
 			|| message.messageType == LocalStorageMessage.RETRIEVE_ADD_TAG) {
 			updateToWindowURL();
 		}
@@ -368,7 +368,7 @@ function UI(container, currentUser) {
 		}
 
 		var search = "?filter=" + tagMenu.getFilterUser() + "&tags=" + JSON.stringify(tagIds);
-		if (window.location.search != search)
+		if (window.location.search.replace(/%22/g,"\""); != search)
 			history.pushState(search, "", search);
 	}
 	
