@@ -655,6 +655,7 @@ function TagSearchMenu(container, editContainer, currentUser, messStore) {
 	
 	function retrieveFilterUsersHandler(storageMessages) {
 		var userAdded = false;
+		var initialFilterValue = filterSelectElement.value;
 		for (var i = 0; i < storageMessages.length; i++) {
 			if (storageMessages[i].messageType == StorageMessage.RESPOND_RETRIEVE_USERS
 				&& storageMessages[i].queryType == retrieveUsers.QUERY_TYPE_ALL) {
@@ -673,8 +674,10 @@ function TagSearchMenu(container, editContainer, currentUser, messStore) {
 		}
 		
 		if (userAdded) {
-			if (!filterSelectElement.value)
+			if (!initialFilterValue)
 				filterSelectElement.value = that.DEFAULT_FILTER_STATE;
+			else
+				filterSelectElement.value = initialFilterValue;
 			filterSelectChangeHandler();
 		}
 	}
