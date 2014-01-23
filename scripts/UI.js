@@ -358,9 +358,11 @@ function UI(container, currentUser) {
 		}
 	}
 	
+	var updatingFromURL = false;
+	
 	/* Update from/to URL */
 	function updateToWindowURL() {
-		if (!history || !history.pushState)
+		if (updatingFromURL || !history || !history.pushState)
 			return;
 		var tagIds = messStore.getSelectedTagIds();
 		if (tagIds.length > 100) { // FIXME: Hack.
@@ -378,6 +380,11 @@ function UI(container, currentUser) {
 	
 		if (urlSearch.length <= 1)
 			return;
+		
+		if (updatingFromURL)
+			return;
+		
+		updatingFromURL = true;
 		
 		var urlAssignments = urlSearch.substring(1).split('&');
 		var filter = undefined;
@@ -403,6 +410,8 @@ function UI(container, currentUser) {
 		} catch (error) {
 		
 		}
+		
+		updatingFromURL = false;
 	}
 
 	window.addEventListener("popstate", function (event){
