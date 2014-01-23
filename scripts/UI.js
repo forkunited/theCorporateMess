@@ -746,6 +746,11 @@ function UI(container, currentUser) {
 		var tagNames = tagMenu.getSelectedTagNames();
 		var filter = tagMenu.getFilterUser();
 		
+		for (var i = 0; i < tagNames.length; i++) {
+			tagNames[i] = tagNames[i].toLowerCase();
+			tagNames[i] = tagNames[i].replace(/ /g, "_");
+		}
+		
 		exportWindow = window.open('','','menubar=no,width=' + that.IMPORT_EXPORT_WIDTH + ',height=' + that.IMPORT_EXPORT_HEIGHT + ',toolbar=no');		
 		exportWindow.document.write(exportWindowContent);
 		exportWindow.document.body.innerHTML=JSON.stringify({filter : filter, organizations : tagNames});
