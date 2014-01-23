@@ -243,7 +243,9 @@ function UI(container, currentUser) {
 									   );
 			
 		setVisibleMessWindow();
+		messStore.addLocalMessageHandler(storeMessageHandler);
 		messStore.init();
+	
 	}
 	
 	function setVisibleMessWindow() {
@@ -346,6 +348,24 @@ function UI(container, currentUser) {
 		}
 	}
 	
+	/* Mess store change handler */
+	
+	function storeMessageHandler(message) {
+		if (message.messageType == LocalStorageMessage.SELECT_TAG) {
+			updateWindowURL();
+		} else if (message.messageType == LocalStorageMessage.DESELECT_TAG) {
+			updateWindowURL();
+		}
+	}
+	
+	/* Update URL */
+	function updateWindowURL() {
+		history.pushState({}, "", "?filter=" + tagMenu.getFilterState() + "&tags=" + JSON.stringify(messStore.getSelectedTagIds()));
+		// Updating from URL (do this on back or forward click or at start:
+			// Set tag menu filter
+			// Set mess store selected tags from id list
+	}
+
 	/* Update interface elements */
 
 	function updateMouse() {
