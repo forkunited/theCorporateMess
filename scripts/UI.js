@@ -702,7 +702,8 @@ function UI(container, currentUser) {
 		importWindow.document.write(importWindowContent);
 		importWindow.document.getElementById('importSubmit').onclick = function() {
 			try {
-				var queryObj = JSON.parse(importWindow.document.getElementById('importText').innerHTML);
+				var queryStr = importWindow.document.getElementById('importText').innerHTML;
+				var queryObj = JSON.parse(queryStr);
 				
 				tagMenu.setFilterUser(queryObj.filter, true);
 				var tagNames = [];
