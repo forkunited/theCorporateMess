@@ -702,7 +702,7 @@ function UI(container, currentUser) {
 		importWindow.document.write(importWindowContent);
 		importWindow.document.getElementById('importSubmit').onclick = function() {
 			try {
-				var queryStr = importWindow.document.getElementById('importText').innerHTML;
+				var queryStr = importWindow.document.getElementById('importText').innerHTML.trim();
 				var queryObj = JSON.parse(queryStr);
 				
 				tagMenu.setFilterUser(queryObj.filter, true);
