@@ -32,8 +32,8 @@ function MessViewControl(canvas, overlayCanvas, currentUser, messStore) {
 	this.EDGE_TYPE_INCONSISTENT = VisualEdge.EDGE_TYPE_X;
 	
 	/* Vertex stuff */
-	this.MAIN_VERT_COLOR = "#FFFFFF";
-	this.TAG_VERT_COLOR = "#AAAAAA";
+	this.MAIN_VERT_COLOR = "#000000";
+	this.TAG_VERT_COLOR = "#000000";
 	this.TAG_VERT_RADIUS = 7;
 	
 	var currentEdgeType = this.EDGE_TYPE_EVIDENCE;
