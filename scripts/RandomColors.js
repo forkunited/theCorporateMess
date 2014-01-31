@@ -28,7 +28,7 @@ RandomColors.historyB = [];
 RandomColors.next = function() {
 	var h = Math.random();
 	var s = 1;//Math.random()*.7+.2;
-	var v = .45;//.99;
+	var v = 1;//.99;
 	
 	var h_i = Math.floor(h*6);
 	var f = h*6 - h_i;
