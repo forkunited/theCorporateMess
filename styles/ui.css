@@ -38,7 +38,7 @@
 	padding:0;
 	overflow:hidden;
 	opacity:.9;
-	background-color: #3B3B3B;
+	background-color: #000000;
 	/*border: 1px solid #FFFFFF;*/
 }
 
@@ -61,7 +61,7 @@
 	z-index: 200;
 	padding:0;
 	overflow:hidden;
-	background-color: #3B3B3B;
+	background-color: #000000;
 	/*border: 1px solid #FFFFFF;*/
 	opacity:.9;
 }
@@ -90,7 +90,7 @@
 	opacity:.9;
 	text-align: center;
 	padding:0;
-	background-color: #3B3B3B;
+	background-color: #000000;
 	/*border: 1px solid #FFFFFF;*/
 	cursor: pointer;
 	overflow: auto;
@@ -140,7 +140,7 @@
 	font: 12pt Calibri;
 	color: #FFFFFF;
 	text-align: center;
-	background-color: #000000;/*#3B3B3B;*/
+	background-color: #000000;/*#000000;*/
 	border-style:solid;
 	border-width:1px;
 	border-color:#FFFFFF;
