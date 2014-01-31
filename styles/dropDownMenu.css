@@ -57,7 +57,7 @@ div.dropDownMenuTitleMouseover {
 	height: 100%;
 	width: 25%;
 	font: 13pt Calibri;
-	background-color:#000000;
+	background-color:#3B3B3B;
 	color: #000000;
 	text-align: center;
 	padding:0;
@@ -71,7 +71,7 @@ div.dropDownMenuBody {
 	width: 25%;
 	text-align: center;
 	color: #FFFFFF;
-	background-color: #000000;
+	background-color: #3B3B3B;
 	opacity:.9;
 	visibility: hidden;
 	cursor: pointer;
