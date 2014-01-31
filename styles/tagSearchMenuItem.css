@@ -81,7 +81,7 @@
 
 .tagSearchMenuItemTextSelected {
 	font: 140% Calibri;
-	color: #111111;
+	color: #FFFFFF;
 	text-align: right;
 	font-weight: bold;
 	float: left;
@@ -93,7 +93,7 @@
 
 .tagSearchMenuItemSubtextSelected {
 	font: 80% Calibri;
-	color: #111111;
+	color: #FFFFFF;
 	text-align: right;
 	font-weight: bold;
 	float: left;
