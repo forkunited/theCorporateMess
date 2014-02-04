@@ -319,8 +319,8 @@ function UI(container, currentUser) {
 													  } );	
 		
 		var colorsMenu = new DropDownMenu(topLinksElement, topLinksBodyElement, that.DOM_COLORS_DROP_DOWN_ID, 'Colors', true);
-		colorsMenu.addLink('black', 'Black', function() { messElement.style.backgroundColor = "#000000"; messControl.setTagVertColor("#000000"); });
-		colorsMenu.addLink('white', 'White', function() { messElement.style.backgroundColor = "#FFFFFF"; messControl.setTagVertColor("#FFFFFF"); });
+		colorsMenu.addLink('black', 'Black', function() { messElement.style.backgroundColor = "#000000"; messControl.setTagVertColor("#FFFFFF"); });
+		colorsMenu.addLink('white', 'White', function() { messElement.style.backgroundColor = "#FFFFFF"; messControl.setTagVertColor("#000000"); });
 		
 		var interfaceMenu = new DropDownMenu(topLinksElement, topLinksBodyElement, that.DOM_INTERFACE_DROP_DOWN_ID, 'Interface', true);
 		interfaceMenu.addLink('show', 'Show', function() { showInterface(); });
