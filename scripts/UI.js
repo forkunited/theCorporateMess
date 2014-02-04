@@ -366,7 +366,10 @@ function UI(container, currentUser) {
 		sideRegionElement.style.display = "none";
 		bottomRegionElement.style.display = "none";
 		bottomRegionElement.style.display = "none";
-		setVisibleMessWindow();
+		messControl.setFullVisibleWindow(topRegionElement.offsetHeight, /* top */
+								messElement.offsetLeft, /* left */
+								messElement.offsetTop-topRegionElement.offsetHeight, /* height */
+								messElement.offsetWidth); /* width */
 	}
 	
 	/* Mess store change handler */
