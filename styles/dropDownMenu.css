@@ -21,11 +21,23 @@
 	top: 0%;
 	left: 0%;
 }
+
+#dropDownMenuTitle_uiColors {
+	position: absolute;
+	top: 0%;
+	left: 25%;
+}
+
+#dropDownMenuTitle_uiInterface {
+	position: absolute;
+	top: 0%;
+	left: 50%;
+}
  
 #dropDownMenuTitle_uiQuery {
 	position: absolute;
 	top: 0%;
-	left: 25%;
+	left: 75%;
 }
 
  #dropDownMenuBody_uiLayout {
@@ -33,11 +45,23 @@
 	top: 0%;
 	left: 0%;
 }
+
+#dropDownMenuBody_uiColors {
+	position: absolute;
+	top: 0%;
+	left: 25%;
+}
+ 
+#dropDownMenuBody_uiInterface {
+	position: absolute;
+	top: 0%;
+	left: 50%;
+}
  
 #dropDownMenuBody_uiQuery {
 	position: absolute;
 	top: 0%;
-	left: 25%;
+	left: 75%;
 }
 
 div.dropDownMenuTitle {

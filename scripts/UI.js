@@ -45,6 +45,8 @@ function UI(container, currentUser) {
 	this.DOM_TOP_LINKS_BODY_ID = 'uiTopLinksBody';
 	
 	this.DOM_LAYOUT_DROP_DOWN_ID = 'uiLayout';
+	this.DOM_COLORS_DROP_DOWN_ID = 'uiColors';
+	this.DOM_INTERFACE_DROP_DOWN_ID = 'uiInterface';
 	this.DOM_QUERY_DROP_DOWN_ID = 'uiQuery';
 	//this.DOM_EXPORT_DROP_DOWN_ID = 'uiExport';
 	//this.DOM_IMPORT_DROP_DOWN_ID = 'uiImport';
@@ -201,16 +203,16 @@ function UI(container, currentUser) {
 		messOverlayElement.addEventListener("mousedown", messMouseDown, false);
 		messOverlayElement.addEventListener("mouseup", messMouseUp, false); 
 		messOverlayElement.addEventListener("mousemove", messMouseMove, false);
-		showContentElement.onclick = function() { messControl.editFocus(); };
-		showContentElement.onmouseover = function() { 
+		//showContentElement.onclick = function() { messControl.editFocus(); };
+		/*showContentElement.onmouseover = function() { 
 														showContentElement.style.backgroundColor = that.SHOW_CONTENT_HIGHLIGHT_COLOR; 
 														showContentElement.style.color = that.SHOW_CONTENT_DEFAULT_FONT_COLOR;
 													};
 		showContentElement.onmouseout = function() { 
 														showContentElement.style.backgroundColor = that.SHOW_CONTENT_DEFAULT_COLOR; 
-														showContentElement.style.color = that.SHOW_CONTENT_DEFAULT_FONT_COLOR;
-													};
-		submitEditElement.onclick = function() { messControl.finishEditFocus(); };
+														showContentElement.style.color = that.SHOW_CONTENT_DEFAULT_FONT_COLOR;*/
+		//											};
+		//submitEditElement.onclick = function() { messControl.finishEditFocus(); };
 		
 		messElement.width = messElement.offsetWidth;
 		messElement.height = messElement.offsetHeight;
@@ -316,9 +318,18 @@ function UI(container, currentUser) {
 															messControl.getVisual().setAnimationClusterer(undefined);
 													  } );	
 		
+		var colorsMenu = new DropDownMenu(topLinksElement, topLinksBodyElement, that.DOM_COLORS_DROP_DOWN_ID, 'Colors', true);
+		colorsMenu.addLink('black', 'Black', function() { messElement.style.backgroundColor = "#000000"; messControl.setTagVertColor("#000000"); });
+		colorsMenu.addLink('white', 'White', function() { messElement.style.backgroundColor = "#FFFFFF"; messControl.setTagVertColor("#FFFFFF"); });
+		
+		var interfaceMenu = new DropDownMenu(topLinksElement, topLinksBodyElement, that.DOM_INTERFACE_DROP_DOWN_ID, 'Interface', true);
+		interfaceMenu.addLink('show', 'Show', function() { showInterface(); });
+		interfaceMenu.addLink('hide', 'Hide', function() { hideInterface(); });
+		
 		var queryMenu = new DropDownMenu(topLinksElement, topLinksBodyElement, that.DOM_QUERY_DROP_DOWN_ID, 'Query', false);
 		queryMenu.addLink('run', 'Run', runQuery);
 		queryMenu.addLink('generate', 'Generate', generateQuery);
+		
 		/*
 		var helpMenu = new DropDownMenu(topLinksElement, topLinksBodyElement, that.DOM_HELP_DROP_DOWN_ID, 'Help', false);
 		helpMenu.addLink('quickReference', 'Quick Reference', toggleInstructions);	*/		
@@ -330,6 +341,32 @@ function UI(container, currentUser) {
 		while (container.hasChildNodes()) {
 			container.removeChild(container.firstChild);
 		}
+	}
+	
+	/* Show/Hide interface elements */
+	
+	function showInterface() {
+		topLinksBodyElement.style.top = "10%";
+		topLinksBodyElement.style.left = "30%";
+		topRegionElement.style.width = "70%";
+		topRegionElement.style.height = "10%";
+		topRegionElement.style.left = "30%";
+		sideRegionElement.style.display = "inline";
+		bottomRegionElement.style.display = "inline";
+		bottomRegionElement.style.display = "inline";
+		setVisibleMessWindow();
+	}
+	
+	function hideInterface() {
+		topLinksBodyElement.style.top = "22px";
+		topLinksBodyElement.style.left = "0%";
+		topRegionElement.style.width = "100%";
+		topRegionElement.style.height = "22px";
+		topRegionElement.style.left = "0%";
+		sideRegionElement.style.display = "none";
+		bottomRegionElement.style.display = "none";
+		bottomRegionElement.style.display = "none";
+		setVisibleMessWindow();
 	}
 	
 	/* Mess store change handler */

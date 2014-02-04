@@ -33,8 +33,10 @@ function MessViewControl(canvas, overlayCanvas, currentUser, messStore) {
 	
 	/* Vertex stuff */
 	this.MAIN_VERT_COLOR = "#000000";
-	this.TAG_VERT_COLOR = "#000000";
+	this.DEFAULT_TAG_VERT_COLOR = "#FFFFFF";
 	this.TAG_VERT_RADIUS = 7;
+	
+	var tagVertColor = this.DEFAULT_TAG_VERT_COLOR;
 	
 	var currentEdgeType = this.EDGE_TYPE_EVIDENCE;
 	var currentEdgeGroup = 0;
@@ -429,7 +431,7 @@ function MessViewControl(canvas, overlayCanvas, currentUser, messStore) {
 					visualGraph.setVertLabel(visualId, label);
 			} else {
 				/* Add visual */
-				var visualId = visualGraph.addVert((label) ? label : '', [that.TAG_VERT_COLOR]);
+				var visualId = visualGraph.addVert((label) ? label : '', [tagVertColor]);
 				visualGraph.setVertRadius(visualId, that.TAG_VERT_RADIUS);
 				tStoreToVisualIds[storeId] = visualId;
 				tVisualToStoreIds[visualId] = storeId;
@@ -447,8 +449,10 @@ function MessViewControl(canvas, overlayCanvas, currentUser, messStore) {
 			
 			var nVisualId = nStoreToVisualIds[nodeStoreId];
 			if (!visualGraph.hasEdge(visualId, nVisualId)) {
-				visualGraph.addEdge(visualId, nVisualId, that.TAG_VERT_COLOR, VisualEdge.EDGE_DIR_BOTH, VisualEdge.EDGE_TYPE_NORMAL);
+				visualGraph.addEdge(visualId, nVisualId, tagVertColor, VisualEdge.EDGE_DIR_BOTH, VisualEdge.EDGE_TYPE_NORMAL);
 				visualGraph.setEdgeFocusable(visualId, nVisualId, false);
+			} else {
+				visualGraph.colorEdge(visualId, nVisualId, tagVertColor);
 			}
 		}
 	}
@@ -834,6 +838,15 @@ function MessViewControl(canvas, overlayCanvas, currentUser, messStore) {
 		}
 		
 		messStore.save();
+	}
+	
+	this.setTagVertColor = function(color) {
+		tagVertColor = color;
+		
+		for (var id in tVisualToStoreIds) {
+			visualGraph.colorVert(id, [tagVertColor]);
+			updateLocalTagRelationships(tVisualToStoreIds[id]);
+		}
 	}
 	
 	/* To and from strings (export and import) [FIXME: Move these functions to their own objects] */
