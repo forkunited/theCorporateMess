@@ -368,7 +368,7 @@ function UI(container, currentUser) {
 		bottomRegionElement.style.display = "none";
 		messControl.setFullVisibleWindow(topRegionElement.offsetHeight, /* top */
 								messElement.offsetLeft, /* left */
-								messElement.offsetTop-topRegionElement.offsetHeight, /* height */
+								messElement.offsetHeight-topRegionElement.offsetHeight, /* height */
 								messElement.offsetWidth); /* width */
 	}
 	
