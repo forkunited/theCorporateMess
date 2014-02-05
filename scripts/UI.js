@@ -144,6 +144,7 @@ function UI(container, currentUser) {
 	var messMouseMoveTime = 0;
 	
 	var editingContent = false;
+	var interfaceVisible = true;
 	
 	/* Construction and destruction */
 	
@@ -252,10 +253,18 @@ function UI(container, currentUser) {
 	}
 	
 	function setVisibleMessWindow() {
-		messControl.setFullVisibleWindow(topRegionElement.offsetHeight, /* top */
-										sideRegionElement.offsetWidth, /* left */
-										bottomRegionElement.offsetTop-topRegionElement.offsetHeight, /* height */
-										container.offsetWidth - sideRegionElement.offsetWidth); /* width */
+		if (interfaceVisible) {
+			messControl.setFullVisibleWindow(topRegionElement.offsetHeight, /* top */
+											sideRegionElement.offsetWidth, /* left */
+											bottomRegionElement.offsetTop-topRegionElement.offsetHeight, /* height */
+											container.offsetWidth - sideRegionElement.offsetWidth); /* width */
+		} else {
+			messControl.setFullVisibleWindow(topRegionElement.offsetHeight, /* top */
+							messElement.offsetLeft, /* left */
+							messElement.offsetHeight-topRegionElement.offsetHeight, /* height */
+							messElement.offsetWidth); /* width */
+
+		}
 	}
 	
 	function constructInstructions() {
@@ -346,6 +355,7 @@ function UI(container, currentUser) {
 	/* Show/Hide interface elements */
 	
 	function showInterface() {
+		interfaceVisible = true;
 		topLinksBodyElement.style.top = "10%";
 		topLinksBodyElement.style.left = "30%";
 		topRegionElement.style.width = "70%";
@@ -358,6 +368,7 @@ function UI(container, currentUser) {
 	}
 	
 	function hideInterface() {
+		interfaceVisible = false;
 		topLinksBodyElement.style.top = "22px";
 		topLinksBodyElement.style.left = "0%";
 		topRegionElement.style.width = "100%";
@@ -366,10 +377,7 @@ function UI(container, currentUser) {
 		sideRegionElement.style.display = "none";
 		bottomRegionElement.style.display = "none";
 		bottomRegionElement.style.display = "none";
-		messControl.setFullVisibleWindow(topRegionElement.offsetHeight, /* top */
-								messElement.offsetLeft, /* left */
-								messElement.offsetHeight-topRegionElement.offsetHeight, /* height */
-								messElement.offsetWidth); /* width */
+		setVisibleMessWindow();
 	}
 	
 	/* Mess store change handler */
