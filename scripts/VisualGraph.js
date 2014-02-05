@@ -26,8 +26,8 @@ function VisualGraph(canvas, overlayCanvas) {
 	
 	/* For active viewing window */
 	this.WINDOW_BUFFER_MULTIPLIER = 0.05;
-	this.GRID_WIDTH_MULTIPLIER = 1;//1.1;
-	this.GRID_HEIGHT_MULTIPLIER = 1.5;//1.1;	
+	this.GRID_WIDTH_MULTIPLIER = 1.1;
+	this.GRID_HEIGHT_MULTIPLIER = 1.1;	
 	
 	/* Scolling */
 	var SCROLL_NONE = 0;
