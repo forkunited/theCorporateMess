@@ -25,7 +25,7 @@ function VisualGraph(canvas, overlayCanvas) {
 	this.EDGE_DISPLAY_HYPER = 1;
 	
 	/* For active viewing window */
-	this.WINDOW_BUFFER_MULTIPLIER = 0.05;
+	this.WINDOW_BUFFER_MULTIPLIER = 0.5;//0.05;
 	this.GRID_WIDTH_MULTIPLIER = 1.1;
 	this.GRID_HEIGHT_MULTIPLIER = 1.1;	
 	
@@ -67,7 +67,7 @@ function VisualGraph(canvas, overlayCanvas) {
 	/* Window and Grid stuff */
 	var windowTop = 0;
 	var windowLeft = 0;
-	var windowBuffer = canvas.height*this.WINDOW_BUFFER_MULTIPLIER;
+	var windowBuffer = canvas.width*this.WINDOW_BUFFER_MULTIPLIER;
 	var gridWidth = canvas.width*this.GRID_WIDTH_MULTIPLIER;
 	var gridHeight = canvas.height*this.GRID_HEIGHT_MULTIPLIER;	
 	
@@ -369,7 +369,7 @@ function VisualGraph(canvas, overlayCanvas) {
 	}
 	
 	this.draw = function(context, overlayContext, activeVerts) {
-		windowBuffer = canvas.height*this.WINDOW_BUFFER_MULTIPLIER;
+		windowBuffer = canvas.width*this.WINDOW_BUFFER_MULTIPLIER;
 		gridWidth = canvas.width*this.GRID_WIDTH_MULTIPLIER;
 		gridHeight = canvas.height*this.GRID_HEIGHT_MULTIPLIER;	
 	
@@ -715,17 +715,30 @@ function VisualGraph(canvas, overlayCanvas) {
 		t = windowTop - windowBuffer;
 		b = windowTop + canvas.height + windowBuffer;
 		
+		topGY = getGridYPos(t, gridHeight);
+		bottomGY = getGridYPos(b, gridHeight);
+		leftGX = getGridXPos(l, gridWidth);
+		rightGX = getGridXPos(r, gridWidth);
+		
+		/* FIXME */
+		keys = {};
+		for (var x = leftGX; x <= rightGX; x++) {
+			for (var y = topGY; y <= bottomGY; y++) {
+				keys[x + ' ' + y] = 1;
+			}
+		}
+		
+		/*
 		topLeftKey = getGridXPos(l,gridWidth) + ' ' + getGridYPos(t,gridHeight);
 		topRightKey = getGridXPos(r,gridWidth) + ' ' + getGridYPos(t,gridHeight);
 		bottomLeftKey = getGridXPos(l,gridWidth) + ' ' + getGridYPos(b,gridHeight);
 		bottomRightKey = getGridXPos(r,gridWidth) + ' ' + getGridYPos(b,gridHeight);
-		
-		/* FIXME */
-		keys = {};
+
 		keys[topLeftKey] = 1;
 		keys[topRightKey] = 1;
 		keys[bottomLeftKey] = 1;
 		keys[bottomRightKey] = 1;
+		*/
 		
 		for (key in keys)
 			for (id in gridToVerts[key])
@@ -1036,10 +1049,10 @@ function VisualGraph(canvas, overlayCanvas) {
 			animation.startNextFrame(activeVerts);
 		}
 		
-		var smallGrid = {};
+		/*var smallGrid = {};
 		for (var id in activeVerts) {
 			updateGrid(idsToVerts[id], smallGrid, SMALL_GRID_WIDTH, SMALL_GRID_HEIGHT, 0, 0);
-		}
+		}*/
 		
 		for (var id1 in activeVerts) {
 			var v1 = idsToVerts[id1];
