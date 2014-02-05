@@ -26,8 +26,8 @@ function VisualGraph(canvas, overlayCanvas) {
 	
 	/* For active viewing window */
 	this.WINDOW_BUFFER_MULTIPLIER = 0.05;
-	this.GRID_WIDTH_MULTIPLIER = 1.1;
-	this.GRID_HEIGHT_MULTIPLIER = 1.1;	
+	this.GRID_WIDTH_MULTIPLIER = 1;//1.1;
+	this.GRID_HEIGHT_MULTIPLIER = 1.5;//1.1;	
 	
 	/* Scolling */
 	var SCROLL_NONE = 0;
@@ -67,7 +67,7 @@ function VisualGraph(canvas, overlayCanvas) {
 	/* Window and Grid stuff */
 	var windowTop = 0;
 	var windowLeft = 0;
-	var windowBuffer = canvas.width*this.WINDOW_BUFFER_MULTIPLIER;
+	var windowBuffer = canvas.height*this.WINDOW_BUFFER_MULTIPLIER;
 	var gridWidth = canvas.width*this.GRID_WIDTH_MULTIPLIER;
 	var gridHeight = canvas.height*this.GRID_HEIGHT_MULTIPLIER;	
 	
@@ -369,7 +369,7 @@ function VisualGraph(canvas, overlayCanvas) {
 	}
 	
 	this.draw = function(context, overlayContext, activeVerts) {
-		windowBuffer = canvas.width*this.WINDOW_BUFFER_MULTIPLIER;
+		windowBuffer = canvas.height*this.WINDOW_BUFFER_MULTIPLIER;
 		gridWidth = canvas.width*this.GRID_WIDTH_MULTIPLIER;
 		gridHeight = canvas.height*this.GRID_HEIGHT_MULTIPLIER;	
 	
