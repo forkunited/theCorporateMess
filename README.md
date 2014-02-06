@@ -13,7 +13,7 @@ feel free to contact Bill at forkunited@gmail.com.
 
 ## Representation of the network ##
 
-A Neo4j database(http://www.neo4j.org/) is used on the backend to store the 
+A Neo4j database (http://www.neo4j.org/) is used on the backend to store the 
 network.  Within this database, the network is given a somewhat odd 
 representation due to the fact that this project was derived from *theMess*,
 which was used for an entirely different purpose.  Here is a summary of this
