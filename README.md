@@ -64,7 +64,7 @@ through which the application interfaces with the server.  These scripts
 use the classes in *server/classes* to update and retrieve parts of the graph 
 from the database.
 
-## Note about changes from theMess to theCorporateMess ##
+## Hacks from theMess to theCorporateMess ##
 
 Most of the code--which comes from *theMess* project--was designed in a 
 coherent way, but many of the modifications to *theMess* to make the 
