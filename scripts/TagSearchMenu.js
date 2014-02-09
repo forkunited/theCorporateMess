@@ -429,7 +429,7 @@ function TagSearchMenu(container, editContainer, currentUser, messStore) {
 				if (filterState == that.FILTER_STATE_SELECTED) {
 					listEmptyElement.innerHTML = 'No mess selected.  Try changing the filter to "All", and then selecting something from the list that appears.';
 				} else if (filterState == that.FILTER_STATE_YOURS) {
-					listEmptyElement.innerHTML = 'You haven\'t created anything.  Try changing the filter to "Selected", and creating something new using the input box at the bottom.';
+					listEmptyElement.innerHTML = 'There are no results matching your query.';
 				} else if (filterState == that.FILTER_STATE_ALL) {
 					listEmptyElement.innerHTML = 'There is nothing... nothing at all.';
 				} else {
