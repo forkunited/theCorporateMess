@@ -98,13 +98,146 @@ function UI(container, currentUser) {
 	this.MOUSE_MOVE_TIMEOUT = 50;
 	
 	/* Instructions stuff */
-	this.INSTRUCTIONS_BODY_TEXT = "<p>Hi.  This box contains quick reference for understanding which keys to press to do things with this program.  If you want " +
-								  "more detailed information about this program and how to use it, then click the \"Instructions\" link in the menu on the left.  A mess of " +
-								  "detailed instructions will pop up.  Hover over the dot with a white circle around it when this mess pops up to begin following along with the instructions.</p>" +
-								  "<p>If you're done reading the text in this box, then click the box, and it will close.  If you want to see this box again, " +
-								  "then click the \"Quick Reference\" link under the \"Help\" menu at the top of the page.</p>";
+	this.INSTRUCTIONS_BODY_TEXT = 
+		"<p>Hello! This visualization allows you to explore the " +
+		"corporate network that we've constructed from a corpus of press " +
+		"release documents. " +
+		"<a href=\"http://www.ark.cs.cmu.edu/CorporateNetwork/\">Click " +
+		"here</a> " +
+		"for general information about this project.</p>" +
+		
+		"<p>You can use the menu on the left to search for " +
+		"organizations in the network, and then select them (by clicking) " +
+		"from the list of results to display their network at the " +
+		"center of the screen as colored dots connected by lines.  Each " +
+		"colored dot may be connected to either black or white dots " +
+		"representing organizations that are connected to the selected " +
+		"organizations, but are not selected themselves. These " +
+		"unselected organizations are also indicated by the fact that the " +
+		"word \"collapsed\" appears next to their names.  You can select " +
+		"(expand) these \"collapsed\" organizations by clicking " +
+		"on their dots.  This allows you to traverse the network outward " +
+		"from the initial set of organizations for which you searched.</p>" +
+		
+		"<p>After you've selected some organizations, you can hover your " +
+		"mouse over their dots and connections to get more information " +
+		"about them in the text box at the bottom.  When you hover over " +
+		"a dot, the box at the bottom will contain the number of " +
+		"times the number of mentions in which the dot's organization was " +
+		"involved in the press release corpus, a list of meta-data fields " +
+		"describing the organization, and the expected number of times " +
+		"that the organization occurred in mentions of each " +
+		"relationship-type according to the relationship extraction model " + 
+		"(under \"In-P\"). When you hover " +
+		"over a connecting line, the box will contain the most likely " +
+		"relationship-type for the connection, the number " +
+		"of mentions from which the connection was constructed, the " + 
+		"expected number of those mentions that " +
+		"are of each relationship-type, and the source text surrounding the " +
+		"mentions.</p>" +
+		
+		"<p>The menu at the left allows you to perform some other " +
+		"complicated searching and filtering operations. You can filter by " +
+		"year using the drop-down box at the top of the menu.  This filter " +
+		"will continue to display the organizations you've selected, but " +
+		"for a different year, which should allow you to view your selected " +
+		"organizations' connections over time.  However, note that some " +
+		"organizations may disappear in some years when they were not " +
+		"present in the press release corpus.  Also, you can insert " +
+		"queries of the following forms into the search box to perform " +
+		"various types of searches: </p>" +
 	
-	this.INSTRUCTIONS_FOOTER_TEXT = '<p>Please use <a href="https://www.google.com/intl/en/chrome/browser/" target="_blank">Google Chrome</a>.</p>';
+		"<p><b>[term_1] [term_2] ... [term_n]</b><br />" + 
+		"Searches for tokens that occur in node " +
+		"names and contents<br />" + 
+		"Example: <i>Microsoft</i></p>" +
+
+		"<p><b>inCount_[n]</b> (with [n] in {0, 1, 2, 3, 4, 5, 10, 25, 50, 100, 1000, 10000, 100000})<br />" +
+		"Searches for organizations that are mentioned at least [n] " + 
+		"times<br />" +
+		"Example: <i>inCount_1</i></p>" +
+
+		"<p><b>inPMax_[relation-type]</b><br />" +
+		"Searches for organizations which are mentioned as " +
+		"[relation-type] relations more often than as other relationship-" +
+		"type relations<br />" +
+		"Example: <i>inPMax_NonCorp-University</i></p>" +
+
+		/*"<p><b>inTypeCountsMax_[relation-type]</b><br />" +
+		"Example: <i>inTypeCountsMax_NonCorp-University</i></p>" + Confusing, but possible. */ 
+
+		"<p><b>outCount_[n]</b> (with [n] in {0, 1, 2, 3, 4, 5, 10, 25, 50, 100, 1000, 10000, 100000})<br />" + 
+		"Searches for organizations that make at least [n] " +
+		"non-self-mentions<br />" +
+		"Example: outCount_1</p>" +
+
+		"<p><b>outPMax_[relation-type]</b><br /> " +
+		"Searches for organizations for which make [relation-type] mentions " +
+		"more often than other relationship-type mentions<br /> " +
+		"Example: <i>outPMax_OCorp-Merger</i></p>" +
+
+		/*outTypeCountsMax_[relation-type]
+		Searches for all nodes for which the maximum value of the count 
+		of maximum-posterior arg-max's on each non-self-mention by the node's organization is given by [relationship-type] 
+		Example: outTypeCountsMax_OCorp-Merger -- Confusing but possible */
+
+		"<p><b>selfCount_[n]</b> (with [n] in {0, 1, 2, 3, 4, 5, 10, 25, 50, 100, 1000, 10000, 100000})<br />" + 
+		"Searches for organizations that make at least [n] self-mentions" + 
+		"<br />" +
+		"Example: <i>selfCount_1</i></p>" + 
+
+		"<p><b>selfPMax_[relation-type]</b><br />" +  
+		"Searches for organizations for which make [relation-type] " +
+		"self-mentions more often than other relationship-type " +
+		"mentions<br /> " +
+		"Example: <i>selfPMax_SelfRef</i></p>" +
+
+		/*selfTypeCountsMax_[relation-type]
+		Searches for all nodes for which the maximum value of the 
+		count of maximum-posterior arg-max's on each self-mention 
+		by the node's organization is given by [relationship-type] 
+		Example: selfTypeCountsMax_SelfRef -- Confusing but possible */
+
+		"<p><b>cik_[cik]</b> (where [cik] is a CIK)<br />" +
+		"Searches organizations with CIK=[cik]<br />" +
+		"Example: <i>cik_855612</i></p>" +
+
+		"<p><b>country_[country]</b> (where [country] is a country)<br />" +
+		"Searches organizations with country=[country]<br />" +
+		"Example: <i>country_Germany</i></p>" + 
+
+		"<p><b>industry_[industry]</b> (where [industry] is a industry)<br />" +
+		"Searches organizations with industry=[industry]<br />" +
+		"Example: <i>industry_Internet_Security</i></p>" +
+
+		"<p><b>sic_[sic]</b> (where [sic] is a prefix of a SIC)<br />" + 
+		"Searches organizations with SICs which are prefixed by [sic]<br />" + 
+		"Example: <i>sic_7370</i></p>" + 
+
+		"<p><b>ticker_[ticker]</b> (where [ticker] is a ticker)<br />" +
+		"Searches organizations with ticker=[ticker]<br />" +
+		"Example: <i>ticker_MS</i></p>" + 
+
+		"<p><b>type_[type]</b> (where [type] is a type)<br />" + 
+		"Searches organizations with type=[type]<br />" +
+		"Example: <i>type_Common_Stock</i></p>" +
+		
+		"<p>The menus at the top provide additional options.  The " +
+		"\"Layout\" menu allows you to toggle the force-directed layout " +
+		"animation, the \"Colors\" menu allows you to toggle the color " +
+		"scheme, the \"Interface\" menu allows you to show and hide the " +
+		"search interface, and the \"Query\" menu allows you to generate " +
+		"or perform queries.  The query generated by the \"Generate\" " +
+		"button in the \"Query\" menu represents the network that you " +
+		"are displaying.  You can save this query, and then paste " +
+		"it back into the text box that appears for the \"Run\" button under " +
+		"\"Query\" to recreate the part of the network that you were " +
+		"previously viewing.</p>";
+	
+	
+	this.INSTRUCTIONS_FOOTER_TEXT = 
+		"<p>For the least buggy experience, use " +
+		"<a href=\"https://www.google.com/intl/en/chrome/browser/\" target=\"_blank\">Google Chrome</a>.</p>";
 	
 	if (!container)
 		container = document.body;
@@ -283,27 +416,8 @@ function UI(container, currentUser) {
 		instructionsElement.appendChild(keysElement);
 		instructionsElement.appendChild(footerElement);
 		
-		headingElement.innerHTML = 'Help?';
+		headingElement.innerHTML = 'Instructions';
 		bodyElement.innerHTML = that.INSTRUCTIONS_BODY_TEXT;
-		
-		var keys = '';
-		keys += 'Show/Hide Instructions: <b>' + that.KEYBOARD_TOGGLE_INSTRUCTIONS + '</b><br />';
-		keys += 'Save Changes: <b>' + that.KEYBOARD_SAVE_THE_MESS + '</b><br />';
-		keys += 'Scroll: <b>Arrow Keys</b><br />'; // Probably will never change these keys.
-		keys += 'Create Dot: <b>' + that.KEYBOARD_ADD_VERT + '</b><br />';
-		keys += 'Highlight Dots: <b>.</b>,<b>0</b>,<b>1</b>,<b>2</b>,<b>3</b>,<b>4</b>,<b>5</b>,<b>6</b>,<b>7</b>,<b>8</b>,<b>9</b><br />'; // Probably will never change these keys
-		keys += 'Select Highlighted Dots: <b>' + that.KEYBOARD_SELECT_VERTS + '</b><br />';
-		keys += 'Deselect Highlighted Dots: <b>' + that.KEYBOARD_DESELECT_VERTS + '</b><br />';
-		keys += 'Edit Selected Dot Text: <b>' + that.KEYBOARD_EDIT_VERT + '</b><br />';
-		keys += 'Remove Selected Dots: <b>' + that.KEYBOARD_REMOVE_VERTS + '</b><br />';
-		keys += 'Add Lines Between Selected Dots: <b>' + that.KEYBOARD_ADD_EDGES + '</b><br />';
-		keys += 'Remove Lines Between Selected Dots: <b>' + that.KEYBOARD_REMOVE_EDGES + '</b><br />';
-		keys += 'Swap Line Directions Between Selected Dots: <b>' + that.KEYBOARD_DIRECTION_EDGES + '</b><br />';
-		keys += 'Change Line Types Between Selected Dots: <b>' + that.KEYBOARD_TYPE_EDGES + '</b><br />';
-		keys += 'Change Line Colors Between Selected Dots: <b>' + that.KEYBOARD_GROUP_EDGES + '</b><br />';
-		keys += 'Toggle Main Selected Dots: <b>' + that.KEYBOARD_TOGGLE_MAIN_VERTS + '</b><br />';
-		keys += 'Undo: <b>' + that.KEYBOARD_UNDO + '</b><br />';
-		keysElement.innerHTML = keys;
 		
 		footerElement.innerHTML = that.INSTRUCTIONS_FOOTER_TEXT;
 	
@@ -339,9 +453,8 @@ function UI(container, currentUser) {
 		queryMenu.addLink('run', 'Run', runQuery);
 		queryMenu.addLink('generate', 'Generate', generateQuery);
 		
-		/*
 		var helpMenu = new DropDownMenu(topLinksElement, topLinksBodyElement, that.DOM_HELP_DROP_DOWN_ID, 'Help', false);
-		helpMenu.addLink('quickReference', 'Quick Reference', toggleInstructions);	*/		
+		helpMenu.addLink('quickReference', 'Instructions', toggleInstructions);	
 	}
 	
 	function removeContainerChildren() {
